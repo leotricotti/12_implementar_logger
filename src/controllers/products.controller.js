@@ -5,17 +5,21 @@ async function getAll(req, res) {
   const { page, sort, category } = req.query;
   try {
     if (category) {
-      const filteredProducts = await productsService.filteredProducts(category);
+      const filteredProducts = await productsService.filteredAllProducts(
+        category
+      );
       res.json({
         products: filteredProducts.docs,
       });
     } else if (sort) {
-      const orderedProducts = await productsService.orderedProducts(sort);
+      const orderedProducts = await productsService.orderedAllProducts(sort);
       res.json({
         products: orderedProducts,
       });
     } else {
-      const paginatedProducts = await productsService.paginatedProducts(page);
+      const paginatedProducts = await productsService.paginatedAllProducts(
+        page
+      );
       res.json({
         products: paginatedProducts.docs,
       });
@@ -32,7 +36,7 @@ async function getAll(req, res) {
 async function getOne(req, res) {
   const { pid } = req.params;
   try {
-    const Products = await productsService.getOne(pid);
+    const Products = await productsService.getOneProduct(pid);
     if (Products) {
       res.json({
         Products: tempArray,

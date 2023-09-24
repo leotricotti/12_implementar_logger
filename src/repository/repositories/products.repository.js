@@ -4,79 +4,44 @@ export default class ProductsRepository {
   }
 
   // Método asyncrono para obtener todos los productos
-  getAll = async () => {
-    try {
-      const result = await this.dao.getAll();
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  getAllProducts = async () => {
+    const result = await this.dao.getAll();
+    return result;
   };
 
   // Método asyncrono para obtener un producto
-  getOne = async (id) => {
-    try {
-      const result = await this.dao.getOne(id);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  getOneProduct = async (id) => {
+    const result = await this.dao.getOne(id);
+    return result;
   };
 
   // Método asyncrono para crear un producto
-  saveProducts = async (product) => {
-    try {
-      const result = await this.dao.saveProducts(product);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  saveOneProducts = async (product) => {
+    const result = await this.dao.saveProducts(product);
+    return result;
   };
 
   // Método asyncrono para actualizar un producto
-  updateProducts = async (id, product) => {
-    try {
-      const result = await this.dao.updateProducts(id, product);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  updateOneProducts = async (id, product) => {
+    const result = await this.dao.updateProducts(id, product);
+    return result;
   };
 
   //Método asyncrono para obtener los productos filtrados por categoría
-  filteredProducts = async (category) => {
-    try {
-      const result = await this.dao.filteredProducts(category);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  filteredAllProducts = async (category) => {
+    const result = await this.dao.filteredProducts(category);
+    return result;
   };
 
   //Método asyncrono para obtener los productos ordenados
-  orderedProducts = async (order) => {
-    try {
-      const result = await this.dao.orderedProducts(order);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  orderedAllProducts = async (order) => {
+    const result = await this.dao.orderedProducts(order);
+    return result;
   };
 
   //Método asyncrono para obtener los productos paginados
-  paginatedProducts = async (page) => {
-    try {
-      const result = await this.dao.paginatedProducts(page);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  paginatedAllProducts = async (page) => {
+    const result = await this.dao.paginatedProducts(page);
+    return result;
   };
 }

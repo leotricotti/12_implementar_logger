@@ -4,68 +4,38 @@ export default class CartsRepository {
   }
 
   // Método asyncrono para obtener todos los carritos
-  getAll = async () => {
-    try {
-      const result = await this.dao.getAll();
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  getAllCarts = async () => {
+    const result = await this.dao.getAll();
+    return result;
   };
 
   // Método asyncrono para obtener un carrito
-  getOne = async (id) => {
-    try {
-      const result = await this.dao.getOne(id);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  getOneCart = async (id) => {
+    const result = await this.dao.getOne(id);
+    return result;
   };
 
   // Método asyncrono para crear un carrito
-  saveCart = async (cart) => {
-    try {
-      const result = await this.dao.saveCart(cart);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  saveOneCart = async (cart) => {
+    const result = await this.dao.saveCart(cart);
+    return result;
   };
 
   // Método asyncrono para eliminar un producto del carrito
-  updateCart = async (id, cart) => {
-    try {
-      const result = await this.dao.updateCart(id, cart);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  updateOneCart = async (id, cart) => {
+    const result = await this.dao.updateCart(id, cart);
+    return result;
   };
 
   // Método asyncrono para vaciar el carrito
-  emptyCart = async (id, cart) => {
-    try {
-      const result = await this.dao.emptyCart(id, cart);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  emptyOneCart = async (id, cart) => {
+    const result = await this.dao.emptyCart(id, cart);
+    return result;
   };
 
   // Método asyncrono para popular el carrito
-  populatedCart = async (id) => {
-    try {
-      const result = await this.dao.populatedCart(id);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  populatedOneCart = async (id) => {
+    const result = await this.dao.populatedCart(id);
+    return result;
   };
 }

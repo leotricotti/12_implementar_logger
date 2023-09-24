@@ -4,75 +4,38 @@ export default class UsersRepository {
   }
 
   //Método asyncrono realizar el login
-  async login(username, password) {
-    try {
-      const result = await this.dao.find({
-        email: username,
-        password,
-      });
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async userLogin(username, password) {
+    const result = await this.dao.login(username, password);
+    return result;
   }
 
   //Metodo asyncrono para realizar el signup
-  async signup(user) {
-    try {
-      const result = await this.dao.create(user);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async signupUser(user) {
+    const result = await this.dao.signup(user);
+    return result;
   }
 
   //Método asyncrono para obtener un usuario
-  async getOne(uid) {
-    try {
-      const result = await this.dao.getOne(uid);
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async getOneUser(uid) {
+    const result = await this.dao.getOne(uid);
+    return result;
   }
 
   //Metodo asyncrono que actualiza la contraseña
-  async updatePassword(user, newPassword) {
-    try {
-      const respuesta = await this.dao.findByIdAndUpdate(user, {
-        password: newPassword,
-      });
-      return respuesta;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async updateUserPassword(user, newPassword) {
+    const result = await this.dao.updatePassword(user, newPassword);
+    return result;
   }
 
   //Método asyncrono para actualizar el carrito
-  async updateCart(id, user) {
-    try {
-      const respuesta = await this.dao.findByIdAndUpdate(id, user);
-      return respuesta;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async updateUserCart(id, user) {
+    const result = await this.dao.updateCart(id, user);
+    return result;
   }
 
   //Método asyncrono para popular el carrito
-  async populateCart(cartId) {
-    try {
-      const result = await this.dao
-        .findById(cartId)
-        .populate("products.product");
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  async populateUserCart(cartId) {
+    const result = await this.dao.populateCart(cartId);
+    return result;
   }
 }

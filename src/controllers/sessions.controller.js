@@ -41,13 +41,13 @@ async function loginUser(req, res) {
 async function forgotPassword(req, res) {
   const { username, newPassword } = req.body;
 
-  const result = await usersService.getOne(username);
+  const result = await usersService.getOneUser(username);
   if (result.length === 0)
     return res.status(401).json({
       respuesta: "El usuario no existe",
     });
   else {
-    const updatePassword = await usersService.updatePassword(
+    const updatePassword = await usersService.updateUserPassword(
       result[0]._id,
       createHash(newPassword)
     );

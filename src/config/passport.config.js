@@ -30,7 +30,7 @@ const initializePassport = () => {
           role = "admin";
         }
         try {
-          const user = await usersService.getOne(username);
+          const user = await usersService.getOneUser(username);
           if (user.length > 0) {
             return done(null, false, {
               message: "Error al crear el usuario. El usuario ya existe",
@@ -43,7 +43,7 @@ const initializePassport = () => {
               password: createHash(password),
               role: role,
             };
-            let result = await usersService.signup(newUser);
+            let result = await usersService.signupUser(newUser);
             return done(null, result);
           }
         } catch (error) {
@@ -64,7 +64,7 @@ const initializePassport = () => {
       },
       async (req, username, password, done) => {
         try {
-          const user = await usersService.getOne(username);
+          const user = await usersService.getOneUser(username);
           if (user.length === 0) {
             return done(null, false, {
               message: "El usuario no existe",
@@ -88,7 +88,7 @@ const initializePassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await usersService.getOne(id);
+    let user = await usersService.getOneUser(id);
     done(null, user);
   });
 };
@@ -105,7 +105,7 @@ const githubStrategy = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const user = await usersService.getOne(profile?.emails[0]?.value);
+          const user = await usersService.getOneUser(profile?.emails[0]?.value);
           if (user.length === 1) {
             return done(null, user);
           } else {
@@ -116,7 +116,7 @@ const githubStrategy = () => {
               age: 18,
               password: "123",
             };
-            const userNew = await usersService.signup(newUser);
+            const userNew = await usersService.signupUser(newUser);
             return done(null, userNew);
           }
         } catch (error) {
@@ -132,7 +132,7 @@ const githubStrategy = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await usersService.getOne(id);
+    let user = await usersService.getOneUser(id);
     done(null, user);
   });
 };

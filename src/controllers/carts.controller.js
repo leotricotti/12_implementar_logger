@@ -3,7 +3,7 @@ import { cartService } from "../repository/index.js";
 //Método asyncrono para obtener todos los carritos
 async function getAll(req, res) {
   try {
-    const carts = await cartService.getAll();
+    const carts = await cartService.getAllCarts();
     res.json({ carts });
   } catch (err) {
     res.status(500).json({
@@ -17,7 +17,7 @@ async function getAll(req, res) {
 async function getOne(req, res) {
   const { cid } = req.params;
   try {
-    const cart = await cartService.getOne(cid);
+    const cart = await cartService.getOneCart(cid);
     if (cart) {
       res.json(cart);
     } else {
@@ -37,7 +37,7 @@ async function getOne(req, res) {
 async function populatedCart(req, res) {
   const { cid } = req.params;
   try {
-    const cart = await cartService.populatedCarts(cid);
+    const cart = await cartService.populatedOneCart(cid);
     const user = req.session.user[0]?.first_name ?? req.session.user.first_name;
     const product = cart.products;
     if (cart) {
@@ -63,7 +63,7 @@ async function populatedCart(req, res) {
 async function createCart(req, res) {
   try {
     const newCart = req.body;
-    const result = await cartService.saveCart(newCart);
+    const result = await cartService.saveOneCart(newCart);
     res.json({ message: "Carrito creado con éxito", data: newCart });
   } catch (err) {
     res.status(500).json({ message: "Error al crear el carrito ", data: err });
@@ -76,7 +76,7 @@ async function addProduct(req, res) {
   const { cid, pid } = req.params;
   const { op } = req.body;
   try {
-    const cart = await cartService.getOne(cid);
+    const cart = await cartService.getOneCart(cid);
     let productExistsInCart = cart.products.findIndex(
       (dato) => dato.product == pid
     );
@@ -90,7 +90,7 @@ async function addProduct(req, res) {
             ? cart.products[productExistsInCarts].quantity + 1
             : cart.products[productExistsInCarts].quantity - 1);
 
-    const result = await cartService.updateCarts(cid, carts);
+    const result = await cartService.updateCarts(cid, cart);
 
     const updatedCart = await cartService.getOne(cid);
 

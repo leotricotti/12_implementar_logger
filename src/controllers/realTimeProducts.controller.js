@@ -5,7 +5,7 @@ import { usersService } from "../repository/index.js";
 async function getProducts(req, res) {
   try {
     const sessionUser = req.session.user[0]?.email ?? req.session.user.email;
-    const user = await usersService.getOne(sessionUser);
+    const user = await usersService.getOneProduct(sessionUser);
     res.render("realTimeProducts", {
       styles: "realTimeProducts.styles.css",
       title: "Productos en tiempo real",
@@ -36,7 +36,7 @@ async function saveProduct(req, res) {
     };
 
     try {
-      let result = await productsService.saveProducts(product);
+      let result = await productsService.saveOneProduct(product);
       res.json({ message: "Producto creado con éxito", data: product });
     } catch (err) {
       res
