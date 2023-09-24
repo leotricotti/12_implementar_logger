@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   signupUser,
   failRegister,
+  failLogin,
   loginUser,
   forgotPassword,
   githubCallback,
@@ -32,6 +33,9 @@ router.post(
   }),
   loginUser
 );
+
+//Ruta que se ejecuta cuando falla el login
+router.get("/failLogin", failLogin);
 
 //Ruta que recupera la contraseña
 router.post("/forgot", forgotPassword);

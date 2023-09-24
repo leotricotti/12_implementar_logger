@@ -24,11 +24,12 @@ const initializePassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email } = req.body;
         let role;
-        if (username !== ADMIN_ID || password !== ADMIN_PASSWORD) {
-          role = "user";
-        } else {
+        if (username === ADMIN_ID || password === ADMIN_PASSWORD) {
           role = "admin";
+        } else {
+          role = "user";
         }
+        console.log(role);
         try {
           const user = await usersService.getOneUser(username);
           if (user.length > 0) {

@@ -37,6 +37,11 @@ async function loginUser(req, res) {
   });
 }
 
+//Ruta que se ejecuta cuando falla el registro
+async function failLogin(req, res) {
+  res.status(500).json({ error: "Error al iniciar session" });
+}
+
 //Ruta que recupera la contraseña
 async function forgotPassword(req, res) {
   const { username, newPassword } = req.body;
@@ -85,6 +90,7 @@ export {
   signupUser,
   failRegister,
   loginUser,
+  failLogin,
   forgotPassword,
   githubCallback,
   handleLogout,
