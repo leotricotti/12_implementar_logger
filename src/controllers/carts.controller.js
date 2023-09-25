@@ -72,7 +72,6 @@ async function createCart(req, res) {
 
 //Método asyncrono para agregar productos al carrito
 async function addProduct(req, res) {
-  console.log("hola");
   const { cid, pid } = req.params;
   const { op } = req.body;
   try {

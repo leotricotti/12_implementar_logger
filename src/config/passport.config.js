@@ -29,7 +29,6 @@ const initializePassport = () => {
         } else {
           role = "user";
         }
-        console.log(role);
         try {
           const user = await usersService.getOneUser(username);
           if (user.length > 0) {
