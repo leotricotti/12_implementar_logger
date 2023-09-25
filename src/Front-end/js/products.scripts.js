@@ -10,7 +10,6 @@ const productsHandler = async (handler, index) => {
   );
 
   const products = await result.json();
-  console.log(products);
   const productsData = products.products;
 
   const productsContainer = document.getElementById("products-container");
