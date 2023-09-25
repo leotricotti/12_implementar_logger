@@ -30,7 +30,7 @@ async function postLogin(username, password) {
     }
 
     window.location.href =
-      "file:///home/leonardo/Documentos/Front-end/html/products.html";
+      "file:///home/leonardo/Documentos/backend-curso/10_tercera_entrega/src/Front-end/html/products.html";
     return result;
   } catch (error) {
     console.error(error);

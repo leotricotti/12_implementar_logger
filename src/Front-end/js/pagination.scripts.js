@@ -1,6 +1,3 @@
-// Initializar socket.io
-const socketIo = io();
-
 // Agregar la clase disabled al botón de la página anterior si es la primera página
 document.addEventListener("DOMContentLoaded", () => {
   const element = document.getElementById("previous-page");
