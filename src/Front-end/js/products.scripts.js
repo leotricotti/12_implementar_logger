@@ -1,6 +1,6 @@
-const updateProducts = async (sort, category) => {
+const productsHandler = async (handler, index) => {
   const result = await fetch(
-    `http://localhost:8080/api/products?sort=${sort}&category=${category}`,
+    `http://localhost:8080/api/products?${handler}=${index}`,
     {
       method: "GET",
       headers: {
@@ -10,6 +10,7 @@ const updateProducts = async (sort, category) => {
   );
 
   const products = await result.json();
+  console.log(products);
   const productsData = products.products;
 
   const productsContainer = document.getElementById("products-container");

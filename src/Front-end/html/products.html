@@ -115,7 +115,7 @@
               <li>
                 <button
                   class="dropdown-item"
-                  onclick="filterProductsByCategory ('Audio')"
+                  onclick="productsHandler ('category', 'Audio')"
                 >
                   Audio
                 </button>
@@ -123,7 +123,7 @@
               <li>
                 <button
                   class="dropdown-item"
-                  onclick="filterProductsByCategory ('Hogar')"
+                  onclick="productsHandler ('category', 'Hogar')"
                 >
                   Hogar
                 </button>
@@ -131,9 +131,9 @@
               <li>
                 <button
                   class="dropdown-item"
-                  onclick="filterProductsByCategory ('Electronics')"
+                  onclick="productsHandler ('category', 'Electronics')"
                 >
-                  Electronics
+                  Electronica
                 </button>
               </li>
             </ul>
@@ -150,14 +150,17 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
-                <button class="dropdown-item" onclick="sortProductsByPrice (1)">
+                <button
+                  class="dropdown-item"
+                  onclick="productsHandler ('sort', 1)"
+                >
                   Menor a mayor
                 </button>
               </li>
               <li>
                 <button
                   class="dropdown-item"
-                  onclick="sortProductsByPrice (-1)"
+                  onclick="productsHandler ('sort', -1)"
                 >
                   Mayor a menor
                 </button>
@@ -185,7 +188,7 @@
               class="page-item"
               id="item-page"
               data-page="1"
-              onclick="pagination(1, 'products?page')"
+              onclick="productsHandler ('page', '1')"
             >
               <button class="page-link">1</button>
             </li>
@@ -193,7 +196,7 @@
               class="page-item"
               id="item-page"
               data-page="2"
-              onclick="pagination(2, 'products?page')"
+              onclick="productsHandler ('page', '2')"
             >
               <button class="page-link">2</button>
             </li>
@@ -201,7 +204,7 @@
               class="page-item"
               id="item-page"
               data-page="3"
-              onclick="pagination(3, 'products?page')"
+              onclick="productsHandler ('page', '3')"
             >
               <button class="page-link">3</button>
             </li>
@@ -209,7 +212,7 @@
               class="page-item"
               id="item-page"
               data-page="4"
-              onclick="pagination(4, 'products?page')"
+              onclick="productsHandler ('page', '4')"
             >
               <button class="page-link">4</button>
             </li>
