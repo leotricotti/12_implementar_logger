@@ -22,7 +22,6 @@ const initializePassport = () => {
         usernameField: "email",
       },
       async (req, username, password, done) => {
-        console.log("hola");
         const { first_name, last_name, email } = req.body;
         let role;
         if (username === ADMIN_ID || password === ADMIN_PASSWORD) {
@@ -114,7 +113,6 @@ const githubStrategy = () => {
               first_name: profile.displayName.split(" ")[0],
               last_name: profile.displayName.split(" ")[1],
               email: profile?.emails[0]?.value,
-              age: 18,
               password: "123",
             };
             const userNew = await usersService.signupUser(newUser);

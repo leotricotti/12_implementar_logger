@@ -18,6 +18,7 @@ async function failRegister(req, res) {
 //Ruta que realiza el login
 async function loginUser(req, res) {
   const isAuthenticated = req.isAuthenticated();
+  console.log(isAuthenticated);
   if (!req.user) {
     return res.status(401).json("Error de autenticacion");
   }

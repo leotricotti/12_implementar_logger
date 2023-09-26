@@ -15,7 +15,6 @@ import {
   initializePassport,
   githubStrategy,
 } from "./config/passport.config.js";
-import { auth } from "./middleware/auth.middleware.js";
 
 // Inicializar servicios
 dotenv.config();
@@ -62,12 +61,19 @@ async function enviroment() {
 
 enviroment();
 
+// Autenticar acceso a rutas
+const isAuthenticate = (req, res, next) => {
+  if (req.isAuthenticated) {
+    return next();
+  }
+  res.status(401).json({ message: "No estás autorizado" });
+};
 // Routes
-app.use("/api/userCart", auth, UserCart);
-app.use("/api/carts", auth, CartsRouter);
+app.use("/api/userCart", isAuthenticate, UserCart);
+app.use("/api/carts", isAuthenticate, CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use("/api/products", auth, ProductsRouter);
-app.use("/api/realtimeproducts", auth, RealTimeProducts);
+app.use("/api/products", isAuthenticate, ProductsRouter);
+app.use("/api/realtimeproducts", isAuthenticate, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {

@@ -10,7 +10,6 @@ import {
   handleLogout,
   currentUser,
 } from "../controllers/sessions.controller.js";
-import { auth } from "../middleware/auth.middleware.js";
 
 //Inicializa servicios
 const router = Router();
@@ -44,9 +43,6 @@ router.post("/forgot", forgotPassword);
 
 //Ruta que cierra la sesión
 router.get("/logout", handleLogout);
-
-//Ruta que contiene el usuario logueado
-router.get("/current", auth, currentUser);
 
 //Ruta que realiza el login con github
 router.get(
