@@ -15,7 +15,7 @@ import {
   initializePassport,
   githubStrategy,
 } from "./config/passport.config.js";
-import { authenticate } from "./middleware/auth.middleware.js";
+import { auth } from "./middleware/auth.middleware.js";
 
 // Inicializar servicios
 dotenv.config();
@@ -63,11 +63,11 @@ async function enviroment() {
 enviroment();
 
 // Routes
-app.use("/api/userCart", authenticate, UserCart);
-app.use("/api/carts", authenticate, CartsRouter);
+app.use("/api/userCart", auth, UserCart);
+app.use("/api/carts", auth, CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use("/api/products", authenticate, ProductsRouter);
-app.use("/api/realtimeproducts", authenticate, RealTimeProducts);
+app.use("/api/products", auth, ProductsRouter);
+app.use("/api/realtimeproducts", auth, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {

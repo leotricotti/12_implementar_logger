@@ -1,4 +1,4 @@
-import passport, { authenticate } from "passport";
+import passport from "passport";
 import { Router } from "express";
 import {
   signupUser,
@@ -10,7 +10,7 @@ import {
   handleLogout,
   currentUser,
 } from "../controllers/sessions.controller.js";
-import { authenticate } from "passport";
+import { auth } from "../middleware/auth.middleware.js";
 
 //Inicializa servicios
 const router = Router();
@@ -46,7 +46,7 @@ router.post("/forgot", forgotPassword);
 router.get("/logout", handleLogout);
 
 //Ruta que contiene el usuario logueado
-router.get("/current", authenticate, currentUser);
+router.get("/current", auth, currentUser);
 
 //Ruta que realiza el login con github
 router.get(
