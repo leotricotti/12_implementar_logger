@@ -80,6 +80,23 @@ async function handleLogout(req, res) {
   }
 }
 
+async function currentUser(req, res) {
+  try {
+    const user = req.session.user;
+    if (user) {
+      res.status(200).json({
+        respuesta: user,
+      });
+    } else {
+      res.status(401).json({
+        respuesta: "No hay usuario logueado",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 //Callback de github
 async function githubCallback(req, res) {
   req.session.user = req.user;
@@ -94,4 +111,5 @@ export {
   forgotPassword,
   githubCallback,
   handleLogout,
+  currentUser,
 };

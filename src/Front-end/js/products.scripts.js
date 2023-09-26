@@ -115,7 +115,7 @@ const getCartId = async () => {
   try {
     const response = await fetch("http://localhost:8080/api/carts");
     const carts = await response.json();
-    const lastCart = carts[carts.length - 1];
+    const lastCart = carts.carts[carts.carts.length - 1];
     saveCartId(lastCart._id);
   } catch (error) {
     console.log(error);
@@ -126,6 +126,8 @@ getCartId();
 
 //Ruta que agrega el id del carrito como referencia al usuario
 const addCartId = async () => {
+  const user = await fetch("http://localhost:8080/api/sessions/current");
+  console.log(user);
   return new Promise(async (resolve, reject) => {
     let cartId = localStorage.getItem("cartId");
     while (!cartId) {
@@ -139,6 +141,7 @@ const addCartId = async () => {
       },
       body: JSON.stringify({
         cartId,
+        user,
       }),
     });
     resolve(response);

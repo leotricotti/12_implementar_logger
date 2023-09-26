@@ -3,7 +3,7 @@ import { usersService } from "../repository/index.js";
 //Ruta que agrega el id del carrito al usuario
 async function addCartIDToUser(req, res) {
   const { cartId, user } = req.body;
-  const email = user.name;
+  const email = user.firts_name;
   try {
     const user = await usersService.getOne(email);
     const userId = user[0]._id;
