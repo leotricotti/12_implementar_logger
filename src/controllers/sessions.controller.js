@@ -82,8 +82,9 @@ async function handleLogout(req, res) {
 }
 
 async function currentUser(req, res) {
+  const { email } = req.body;
   try {
-    const user = req.session.user;
+    const user = await usersService.getOneUser(email);
     if (user) {
       res.status(200).json({
         respuesta: user,
