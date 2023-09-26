@@ -1,5 +1,6 @@
 const productsHandler = async (handler, index) => {
-  localStorage.setItem("currentPage", index);
+  if (!handler) handler = "page";
+  if (!index) index = 1;
 
   const result = await fetch(
     `http://localhost:8080/api/products?${handler}=${index}`,
@@ -13,8 +14,6 @@ const productsHandler = async (handler, index) => {
 
   const products = await result.json();
   const productsData = products.products;
-
-  console.log(productsData);
 
   const productsContainer = document.getElementById("products-container");
   productsContainer.innerHTML = "";
@@ -69,7 +68,7 @@ const productsHandler = async (handler, index) => {
                 <br />
               </span>
             </div>
-            <p class="text-truncate mb-4 mb-md-0">{{description}}</p>
+            <p class="text-truncate mb-4 mb-md-0">${product.description}</p>
           </div>
           <div
             class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start"
@@ -88,7 +87,7 @@ const productsHandler = async (handler, index) => {
               <button
                 class="btn btn-outline-primary btn-sm mt-2"
                 type="button"
-                onclick="addProduct('{{this._id}}')"
+                onclick="addProduct('${product._id}')"
               >
                 Agregar al carrito
               </button>
@@ -191,14 +190,4 @@ const setCartRoute = () => {
   return cartRoute;
 };
 
-//Moverse al panel del administrador
-const goToAdminPanel = () => {
-  window.location.href = "http://localhost:8080/api/realtimeproducts";
-};
-
-//Refrescar página
-const refreshPage = () => {
-  setTimeout(() => {
-    window.location.reload();
-  }, 1800);
-};
+setCartRoute();

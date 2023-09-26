@@ -1,51 +1,85 @@
-// Agregar la clase disabled al botón de la página anterior si es la primera página
-document.addEventListener("DOMContentLoaded", () => {
-  const element = document.getElementById("previous-page");
-  if (localStorage.getItem("currentPage") === "1") {
-    console.log("j");
-    element.classList.add("disabled");
-  } else if (localStorage.getItem("currentPage") === "4") {
-    const element = document.getElementById("next-page");
-    element.classList.add("disabled");
+const updatePagination = () => {
+  const currentPage = parseInt(localStorage.getItem("currentPage"));
+  const previousButton = document.getElementById("previous-page");
+  const nextButton = document.getElementById("next-page");
+
+  if (currentPage === 1) {
+    previousButton.classList.add("disabled");
+    previousButton.disabled = true;
+  } else {
+    previousButton.classList.remove("disabled");
+    previousButton.disabled = false;
   }
+
+  if (currentPage === 4) {
+    nextButton.classList.add("disabled");
+    nextButton.disabled = true;
+  } else {
+    nextButton.classList.remove("disabled");
+    nextButton.disabled = false;
+  }
+};
+
+const previousPage = () => {
+  let currentPage = localStorage.getItem("currentPage");
+  currentPage = parseInt(currentPage);
+  if (currentPage > 1) {
+    currentPage -= 1;
+    productsHandler("page", currentPage);
+    localStorage.setItem("currentPage", currentPage);
+    setActivePage(currentPage);
+  }
+  updatePagination();
+  activePage();
+};
+
+const nextPage = () => {
+  let currentPage = localStorage.getItem("currentPage");
+  currentPage = parseInt(currentPage);
+  if (currentPage < 4) {
+    currentPage += 1;
+    productsHandler("page", currentPage);
+    localStorage.setItem("currentPage", currentPage);
+    setActivePage(currentPage);
+  }
+  updatePagination();
+  activePage();
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  updatePagination();
 });
 
-// Agregar la clase active al elemento de la pagina actual
-document.addEventListener("DOMContentLoaded", () => {
-  const currentPage = localStorage.getItem("currentPage");
+const setActivePage = (page) => {
   const elements = document.querySelectorAll(`li[data-page]`);
   elements.forEach((element) => {
-    if (element.dataset.page === currentPage) {
+    if (element.dataset.page === page) {
       element.classList.add("active");
     } else {
       element.classList.remove("active");
     }
   });
-  if (!currentPage && elements.length > 0) {
-    elements[0].classList.add("active");
-    localStorage.setItem("currentPage", elements[0].dataset.page);
+  localStorage.setItem("currentPage", page);
+  productsHandler("page", page);
+  updatePagination();
+};
+
+const activePage = () => {
+  const currentPage = localStorage.getItem("currentPage");
+  setActivePage(currentPage);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const currentPage = localStorage.getItem("currentPage");
+  if (!currentPage) {
+    setActivePage("1");
+  } else {
+    setActivePage(currentPage);
   }
+  const elements = document.querySelectorAll(`li[data-page]`);
+  elements.forEach((element) => {
+    element.addEventListener("click", () => {
+      setActivePage(element.dataset.page);
+    });
+  });
 });
-
-//Paginación botón anterior
-const previousPage = (api) => {
-  let currentPage = localStorage.getItem("currentPage");
-  currentPage = parseInt(currentPage);
-  if (currentPage > 1) {
-    currentPage -= 1;
-  }
-  const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `http://localhost:8080/api/${api}=${currentPage}`);
-};
-
-//Paginación botón siguiente
-const nextPage = (api) => {
-  let currentPage = localStorage.getItem("currentPage");
-  currentPage = parseInt(currentPage);
-  if (currentPage < 4) {
-    currentPage += 1;
-  }
-
-  const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `${api}=${currentPage}`);
-};
