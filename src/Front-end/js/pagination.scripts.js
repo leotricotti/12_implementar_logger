@@ -1,10 +1,8 @@
 // Agregar la clase disabled al botón de la página anterior si es la primera página
 document.addEventListener("DOMContentLoaded", () => {
   const element = document.getElementById("previous-page");
-  if (
-    !localStorage.getItem("currentPage") ||
-    localStorage.getItem("currentPage") === "1"
-  ) {
+  if (localStorage.getItem("currentPage") === "1") {
+    console.log("j");
     element.classList.add("disabled");
   } else if (localStorage.getItem("currentPage") === "4") {
     const element = document.getElementById("next-page");

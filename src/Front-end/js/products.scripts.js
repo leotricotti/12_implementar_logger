@@ -1,7 +1,4 @@
 const productsHandler = async (handler, index) => {
-  handler = handler || "page";
-  index = index || 1;
-
   localStorage.setItem("currentPage", index);
 
   const result = await fetch(
