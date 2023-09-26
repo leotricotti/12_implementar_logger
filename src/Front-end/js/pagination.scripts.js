@@ -29,14 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-//Paginación de navegación
-const pagination = (page, api) => {
-  if (page) {
-    let currentPage = localStorage.setItem("currentPage", page);
-  }
-  return (window.location.href = `${api}=${page}`);
-};
-
 //Paginación botón anterior
 const previousPage = (api) => {
   let currentPage = localStorage.getItem("currentPage");

@@ -1,4 +1,9 @@
 const productsHandler = async (handler, index) => {
+  handler = handler || "page";
+  index = index || 1;
+
+  localStorage.setItem("currentPage", index);
+
   const result = await fetch(
     `http://localhost:8080/api/products?${handler}=${index}`,
     {
@@ -11,6 +16,8 @@ const productsHandler = async (handler, index) => {
 
   const products = await result.json();
   const productsData = products.products;
+
+  console.log(productsData);
 
   const productsContainer = document.getElementById("products-container");
   productsContainer.innerHTML = "";
@@ -96,6 +103,8 @@ const productsHandler = async (handler, index) => {
   </div>`;
   });
 };
+
+productsHandler();
 
 //Guardar cartId en localStorage
 const saveCartId = (cartId) => {
