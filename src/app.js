@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import passport from "passport";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
-import session from "express-session";
-import MongoStore from "connect-mongo";
 import UserCart from "./routes/userCart.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import SessionsRouter from "./routes/sessions.routes.js";
@@ -29,20 +27,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-
-// Connect to MongoDB
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: MONGO_URI,
-      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 30 * 60,
-    }),
-    secret: "codersecret",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 // Passport
 githubStrategy();

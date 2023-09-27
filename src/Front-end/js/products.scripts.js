@@ -182,27 +182,15 @@ const addProduct = async (idProduct) => {
   }
 };
 
-//Obtener cartId de localStorage y asignarlo a la ruta del carrito
-const setCartRoute = () => {
-  const cartRoute = document
-    .getElementById("cart-route")
-    .setAttribute(
-      "href",
-      `http://localhost:8080/api/carts/${localStorage.getItem("cartId")}`
-    );
-  return cartRoute;
-};
+// //Obtener cartId de localStorage y asignarlo a la ruta del carrito
+// const setCartRoute = () => {
+//   const cartRoute = document
+//     .getElementById("cart-route")
+//     .setAttribute(
+//       "href",
+//       `http://localhost:8080/api/carts/${localStorage.getItem("cartId")}`
+//     );
+//   return cartRoute;
+// };
 
-setCartRoute();
-
-const userData = async () => {
-  try {
-    const result = await fetch("http://localhost:8080/api/sessions/current");
-    const user = await result.json();
-    console.log(user);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-userData();
+// setCartRoute();

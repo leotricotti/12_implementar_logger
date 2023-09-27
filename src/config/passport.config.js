@@ -1,36 +1,40 @@
 import passport from "passport";
+import jwt from "passport-jwt";
 import * as dotenv from "dotenv";
-import local from "passport-local";
 import GitHubStrategy from "passport-github2";
 import { usersService } from "../repository/index.js";
 import { createHash, isValidPassword } from "../utils.js";
 
 // Inicializar servicios
 dotenv.config();
-const LocalStrategy = local.Strategy;
+const JWTStrategy = jwt.Strategy;
+const ExtractJwt = jwt.ExtractJwt;
 
 const ADMIN_ID = process.env.ADMIN_ID;
+const JWT_SECRET = process.env.JWT_SECRET;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const initializePassport = () => {
   // Configurar passport para registrar usuarios
   passport.use(
     "register",
-    new LocalStrategy(
+    new JWTStrategy(
       {
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: JWT_SECRET,
         passReqToCallback: true,
         usernameField: "email",
       },
-      async (req, username, password, done) => {
-        const { first_name, last_name, email } = req.body;
+      async (req, payload, done) => {
+        const { first_name, last_name, email, password } = req.body;
         let role;
-        if (username === ADMIN_ID || password === ADMIN_PASSWORD) {
+        if (payload.id === ADMIN_ID && payload.password === ADMIN_PASSWORD) {
           role = "admin";
         } else {
           role = "user";
         }
         try {
-          const user = await usersService.getOneUser(username);
+          const user = await usersService.getOneUser(email);
           if (user.length > 0) {
             return done(null, false, {
               message: "Error al crear el usuario. El usuario ya existe",
@@ -56,21 +60,23 @@ const initializePassport = () => {
   // Configurar passport para loguear usuarios
   passport.use(
     "login",
-    new LocalStrategy(
+    new JWTStrategy(
       {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: JWT_SECRET,
         passReqToCallback: true,
         usernameField: "username",
         passwordField: "password",
       },
-      async (req, username, password, done) => {
+      async (req, payload, done) => {
         try {
-          const user = await usersService.getOneUser(username);
+          const user = await usersService.getOneUser(payload.email);
           if (user.length === 0) {
             return done(null, false, {
               message: "El usuario no existe",
             });
           }
-          if (!isValidPassword(user[0].password, password)) {
+          if (!isValidPassword(user[0].password, payload.password)) {
             return done(null, false, { message: "Contraseña incorrecta" });
           } else {
             return done(null, user);
@@ -81,16 +87,15 @@ const initializePassport = () => {
       }
     )
   );
+};
 
-  // Serializar y deserializar usuarios
-  passport.serializeUser((user, done) => {
-    done(null, user[0].email);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    let user = await usersService.getOneUser(id);
-    done(null, user);
-  });
+// Configurar cookie extractor
+const cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+  return token;
 };
 
 // Configurar passport para loguear usuarios con github
@@ -124,16 +129,6 @@ const githubStrategy = () => {
       }
     )
   );
-
-  // Serializar y deserializar usuarios
-  passport.serializeUser((user, done) => {
-    done(null, user.email);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    let user = await usersService.getOneUser(id);
-    done(null, user);
-  });
 };
 
 export { initializePassport, githubStrategy };

@@ -66,3 +66,15 @@ loginForm.addEventListener("submit", function (event) {
   postLogin(username, password);
   createCart();
 });
+
+const userData = async () => {
+  try {
+    const result = await fetch("http://localhost:8080/api/sessions/current");
+    const user = await result.json();
+    console.log(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+userData();

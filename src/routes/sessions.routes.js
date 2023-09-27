@@ -8,7 +8,6 @@ import {
   forgotPassword,
   githubCallback,
   handleLogout,
-  currentUser,
 } from "../controllers/sessions.controller.js";
 
 //Inicializa servicios
@@ -43,6 +42,11 @@ router.post("/forgot", forgotPassword);
 
 //Ruta que cierra la sesión
 router.get("/logout", handleLogout);
+
+//Ruta que devuelve el usuario logueado
+router.get("/current", (req, res) => {
+  console.log(req.session);
+});
 
 //Ruta que realiza el login con github
 router.get(

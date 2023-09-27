@@ -18,7 +18,6 @@ async function failRegister(req, res) {
 //Ruta que realiza el login
 async function loginUser(req, res) {
   const isAuthenticated = req.isAuthenticated();
-  console.log(isAuthenticated);
   if (!req.user) {
     return res.status(401).json("Error de autenticacion");
   }
@@ -74,24 +73,6 @@ async function handleLogout(req, res) {
     } else {
       res.status(401).json({
         respuesta: "Algo salió mal. No hemos podido cerrar la sesión",
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function currentUser(req, res) {
-  const { email } = req.body;
-  try {
-    const user = await usersService.getOneUser(email);
-    if (user) {
-      res.status(200).json({
-        respuesta: user,
-      });
-    } else {
-      res.status(401).json({
-        respuesta: "No hay usuario logueado",
       });
     }
   } catch (error) {
