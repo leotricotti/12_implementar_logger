@@ -62,6 +62,20 @@ async function forgotPassword(req, res) {
   }
 }
 
+// Ruta que recupera la información del usuario
+async function getUserInfo(req, res) {
+  const user = req.user;
+  res.status(200).json({
+    respuesta: "Información del usuario",
+    data: {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      role: user.role,
+    },
+  });
+}
+
 //Ruta que cierra la sesión
 async function handleLogout(req, res) {
   try {
@@ -94,5 +108,5 @@ export {
   forgotPassword,
   githubCallback,
   handleLogout,
-  currentUser,
+  getUserInfo,
 };

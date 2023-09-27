@@ -3,7 +3,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import passport from "passport";
 import * as dotenv from "dotenv";
-import __dirname from "./utils.js";
 import UserCart from "./routes/userCart.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import SessionsRouter from "./routes/sessions.routes.js";
@@ -13,6 +12,8 @@ import {
   initializePassport,
   githubStrategy,
 } from "./config/passport.config.js";
+import cookieParser from "cookie-parser";
+import isAuthenticated from "./middlewares/isAuthenticated.middleware.js";
 
 // Inicializar servicios
 dotenv.config();
@@ -24,6 +25,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // Middlewares
 app.use(cors());
+app.use(cookieParser);
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -45,19 +47,12 @@ async function enviroment() {
 
 enviroment();
 
-// Autenticar acceso a rutas
-const isAuthenticate = (req, res, next) => {
-  if (req.isAuthenticated) {
-    return next();
-  }
-  res.status(401).json({ message: "No estás autorizado" });
-};
 // Routes
-app.use("/api/userCart", isAuthenticate, UserCart);
-app.use("/api/carts", isAuthenticate, CartsRouter);
+app.use("/api/userCart", isAuthenticated, UserCart);
+app.use("/api/carts", isAuthenticated, CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use("/api/products", isAuthenticate, ProductsRouter);
-app.use("/api/realtimeproducts", isAuthenticate, RealTimeProducts);
+app.use("/api/products", isAuthenticated, ProductsRouter);
+app.use("/api/realtimeproducts", isAuthenticated, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
