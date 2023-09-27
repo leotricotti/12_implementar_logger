@@ -50,6 +50,7 @@ const initializePassport = () => {
       {
         passReqToCallback: true,
         usernameField: "email",
+        session: false,
       },
       async (req, username, password, done) => {
         console.log("hola");
@@ -92,6 +93,7 @@ const initializePassport = () => {
         passReqToCallback: true,
         usernameField: "username",
         passwordField: "password",
+        session: false,
       },
       async (req, username, password, done) => {
         try {
@@ -142,6 +144,7 @@ const githubStrategy = () => {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        session: false,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

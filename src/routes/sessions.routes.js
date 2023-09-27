@@ -42,11 +42,6 @@ router.get("/failLogin", failLogin);
 //Ruta que recupera la contraseña
 router.post("/forgot", forgotPassword);
 
-//Ruta que devuelve el usuario logueado
-router.get("/current", passport.authenticate, (req, res) => {
-  getUserInfo();
-});
-
 //Ruta que realiza el login con github
 router.get(
   "/github",

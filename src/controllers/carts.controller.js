@@ -38,7 +38,8 @@ async function populatedCart(req, res) {
   const { cid } = req.params;
   try {
     const cart = await cartService.populatedOneCart(cid);
-    const user = req.session.user[0]?.first_name ?? req.session.user.first_name;
+    const user = req.user[0]?.first_name ?? req.user.first_name;
+
     const product = cart.products;
     if (cart) {
       res.render("Carts", {

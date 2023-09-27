@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import { createHash } from "../utils.js";
 import { usersService } from "../repository/index.js";
-import e from "express";
+import { generateToken } from "../utils.js";
 
 //Inicializa servicios
 dotenv.config();
@@ -76,7 +76,7 @@ async function forgotPassword(req, res) {
 
 //Callback de github
 async function githubCallback(req, res) {
-  req.session.user = req.user;
+  req.user = req.user._json;
   res.redirect("/api/products?page=1");
 }
 

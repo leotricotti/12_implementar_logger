@@ -13,7 +13,6 @@ import {
   githubStrategy,
 } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
-import isAuthenticated from "./middlewares/isAuthenticated.middleware.js";
 
 // Inicializar servicios
 dotenv.config();
@@ -48,11 +47,11 @@ async function enviroment() {
 enviroment();
 
 // Routes
-app.use("/api/userCart", isAuthenticated, UserCart);
-app.use("/api/carts", isAuthenticated, CartsRouter);
+app.use("/api/userCart", UserCart);
+app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use("/api/products", isAuthenticated, ProductsRouter);
-app.use("/api/realtimeproducts", isAuthenticated, RealTimeProducts);
+app.use("/api/products", ProductsRouter);
+app.use("/api/realtimeproducts", RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
