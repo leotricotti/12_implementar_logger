@@ -48,12 +48,11 @@ const initializePassport = () => {
     "register",
     new LocalStrategy(
       {
+        session: false,
         passReqToCallback: true,
         usernameField: "email",
-        session: false,
       },
       async (req, username, password, done) => {
-        console.log("hola");
         const { first_name, last_name, email } = req.body;
         let role;
         if (username === ADMIN_ID || password === ADMIN_PASSWORD) {
@@ -90,12 +89,13 @@ const initializePassport = () => {
     "login",
     new LocalStrategy(
       {
+        session: false,
         passReqToCallback: true,
         usernameField: "username",
         passwordField: "password",
-        session: false,
       },
       async (req, username, password, done) => {
+        console.log("username", username, "password", password);
         try {
           const user = await usersService.getOneUser(username);
           if (user.length === 0) {
@@ -141,10 +141,10 @@ const githubStrategy = () => {
     "github",
     new GitHubStrategy(
       {
+        session: false,
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
-        session: false,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

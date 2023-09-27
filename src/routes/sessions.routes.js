@@ -16,10 +16,10 @@ const router = Router();
 router.post(
   "/signup",
   passport.authenticate("register", {
-    passReqToCallback: true,
     session: false,
-    failureRedirect: "api/sessions/failedRegister",
+    passReqToCallback: true,
     failureMessage: true,
+    failureRedirect: "api/sessions/failedRegister",
   }),
   signupUser
 );
@@ -31,6 +31,9 @@ router.get("/failRegister", failRegister);
 router.post(
   "/login",
   passport.authenticate("login", {
+    session: false,
+    passReqToCallback: true,
+    failureMessage: true,
     failureRedirect: "/api/sessions/failLogin",
   }),
   loginUser
@@ -55,7 +58,12 @@ router.get(
 //Callback de github
 router.get(
   "/githubcallback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github", {
+    failureRedirect: "/login",
+    session: false,
+    passReqToCallback: true,
+    failureMessage: true,
+  }),
   githubCallback
 );
 

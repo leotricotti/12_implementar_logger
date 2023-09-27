@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 //Variables
 dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //Encriptar contraseña
 export const createHash = (password) =>
@@ -12,19 +14,13 @@ export const isValidPassword = (savedPassword, password) => {
   return bcrypt.compareSync(password, savedPassword);
 };
 
-// Generar token
-// Esta función recibe un objeto de usuario y genera un token JWT utilizando la clave privada definida en la constante PRIVATE_KEY.
-// El token generado tiene una duración de 1 hora y se devuelve como resultado de la función.
+// Función que recibe un objeto de usuario y genera un token JWT.
 const generateToken = (user) => {
-  const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "1h" });
+  const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: "1h" });
   return token;
 };
 
-// Verificar token
-// Esta función es un middleware que se utiliza para verificar si un token JWT es válido.
-// La función verifica si el token se encuentra en el encabezado de autorización de la solicitud y lo decodifica utilizando la clave privada definida en la constante PRIVATE_KEY.
-// Si el token es válido, el objeto de usuario decodificado se agrega a la solicitud y se llama a la siguiente función de middleware.
-// Si el token no es válido, se devuelve una respuesta de error con un código de estado 403.
+// Función que verifica si el token se ha enviado en la solicitud y si es válido.
 const authToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -32,7 +28,7 @@ const authToken = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
   console.log(token);
-  jwt.verify(token, PRIVATE_KEY, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) res.status(403).json({ error: "Token invalido" });
 
     req.user = user;
@@ -40,11 +36,7 @@ const authToken = (req, res, next) => {
   });
 };
 
-// Passport
-// Esta función es un middleware que se utiliza para autenticar a los usuarios utilizando Passport.js.
-// La función recibe una estrategia de autenticación como parámetro y devuelve un middleware que se utiliza para autenticar a los usuarios en una solicitud.
-// Si la autenticación es exitosa, el objeto de usuario se agrega a la solicitud y se llama a la siguiente función de middleware.
-// Si la autenticación falla, se devuelve una respuesta de error con un código de estado 401.
+// Esta función para autenticar a los usuarios.
 const passportCall = (strategy) => {
   return async (req, res, next) => {
     passport.authenticate(strategy, function (error, user, info) {
@@ -70,4 +62,5 @@ const authorization = (role) => {
     next();
   };
 };
+
 export { generateToken, authToken, passportCall, authorization };

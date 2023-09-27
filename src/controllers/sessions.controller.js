@@ -32,15 +32,16 @@ async function loginUser(req, res) {
 
   const result = await usersService.getOneUser(username);
 
+  console.log(result);
+
   if (result.length > 0) {
-    const role = "admin";
     const myToken = generateToken({ username, password, role });
 
     res
       .cookie(JWT_SECRET, myToken, {
         maxAge: 60 * 60 * 1000,
       })
-      .send({ message: "Loggeg in!" });
+      .send({ message: "Usuario logeado con éxito" });
   } else {
     res.status(401).json({
       message: "error",
