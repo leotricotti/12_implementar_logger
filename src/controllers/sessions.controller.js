@@ -1,9 +1,13 @@
 import * as dotenv from "dotenv";
 import { createHash } from "../utils.js";
 import { usersService } from "../repository/index.js";
+import e from "express";
 
 //Inicializa servicios
 dotenv.config();
+
+//Variables
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //Ruta que realiza el registro
 async function signupUser(req, res) {
@@ -17,24 +21,32 @@ async function failRegister(req, res) {
 
 //Ruta que realiza el login
 async function loginUser(req, res) {
-  const isAuthenticated = req.isAuthenticated();
-  if (!req.user) {
-    return res.status(401).json("Error de autenticacion");
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    res.status(400).json({
+      message: "error",
+      data: "Faltan campos",
+    });
   }
-  req.session.user = {
-    first_name: req.user[0].first_name,
-    last_name: req.user[0].last_name,
-    email: req.user[0].email,
-    role: req.user[0].role,
-    isAuthenticated,
-  };
-  res.status(200).json({
-    message: "Usuario logueado con éxito",
-    data: {
-      name: req.user[0].first_name,
-      role: req.user[0].role,
-    },
-  });
+
+  const result = await usersService.getOneUser(username);
+
+  if (result.length > 0) {
+    const role = "admin";
+    const myToken = generateToken({ username, password, role });
+
+    res
+      .cookie(JWT_SECRET, myToken, {
+        maxAge: 60 * 60 * 1000,
+      })
+      .send({ message: "Loggeg in!" });
+  } else {
+    res.status(401).json({
+      message: "error",
+      data: "Usuario o contraseña incorrectos",
+    });
+  }
 }
 
 //Ruta que se ejecuta cuando falla el registro
@@ -62,38 +74,6 @@ async function forgotPassword(req, res) {
   }
 }
 
-// Ruta que recupera la información del usuario
-async function getUserInfo(req, res) {
-  const user = req.user;
-  res.status(200).json({
-    respuesta: "Información del usuario",
-    data: {
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      role: user.role,
-    },
-  });
-}
-
-//Ruta que cierra la sesión
-async function handleLogout(req, res) {
-  try {
-    const logout = req.session.destroy();
-    if (logout) {
-      res.status(200).json({
-        respuesta: "Sesión cerrada con éxito",
-      });
-    } else {
-      res.status(401).json({
-        respuesta: "Algo salió mal. No hemos podido cerrar la sesión",
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 //Callback de github
 async function githubCallback(req, res) {
   req.session.user = req.user;
@@ -107,6 +87,4 @@ export {
   failLogin,
   forgotPassword,
   githubCallback,
-  handleLogout,
-  getUserInfo,
 };

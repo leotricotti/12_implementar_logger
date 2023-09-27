@@ -7,8 +7,6 @@ import {
   loginUser,
   forgotPassword,
   githubCallback,
-  handleLogout,
-  getUserInfo,
 } from "../controllers/sessions.controller.js";
 
 //Inicializa servicios
@@ -18,7 +16,10 @@ const router = Router();
 router.post(
   "/signup",
   passport.authenticate("register", {
-    failureRedirect: "/api/sessions/failRegister",
+    passReqToCallback: true,
+    session: false,
+    failureRedirect: "api/sessions/failedRegister",
+    failureMessage: true,
   }),
   signupUser
 );
@@ -40,9 +41,6 @@ router.get("/failLogin", failLogin);
 
 //Ruta que recupera la contraseña
 router.post("/forgot", forgotPassword);
-
-//Ruta que cierra la sesión
-router.get("/logout", handleLogout);
 
 //Ruta que devuelve el usuario logueado
 router.get("/current", passport.authenticate, (req, res) => {

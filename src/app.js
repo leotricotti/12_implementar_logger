@@ -25,7 +25,6 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // Middlewares
 app.use(cors());
-app.use(cookieParser);
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // Passport
 githubStrategy();
 initializePassport();
+app.use(cookieParser());
 app.use(passport.initialize());
 
 //Función asincrónica para conectar a la base de datos  y chequear si está conectada
