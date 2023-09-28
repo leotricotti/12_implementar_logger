@@ -31,10 +31,12 @@ async function loginUser(req, res) {
 
   const result = await usersService.getOneUser(username);
 
+  console.log(result);
+
   if (result.length > 0) {
     const myToken = generateToken({ username, password, role: result[0].role });
 
-    res.cookie("storeCookie", "Hola");
+    res.cookie("storeCookie");
   } else {
     res.status(401).json({
       message: "error",
