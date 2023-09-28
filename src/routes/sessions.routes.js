@@ -28,19 +28,7 @@ router.post(
 router.get("/failRegister", failRegister);
 
 //Ruta que realiza el login
-router.post(
-  "/login",
-  passport.authenticate("login", {
-    session: false,
-    passReqToCallback: true,
-    failureMessage: true,
-    failureRedirect: "/api/sessions/failLogin",
-  }),
-  loginUser
-);
-
-//Ruta que se ejecuta cuando falla el login
-router.get("/failLogin", failLogin);
+router.post("/login", loginUser);
 
 //Ruta que recupera la contraseña
 router.post("/forgot", forgotPassword);

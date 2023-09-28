@@ -29,20 +29,19 @@ async function loginUser(req, res) {
     });
   }
 
+  // Establecer la política de cookies en la respuesta
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
   const result = await usersService.getOneUser(username);
 
   console.log(result);
-
-  if (result.length > 0) {
-    const myToken = generateToken({ username, password, role: result[0].role });
-
-    res.cookie("storeCookie");
-  } else {
-    res.status(401).json({
-      message: "error",
-      data: "Usuario o contraseña incorrectos",
-    });
-  }
+  const myToken = generateToken({ username, password, role: result[0].role });
+  console.log(myToken);
+  res
+    .cookie("setCookie", myToken, {
+      maxAge: 60 * 60 * 1000,
+    })
+    .send({ message: "Usuario creado  con éxito" });
 }
 
 //Ruta que se ejecuta cuando falla el registro
