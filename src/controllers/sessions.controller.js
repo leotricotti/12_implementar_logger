@@ -22,7 +22,6 @@ async function failRegister(req, res) {
 //Ruta que realiza el login
 async function loginUser(req, res) {
   const { username, password } = req.body;
-
   if (!username || !password) {
     res.status(400).json({
       message: "error",
@@ -32,16 +31,10 @@ async function loginUser(req, res) {
 
   const result = await usersService.getOneUser(username);
 
-  console.log(result);
-
   if (result.length > 0) {
-    const myToken = generateToken({ username, password, role });
+    const myToken = generateToken({ username, password, role: result[0].role });
 
-    res
-      .cookie(JWT_SECRET, myToken, {
-        maxAge: 60 * 60 * 1000,
-      })
-      .send({ message: "Usuario logeado con éxito" });
+    res.cookie("storeCookie", "Hola");
   } else {
     res.status(401).json({
       message: "error",

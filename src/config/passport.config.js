@@ -27,7 +27,6 @@ const initializePassport = () => {
       async (jwt_payload, done) => {
         try {
           //validar que el usuario exista en la base de datos
-          console.log("jwt_payload", jwt_payload);
           let response = await usersService.getOneUser({
             email: jwt_payload.user.username,
           });
@@ -95,7 +94,6 @@ const initializePassport = () => {
         passwordField: "password",
       },
       async (req, username, password, done) => {
-        console.log("username", username, "password", password);
         try {
           const user = await usersService.getOneUser(username);
           if (user.length === 0) {
