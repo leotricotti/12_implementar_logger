@@ -125,30 +125,28 @@ const getCartId = async () => {
 getCartId();
 
 // Ruta que agrega el id del carrito como referencia al usuario
-// const addCartId = async () => {
-//   const user = await fetch("http://localhost:8080/api/sessions/current");
-//   console.log(user);
-//   return new Promise(async (resolve, reject) => {
-//     let cartId = localStorage.getItem("cartId");
-//     while (!cartId) {
-//       await new Promise((resolve) => setTimeout(resolve, 1000));
-//       cartId = localStorage.getItem("cartId");
-//     }
-//     const response = await fetch("http://localhost:8080/api/userCart", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         cartId,
-//         user,
-//       }),
-//     });
-//     resolve(response);
-//   });
-// };
+const addCartId = async () => {
+  return new Promise(async (resolve, reject) => {
+    let cartId = localStorage.getItem("cartId");
+    while (!cartId) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      cartId = localStorage.getItem("cartId");
+    }
+    const response = await fetch("http://localhost:8080/api/userCart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId,
+        user,
+      }),
+    });
+    resolve(response);
+  });
+};
 
-// addCartId();
+addCartId();
 
 // Agrega productos al carrito
 const addProduct = async (idProduct) => {
