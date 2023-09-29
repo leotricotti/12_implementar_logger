@@ -36,7 +36,6 @@ async function getOne(req, res) {
 //Método asyncrono para popular el carrito
 async function populatedCart(req, res) {
   const { cid } = req.params;
-  console.log(cid);
   try {
     const cart = await cartService.populatedOneCart(cid);
     if (cart) {
@@ -64,6 +63,7 @@ async function createCart(req, res) {
 //Método asyncrono para agregar productos al carrito
 async function addProduct(req, res) {
   const { cid, pid } = req.params;
+  console.log(req.body);
   const { op } = req.body;
   try {
     const cart = await cartService.getOneCart(cid);
@@ -82,7 +82,6 @@ async function addProduct(req, res) {
             : cart.products[productExistsInCart].quantity - 1);
 
     const result = await cartService.updateOneCart(cid, cart);
-    console.log(result);
 
     const updatedCart = await cartService.getOneCart(cid);
 

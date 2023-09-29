@@ -32,7 +32,7 @@
             <ul
               class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu d-flex align-items-center"
             >
-              <p class="text-white-50">Bienvenido {{user}}</p>
+              <p class="text-white-50">Bienvenido</p>
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -70,49 +70,14 @@
                 </ul>
               </li>
               <button class="btn position-relative">
-                <a href="" id="cart-badge"> </a>
+                <i class="fa-solid fa-cart-shopping"></i>
+                <a href="" id="cart-badge" class="cart-basket"> </a>
               </button>
             </ul>
           </div>
         </div>
       </nav>
-      <div class="container h-100 py-5">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-10">
-            <h3
-              class="fw-normal text-black mb-5 text-decoration-underline text-center"
-            >
-              Carrito de compras
-            </h3>
-            <nav
-              class="d-flex justify-content-between mb-3 nav-products flex-wrap"
-            >
-              <button
-                class="btn btn-secondary btn-sm mb-2"
-                onclick="continueBuying()"
-                type="button"
-              >
-                Seguir comprando
-              </button>
-              <button
-                class="btn btn-secondary btn-sm mb-2"
-                type="button"
-                onclick="deleteAllProducts()"
-              >
-                Vaciar carrito
-              </button>
-              <button
-                class="btn btn-secondary btn-sm mb-2"
-                type="button"
-                onclick="finishBuy()"
-              >
-                Finalizar compra
-              </button>
-            </nav>
-            <div class="card rounded-3 mb-4" id="cart-container"></div>
-          </div>
-        </div>
-      </div>
+      <div class="container h-100 py-5" id="cart-container"></div>
     </main>
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

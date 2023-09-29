@@ -42,6 +42,12 @@ p {
   border-radius: 50%;
 }
 
+.basket-count {
+  position: absolute;
+  top: -1px;
+  right: 3.5px;
+}
+
 .navbar-nav {
   flex-direction: row !important;
 }

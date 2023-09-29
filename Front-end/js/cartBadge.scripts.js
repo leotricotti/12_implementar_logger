@@ -12,10 +12,9 @@ const cartBadge = async () => {
       }
       const cart = await response.json();
       cartBadge.innerHTML = `                
-      <i class="fa-solid fa-cart-shopping"></i>
       <span
         id="cart-badge"
-        class="cart-basket d-flex align-items-center justify-content-center"
+        class="basket-count"
         >${cart.products.length}</span
       >`;
     }

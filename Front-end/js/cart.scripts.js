@@ -129,12 +129,46 @@ const showCartProducts = async () => {
     );
     const cart = await response.json();
     const products = cart.data.products;
-    let total = 0;
+    console.log(products.length);
     let html = "";
     if (products.length > 0) {
       products.forEach((product) => {
-        total += product.price * product.quantity;
+        console.log(product.product._id);
         html += `
+        <div class="container h-100 py-5" id="cart-container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-10">
+            <h3
+              class="fw-normal text-black mb-5 text-decoration-underline text-center"
+            >
+              Carrito de compras
+            </h3>
+            <nav
+              class="d-flex justify-content-between mb-3 nav-products flex-wrap"
+            >
+              <button
+                class="btn btn-secondary btn-sm mb-2"
+                onclick="continueBuying()"
+                type="button"
+              >
+                Seguir comprando
+              </button>
+              <button
+                class="btn btn-secondary btn-sm mb-2"
+                type="button"
+                onclick="deleteAllProducts()"
+              >
+                Vaciar carrito
+              </button>
+              <button
+                class="btn btn-secondary btn-sm mb-2"
+                type="button"
+                onclick="finishBuy()"
+              >
+                Finalizar compra
+              </button>
+            </nav>
+            <div class="card rounded-3 mb-4">
     <div class="card-body p-4">
     <div class="product-cart">
       <div
@@ -154,25 +188,25 @@ const showCartProducts = async () => {
         <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
           <p class="lead fw-normal mb-2">
             Producto:
-            <span class="text-muted"> ${product.product.title} </span>
+            <span class="text-muted"> ${product.product.title}</span>
           </p>
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
           <button
             class="btn btn-link px-2"
-            onclick="decreaseQuantity(${product.product._id})"
+            onclick="decreaseQuantity(${product.product._id} )"
           >
             <i class="fas fa-minus"></i>
           </button>
           <input
             name="quantity"
-            value="{{quantity}}"
+            value="${product.quantity}"
             type="text"
             class="form-control form-control-sm text-center"
           />
           <button
             class="btn btn-link px-2"
-            onclick="increaseQuantity(${product.product._id})"
+            onclick="increaseQuantity('${product.product._id}')"
           >
             <i class="fas fa-plus"></i>
           </button>
@@ -184,13 +218,13 @@ const showCartProducts = async () => {
         </div>
         <div
           class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon"
-          onclick="deleteProduct(${product.product._id})"
+          onclick="deleteProduct('${product.product._id}')"
         >
           <i class="fas fa-trash fa-lg"></i>
         </div>
       </div>
     </div>
-    {{/each}}
+  </div>
   </div>
   </div>
   </div>
@@ -201,7 +235,7 @@ const showCartProducts = async () => {
   <nav class="d-flex mb-3 nav-products flex-wrap">
   <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
   <button class="btn btn-secondary btn-sm" type="button">
-  <a href="/api/products"> Ir a comprar </a>
+  <a href="http://127.0.0.1:5500/html/products.html"> Ir a comprar </a>
   </button>
   </nav>
   `;
