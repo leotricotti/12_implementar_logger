@@ -8,7 +8,6 @@ import {
   emptyCart,
   populatedCart,
 } from "../controllers/carts.controller.js";
-import userCart from "../controllers/userCart.controller.js";
 
 //Inicializar servicios
 const router = Router();
