@@ -38,10 +38,13 @@ async function loginUser(req, res) {
   const myToken = generateToken({ username, password, role: result[0].role });
   console.log(myToken);
   res
-    .cookie("setCookie", myToken, {
-      maxAge: 60 * 60 * 1000,
+    .cookie("token", myToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60,
     })
-    .send({ message: "Usuario creado  con éxito" });
+    .json({ message: "Login correcto" });
 }
 
 //Ruta que se ejecuta cuando falla el registro

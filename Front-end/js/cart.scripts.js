@@ -79,20 +79,7 @@ const refreshPage = () => {
 //Direccionar a la pagina de productos anterior
 const continueBuying = (page) => {
   page = localStorage.getItem("currentPage");
-  window.location.href = `../html/products.html`;
-};
-
-//Cerrar sesión
-const logoutBuy = async () => {
-  const response = await fetch("http://localhost:8080/api/sessions/logout", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  window.location.href = "../html/index.html";
-  localStorage.removeItem("cartId");
-  return response;
+  window.location.href = `http://127.0.0.1:5500/html/products.html`;
 };
 
 //Finalizar compra
@@ -125,26 +112,93 @@ const finishBuy = () => {
   });
 };
 
-//Codigo que muestra la cantidad de productos en el carrito de compras
-const cartBadge = async () => {
+// Mostrar productos del carrito
+const showCartProducts = async () => {
+  //Obtener cartId de localStorage
   const cartId = localStorage.getItem("cartId");
-  const cartBadge = document.getElementById("cart-badge");
-  try {
-    if (!cartId) {
-      cartBadge.innerText = 0;
-    } else {
-      const response = await fetch(
-        `http://localhost:8080/api/carts/cartbadge/${cartId}`
-      );
-      if (!response.ok) {
-        throw new Error("Error al obtener el carrito");
-      }
-      const cart = await response.json();
-      cartBadge.innerText = cart.products.length;
-    }
-  } catch (error) {
-    console.error(error);
+  const response = await fetch(`http://localhost:8080/api/carts/${cartId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const cart = await response.json();
+  const products = cart.products;
+  let total = 0;
+  let html = "";
+  if (products.length > 0) {
+    products.forEach((product) => {
+      total += product.price * product.quantity;
+      html += `
+    <div class="card-body p-4">
+    {{#each cart}}
+    <div class="product-cart">
+      <div
+        class="row d-flex justify-content-between align-items-center mb-3 mt-3"
+      >
+        {{#each product.thumbnail}}
+        <div class="col-md-2 col-lg-2 col-xl-2">
+          <img
+            src="{{img1}}"
+            class="img-fluid rounded-3"
+            alt="Cotton T-shirt"
+          />
+        </div>
+        {{/each}}
+        <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
+          <p class="lead fw-normal mb-2">
+            Producto:
+            <span class="text-muted"> {{product.title}} </span>
+          </p>
+        </div>
+        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+          <button
+            class="btn btn-link px-2"
+            onclick="decreaseQuantity('{{product._id}}')"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <input
+            name="quantity"
+            value="{{quantity}}"
+            type="text"
+            class="form-control form-control-sm text-center"
+          />
+          <button
+            class="btn btn-link px-2"
+            onclick="increaseQuantity('{{product._id}}')"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div
+          class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4"
+        >
+          <h5 class="mb-0">$ {{product.price}}</h5>
+        </div>
+        <div
+          class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon"
+          onclick="deleteProduct('{{product._id}}')"
+        >
+          <i class="fas fa-trash fa-lg"></i>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  </div>
+  </div>
+  </div>`;
+    });
+  } else {
+    html += `
+  <nav class="d-flex mb-3 nav-products flex-wrap">
+  <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
+  <button class="btn btn-secondary btn-sm" type="button">
+  <a href="/api/products"> Ir a comprar </a>
+  </button>
+  </nav>
+  `;
   }
+  document.getElementById("cart-products").innerHTML = html;
 };
-
-cartBadge();
