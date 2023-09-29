@@ -36,21 +36,11 @@ async function getOne(req, res) {
 //Método asyncrono para popular el carrito
 async function populatedCart(req, res) {
   const { cid } = req.params;
+  console.log(cid);
   try {
     const cart = await cartService.populatedOneCart(cid);
-    const user = req.user[0]?.first_name ?? req.user.first_name;
-
-    const product = cart.products;
     if (cart) {
-      res.render("Carts", {
-        Carts: product,
-        styles: "Carts.styles.css",
-        user: user,
-      });
-    } else {
-      res.status(404).json({
-        message: "Carrito no encontrado",
-      });
+      res.json({ message: "Carrito populado con éxito", data: cart });
     }
   } catch (err) {
     res.status(500).json({

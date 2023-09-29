@@ -118,48 +118,49 @@ const showCartProducts = async () => {
   try {
     const cartId = localStorage.getItem("cartId");
     console.log(cartId);
-    const response = await fetch(`http://localhost:8080/api/carts/${cartId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(response);
+    const response = await fetch(
+      `http://localhost:8080/api/carts/populated/${cartId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const cart = await response.json();
-    console.log(cart);
-    const products = cart.products;
+    const products = cart.data.products;
     let total = 0;
     let html = "";
-    console.log(products);
     if (products.length > 0) {
       products.forEach((product) => {
         total += product.price * product.quantity;
         html += `
     <div class="card-body p-4">
-    {{#each cart}}
     <div class="product-cart">
       <div
         class="row d-flex justify-content-between align-items-center mb-3 mt-3"
       >
-        {{#each product.thumbnail}}
+      ${product.product.thumbnail.map((img) => {
+        return `
         <div class="col-md-2 col-lg-2 col-xl-2">
           <img
-            src="{{img1}}"
+            src="${img.img1}"
             class="img-fluid rounded-3"
             alt="Cotton T-shirt"
           />
         </div>
-        {{/each}}
+        `;
+      })}
         <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
           <p class="lead fw-normal mb-2">
             Producto:
-            <span class="text-muted"> {{product.title}} </span>
+            <span class="text-muted"> ${product.product.title} </span>
           </p>
         </div>
         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
           <button
             class="btn btn-link px-2"
-            onclick="decreaseQuantity('{{product._id}}')"
+            onclick="decreaseQuantity(${product.product._id})"
           >
             <i class="fas fa-minus"></i>
           </button>
@@ -171,7 +172,7 @@ const showCartProducts = async () => {
           />
           <button
             class="btn btn-link px-2"
-            onclick="increaseQuantity('{{product._id}}')"
+            onclick="increaseQuantity(${product.product._id})"
           >
             <i class="fas fa-plus"></i>
           </button>
@@ -179,11 +180,11 @@ const showCartProducts = async () => {
         <div
           class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4"
         >
-          <h5 class="mb-0">$ {{product.price}}</h5>
+          <h5 class="mb-0">$ ${product.product.price}</h5>
         </div>
         <div
           class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon"
-          onclick="deleteProduct('{{product._id}}')"
+          onclick="deleteProduct(${product.product._id})"
         >
           <i class="fas fa-trash fa-lg"></i>
         </div>

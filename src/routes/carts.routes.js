@@ -20,7 +20,7 @@ router.get("/", getAll);
 router.get("/:cid", getOne);
 
 //Método asyncrono para mostrar los productos del carrito
-router.get("/populated", populatedCart);
+router.get("/populated/:cid", populatedCart);
 
 //Método asyncrono para crear un carrito
 router.post("/", createCart);
