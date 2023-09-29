@@ -80,19 +80,21 @@ async function addProduct(req, res) {
     let productExistsInCart = cart.products.findIndex(
       (dato) => dato.product == pid
     );
-    productExistsInCart == -1
+    console.log(productExistsInCart);
+    productExistsInCart === -1
       ? cart.products.push({
           product: pid,
           quantity: 1,
         })
-      : (cart.products[productExistsInCarts].quantity =
+      : (cart.products[productExistsInCart].quantity =
           op === "add"
-            ? cart.products[productExistsInCarts].quantity + 1
-            : cart.products[productExistsInCarts].quantity - 1);
+            ? cart.products[productExistsInCart].quantity + 1
+            : cart.products[productExistsInCart].quantity - 1);
 
-    const result = await cartService.updateCarts(cid, cart);
+    const result = await cartService.updateOneCart(cid, cart);
+    console.log(result);
 
-    const updatedCart = await cartService.getOne(cid);
+    const updatedCart = await cartService.getOneCart(cid);
 
     res.json({ message: "Carrito actualizado con éxito", data: updatedCart });
   } catch (err) {
@@ -128,10 +130,10 @@ async function deleteProduct(req, res) {
 async function emptyCart(req, res) {
   const { cid } = req.params;
   try {
-    const cart = await CartService.getOne(cid);
+    const cart = await cartService.getOneCart(cid);
     if (cart) {
       cart.products = [];
-      const result = await cart.updateCarts(cid, cart);
+      const result = await cartService.updateOneCart(cid, cart);
       res.json({ message: "Carrito vaciado con éxito", data: cart });
     } else {
       res.status(404).json({

@@ -115,21 +115,26 @@ const finishBuy = () => {
 // Mostrar productos del carrito
 const showCartProducts = async () => {
   //Obtener cartId de localStorage
-  const cartId = localStorage.getItem("cartId");
-  const response = await fetch(`http://localhost:8080/api/carts/${cartId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const cart = await response.json();
-  const products = cart.products;
-  let total = 0;
-  let html = "";
-  if (products.length > 0) {
-    products.forEach((product) => {
-      total += product.price * product.quantity;
-      html += `
+  try {
+    const cartId = localStorage.getItem("cartId");
+    console.log(cartId);
+    const response = await fetch(`http://localhost:8080/api/carts/${cartId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response);
+    const cart = await response.json();
+    console.log(cart);
+    const products = cart.products;
+    let total = 0;
+    let html = "";
+    console.log(products);
+    if (products.length > 0) {
+      products.forEach((product) => {
+        total += product.price * product.quantity;
+        html += `
     <div class="card-body p-4">
     {{#each cart}}
     <div class="product-cart">
@@ -189,9 +194,9 @@ const showCartProducts = async () => {
   </div>
   </div>
   </div>`;
-    });
-  } else {
-    html += `
+      });
+    } else {
+      html += `
   <nav class="d-flex mb-3 nav-products flex-wrap">
   <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
   <button class="btn btn-secondary btn-sm" type="button">
@@ -199,6 +204,11 @@ const showCartProducts = async () => {
   </button>
   </nav>
   `;
+    }
+    document.getElementById("cart-container").innerHTML = html;
+  } catch (error) {
+    console.error(error);
   }
-  document.getElementById("cart-products").innerHTML = html;
 };
+
+showCartProducts();

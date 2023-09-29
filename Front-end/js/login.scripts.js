@@ -21,6 +21,7 @@ async function postLogin(username, password) {
     });
 
     const result = await response.json();
+    localStorage.setItem("user", JSON.stringify(result.user));
     console.log(result);
 
     if (result.message === "Login correcto") {

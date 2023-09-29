@@ -126,6 +126,8 @@ getCartId();
 
 // Ruta que agrega el id del carrito como referencia al usuario
 const addCartId = async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user.email;
   return new Promise(async (resolve, reject) => {
     let cartId = localStorage.getItem("cartId");
     while (!cartId) {
@@ -139,7 +141,7 @@ const addCartId = async () => {
       },
       body: JSON.stringify({
         cartId,
-        user,
+        email,
       }),
     });
     resolve(response);
@@ -180,15 +182,7 @@ const addProduct = async (idProduct) => {
   }
 };
 
-// //Obtener cartId de localStorage y asignarlo a la ruta del carrito
-// const setCartRoute = () => {
-//   const cartRoute = document
-//     .getElementById("cart-route")
-//     .setAttribute(
-//       "href",
-//       `http://localhost:8080/api/carts/${localStorage.getItem("cartId")}`
-//     );
-//   return cartRoute;
-// };
-
-// setCartRoute();
+// Función que actualiza la página
+const refreshPage = () => {
+  window.location.reload();
+};
