@@ -150,7 +150,7 @@ getCartId();
 // Ruta que agrega el id del carrito como referencia al usuario
 const addCartId = async () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const email = user.email;
+  const email = user.username;
   return new Promise(async (resolve, reject) => {
     let cartId = localStorage.getItem("cartId");
     while (!cartId) {
@@ -168,7 +168,6 @@ const addCartId = async () => {
         email,
       }),
     });
-    resolve(response);
   });
 };
 
