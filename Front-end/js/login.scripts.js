@@ -11,17 +11,6 @@ loginForm.addEventListener("submit", function (event) {
 
 async function postLogin(username, password) {
   try {
-    const user = await fetch("http://localhost:8080/api/sessions/current", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const userResult = await user.json();
-
-    console.log(user);
-
     const response = await fetch("http://localhost:8080/api/sessions/login", {
       method: "POST",
       headers: {
@@ -33,8 +22,20 @@ async function postLogin(username, password) {
     const result = await response.json();
     localStorage.setItem("token", result.token);
 
+    const user = await fetch("http://localhost:8080/api/sessions/current", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const userResult = await user.json();
+
+    console.log(userResult);
+
     if (result.message === "Login correcto") {
-      window.location.href = "http://127.0.0.1:5500/html/products.html";
+      // window.location.href = "http://127.0.0.1:5500/html/products.html";
     } else {
       Swal.fire({
         icon: "error",
@@ -59,6 +60,7 @@ const createCart = async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({
       products: [],

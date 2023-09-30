@@ -1,3 +1,4 @@
+import passport from "passport";
 import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
@@ -44,22 +45,21 @@ const passportCall = (strategy) => {
         return res.status(401).json({
           error: info.messages ? info.messages : info.toString(),
         });
-      user.role = "admin";
       req.user = user;
       next();
     })(req, res, next);
   };
 };
 
-// //Función que verifica si un usuario tiene permisos para acceder a una ruta determinada
-// const authorization = (role) => {
-//   return async (req, res, next) => {
-//     console.log(req.user);
-//     if (!req.user) return res.status(401).send({ error: "Unauthorized" });
-//     if (req.user.role != role)
-//       return res.status(403).send({ error: "No permissions" });
-//     next();
-//   };
-// };
+//Función que verifica si un usuario tiene permisos para acceder a una ruta determinada
+const authorization = (role) => {
+  return async (req, res, next) => {
+    console.log(req.user);
+    if (!req.user) return res.status(401).send({ error: "Unauthorized" });
+    if (req.user.role != role)
+      return res.status(403).send({ error: "No permissions" });
+    next();
+  };
+};
 
-export { generateToken, authToken, passportCall };
+export { generateToken, authToken, passportCall, authorization };

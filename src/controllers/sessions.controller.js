@@ -16,7 +16,7 @@ async function signupUser(req, res) {
 
 //Ruta que se ejecuta cuando falla el registro
 async function failRegister(req, res) {
-  res.status(500).json({ error: "Error al crear el ususario" });
+  res.status(500).json({ message: "Error al crear el ususario" });
 }
 
 //Ruta que realiza el login
@@ -24,7 +24,7 @@ async function loginUser(req, res) {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
-      message: "error",
+      message: "Error al iniciar sesión",
       data: "Faltan campos",
     });
   }
@@ -46,7 +46,7 @@ async function loginUser(req, res) {
 
 //Ruta que se ejecuta cuando falla el registro
 async function failLogin(req, res) {
-  res.status(500).json({ error: "Error al iniciar session" });
+  res.status(500).json({ message: "Error al iniciar session" });
 }
 
 //Ruta que recupera la contraseña
