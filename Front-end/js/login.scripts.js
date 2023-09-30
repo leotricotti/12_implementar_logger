@@ -1,3 +1,31 @@
+// Funcion que captura la información del usuario y la envía almacena en el local storage
+const getUser = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/sessions/current", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const result = await response.json();
+    console.log(result);
+
+    if (result.message === "No hay usuario logueado") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No hay usuario logueado",
+        showConfirmButton: true,
+      });
+    }
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Capturar datos del formulario de login y los envía al servidor
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-button");
@@ -22,20 +50,8 @@ async function postLogin(username, password) {
     const result = await response.json();
     localStorage.setItem("token", result.token);
 
-    const user = await fetch("http://localhost:8080/api/sessions/current", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    const userResult = await user.json();
-
-    console.log(userResult);
-
     if (result.message === "Login correcto") {
-      // window.location.href = "http://127.0.0.1:5500/html/products.html";
+      getUser();
     } else {
       Swal.fire({
         icon: "error",

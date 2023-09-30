@@ -38,7 +38,7 @@ router.post("/forgot", forgotPassword);
 router.get("/failLogin", failLogin);
 
 // Ruta que envia el usuario logueado
-router.get("/current", passportCall("jwt", { session: false }), currentUser);
+router.get("/current", currentUser);
 
 //Ruta que realiza el login con github
 router.get(
@@ -52,7 +52,6 @@ router.get(
   passportCall("github", {
     failureRedirect: "/login",
     session: false,
-    passReqToCallback: true,
     failureMessage: true,
   }),
   githubCallback
