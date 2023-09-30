@@ -4,13 +4,11 @@ import { usersService } from "../repository/index.js";
 // Método asyncrono para obtener los productos en tiempo real
 async function getProducts(req, res) {
   try {
-    const isLogged = req.user[0]?.email ?? req.user.email;
-    const user = await usersService.getOneProduct(isLogged);
-    res.render("realTimeProducts", {
-      styles: "realTimeProducts.styles.css",
-      title: "Productos en tiempo real",
-      user: user[0].first_name,
-    });
+    const result = await productsService.getAllProducts();
+    if (!result) {
+      res.status(404).json({ message: "No se encontraron productos" });
+    }
+    res.json({ message: "Productos obtenidos con éxito", data: result });
   } catch (err) {
     res
       .status(404)

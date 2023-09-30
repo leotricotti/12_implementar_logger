@@ -52,7 +52,7 @@ app.use("/api/userCart", authToken, UserCart);
 app.use("/api/carts", authToken, CartsRouter);
 app.use("/api/sessions", SessionsRouter);
 app.use("/api/products", authToken, ProductsRouter);
-app.use("/api/realtimeproducts", authToken, RealTimeProducts);
+app.use("/api/realTimeProducts", authToken, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {

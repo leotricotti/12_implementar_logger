@@ -1,9 +1,3 @@
-// Crear una instancia del socket
-const socketIo = io();
-
-// Mensaje que indica que el cliente se ha conectado
-socketIo.emit("mesagge", "Hola soy un cliente");
-
 // Obtener el formulario de agregar producto
 const form = document.getElementById("add-product-form");
 form.addEventListener("submit", handleSubmit);
@@ -69,7 +63,6 @@ async function handleSubmit(e) {
       });
     }
   }
-  refreshPage();
   // Limpiar todos los campos del formulario
   for (let i = 0; i < form.elements.length; i++) {
     form.elements[i].value = "";
@@ -77,14 +70,34 @@ async function handleSubmit(e) {
 }
 
 // Función para actualizar la lista de productos
-async function updateProductList(products) {
-  if (products.length > 0) {
-    const productList = document.getElementById("products-list");
-    productList.innerHTML = "";
+async function updateProductList() {
+  const productList = document.getElementById("products-list");
+  productList.innerHTML = "";
+  const container = document.createElement("div");
+  container.classList.add("list-group-item");
 
-    products.forEach((product) => {
-      const container = document.createElement("div");
-      container.classList.add("list-group-item");
+  try {
+    const result = await fetch("http://localhost:8080/api/realTimeProducts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (result.status === 404) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal! Vuelve a intentarlo",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar",
+      });
+    }
+
+    const products = await result.json();
+
+    products.data.forEach((product) => {
       //Capturar la url de la imagen
       const imageUrl = product.thumbnail[0]["img1"];
 
@@ -108,51 +121,24 @@ async function updateProductList(products) {
       });
       productList.appendChild(container);
     });
-  } else {
-    container.innerHTML = `
-    <h1 class="title">Aún no has agrregado productos</h1>
-  `;
+  } catch (error) {
+    console.log(error);
   }
 }
 
-// Obtener la lista de productos
-socketIo.on("products", (products) => {
-  updateProductList(products);
-});
+updateProductList();
 
-// Eliminar un producto de la lista de productos
-function eliminarProducto(id) {
-  socketIo.emit("deleteProduct", id);
-  socketIo.on("products", (products) => {
-    updateProductList(products);
-  });
-  Swal.fire({
-    icon: "success",
-    title: "Producto eliminado con exito!",
-    showConfirmButton: true,
-    showClass: {
-      popup: "animate__animated animate__fadeInDown",
-    },
-  });
-}
-
-// Paginación
-const btnNextPage = document.getElementById("next-page");
-
-let page = 1;
-socketIo.emit("nextPage", page);
-
-const nextPage = () => {
-  page++;
-  socketIo.emit("nextPage", page);
-};
-
-//Ir a productos
-const goToProducts = () => {
-  window.location.href = "http://localhost:8080/api/products?page=1";
-};
-
-//Refrescar pagina
-const refreshPage = () => {
-  window.location.reload();
-};
+// // Eliminar un producto de la lista de productos
+// function eliminarProducto(id) {
+//   socketIo.on("products", (products) => {
+//     updateProductList(products);
+//   });
+//   Swal.fire({
+//     icon: "success",
+//     title: "Producto eliminado con exito!",
+//     showConfirmButton: true,
+//     showClass: {
+//       popup: "animate__animated animate__fadeInDown",
+//     },
+//   });
+// }
