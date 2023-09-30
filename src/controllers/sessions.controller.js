@@ -29,22 +29,19 @@ async function loginUser(req, res) {
     });
   }
 
-  // Establecer la política de cookies en la respuesta
-  res.setHeader("Access-Control-Allow-Credentials", true);
-
   const result = await usersService.getOneUser(username);
 
-  console.log(result);
   const myToken = generateToken({ username, password, role: result[0].role });
-  console.log(myToken);
-  res
-    .cookie("token", myToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "none",
-      maxAge: 1000 * 60 * 60,
-    })
-    .json({ message: "Login correcto", user: result[0] });
+  res.json({ message: "Login correcto", token: myToken });
+
+  // res
+  //   .cookie("token", myToken, {
+  //     httpOnly: true,
+  //     secure: false,
+  //     sameSite: "none",
+  //     maxAge: 1000 * 60 * 60,
+  //   })
+  //   .json({ message: "Login correcto", user: result[0] });
 }
 
 //Ruta que se ejecuta cuando falla el registro

@@ -21,8 +21,7 @@ async function postLogin(username, password) {
     });
 
     const result = await response.json();
-    localStorage.setItem("user", JSON.stringify(result.user));
-    console.log(result);
+    localStorage.setItem("token", result.token);
 
     if (result.message === "Login correcto") {
       window.location.href = "http://127.0.0.1:5500/html/products.html";
