@@ -132,9 +132,7 @@ const showCartProducts = async () => {
     console.log(products.length);
     let html = "";
     if (products.length > 0) {
-      products.forEach((product) => {
-        console.log(product.product._id);
-        html += `
+      html += `
         <div class="container h-100 py-5" id="cart-container">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-10">
@@ -168,7 +166,10 @@ const showCartProducts = async () => {
                 Finalizar compra
               </button>
             </nav>
-            <div class="card rounded-3 mb-4">
+  <div class="card rounded-3 mb-4">
+  ${products
+    .map((product) => {
+      return `
     <div class="card-body p-4">
     <div class="product-cart">
       <div
@@ -223,13 +224,15 @@ const showCartProducts = async () => {
           <i class="fas fa-trash fa-lg"></i>
         </div>
       </div>
+      `;
+    })
+    .join("")}
     </div>
   </div>
   </div>
   </div>
   </div>
   </div>`;
-      });
     } else {
       html += `
   <nav class="d-flex mb-3 nav-products flex-wrap">
