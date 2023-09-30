@@ -11,6 +11,7 @@ async function postSignup(first_name, last_name, username, password) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(data),
   });

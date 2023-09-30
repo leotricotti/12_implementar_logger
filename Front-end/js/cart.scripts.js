@@ -117,19 +117,18 @@ const showCartProducts = async () => {
   //Obtener cartId de localStorage
   try {
     const cartId = localStorage.getItem("cartId");
-    console.log(cartId);
     const response = await fetch(
       `http://localhost:8080/api/carts/populated/${cartId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
     const cart = await response.json();
     const products = cart.data.products;
-    console.log(products.length);
     let html = "";
     if (products.length > 0) {
       html += `

@@ -6,7 +6,16 @@ const cartBadge = async () => {
     if (!cartId) {
       cartBadge.innerText = 0;
     } else {
-      const response = await fetch(`http://localhost:8080/api/carts/${cartId}`);
+      const response = await fetch(
+        `http://localhost:8080/api/carts/${cartId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Error al obtener el carrito");
       }

@@ -63,14 +63,12 @@ async function createCart(req, res) {
 //Método asyncrono para agregar productos al carrito
 async function addProduct(req, res) {
   const { cid, pid } = req.params;
-  console.log(req.body);
   const { op } = req.body;
   try {
     const cart = await cartService.getOneCart(cid);
     let productExistsInCart = cart.products.findIndex(
       (dato) => dato.product == pid
     );
-    console.log(productExistsInCart);
     productExistsInCart === -1
       ? cart.products.push({
           product: pid,

@@ -10,7 +10,6 @@ loginForm.addEventListener("submit", function (event) {
 });
 
 async function postLogin(username, password) {
-  console.log(username, password);
   try {
     const response = await fetch("http://localhost:8080/api/sessions/login", {
       method: "POST",
