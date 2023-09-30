@@ -114,7 +114,21 @@ const saveCartId = (cartId) => {
 //Obtener carrito
 const getCartId = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/carts");
+    const response = await fetch("http://localhost:8080/api/carts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (!response.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se pudo obtener el carrito",
+        showConfirmButton: true,
+      });
+    }
     const carts = await response.json();
     const lastCart = carts.carts[carts.carts.length - 1];
     saveCartId(lastCart._id);

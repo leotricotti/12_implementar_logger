@@ -7,6 +7,7 @@ const increaseQuantity = async (idProduct) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
         op: "add",
@@ -28,6 +29,7 @@ const decreaseQuantity = async (idProduct) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }
   );
@@ -46,6 +48,7 @@ const deleteProduct = async (idProduct) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }
   );
@@ -62,6 +65,7 @@ const deleteAllProducts = async () => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
   if (response) showResult("Carrito vaciado con éxito");

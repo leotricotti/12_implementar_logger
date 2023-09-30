@@ -77,8 +77,8 @@ body {
 
 .basket-count {
   position: absolute;
-  top: -1px;
-  right: 3.3px;
+  top: 0px;
+  right: 3px;
 }
 
 a {

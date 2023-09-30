@@ -22,7 +22,6 @@ const cartBadge = async () => {
       const cart = await response.json();
       cartBadge.innerHTML = `                
       <span
-        id="cart-badge"
         class="basket-count"
         >${cart.products.length}</span
       >`;

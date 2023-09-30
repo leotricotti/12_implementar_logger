@@ -44,7 +44,7 @@ p {
 
 .basket-count {
   position: absolute;
-  top: -1px;
+  top: 0px;
   right: 3.5px;
 }
 
