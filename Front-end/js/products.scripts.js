@@ -106,7 +106,7 @@ productsHandler();
 const welcomeUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const welcome = document.getElementById("welcome-user");
-  welcome.innerHTML = `<p class="text-white-50">Bienvenido ${user.first_name}</p>`;
+  welcome.innerHTML = `<p class="text-white-50 welcome-user-item ">Bienvenido ${user.first_name}</p>`;
 };
 
 welcomeUser();
