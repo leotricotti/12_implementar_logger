@@ -35,21 +35,21 @@ const authToken = (req, res, next) => {
   });
 };
 
-// // Esta función para autenticar a los usuarios.
-// const passportCall = (strategy) => {
-//   return async (req, res, next) => {
-//     passport.authenticate(strategy, function (error, user, info) {
-//       if (error) return next(error);
-//       if (!user)
-//         return res.status(401).json({
-//           error: info.messages ? info.messages : info.toString(),
-//         });
-//       user.role = "admin";
-//       req.user = user;
-//       next();
-//     })(req, res, next);
-//   };
-// };
+// Esta función para autenticar a los usuarios.
+const passportCall = (strategy) => {
+  return async (req, res, next) => {
+    passport.authenticate(strategy, function (error, user, info) {
+      if (error) return next(error);
+      if (!user)
+        return res.status(401).json({
+          error: info.messages ? info.messages : info.toString(),
+        });
+      user.role = "admin";
+      req.user = user;
+      next();
+    })(req, res, next);
+  };
+};
 
 // //Función que verifica si un usuario tiene permisos para acceder a una ruta determinada
 // const authorization = (role) => {
@@ -62,4 +62,4 @@ const authToken = (req, res, next) => {
 //   };
 // };
 
-export { generateToken, authToken };
+export { generateToken, authToken, passportCall };

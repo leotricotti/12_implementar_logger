@@ -1,4 +1,3 @@
-import passport from "passport";
 import { Router } from "express";
 import {
   signupUser,
@@ -9,6 +8,7 @@ import {
   githubCallback,
   currentUser,
 } from "../controllers/sessions.controller.js";
+import { passportCall } from "../utils.js";
 
 //Inicializa servicios
 const router = Router();
@@ -16,7 +16,7 @@ const router = Router();
 //Ruta que realiza el registro
 router.post(
   "/signup",
-  passport.authenticate("register", {
+  passportCall("register", {
     session: false,
     passReqToCallback: true,
     failureMessage: true,
@@ -38,26 +38,18 @@ router.post("/forgot", forgotPassword);
 router.get("/failLogin", failLogin);
 
 // Ruta que envia el usuario logueado
-router.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }),
-  currentUser
-);
+router.get("/current", passportCall("jwt", { session: false }), currentUser);
 
 //Ruta que realiza el login con github
 router.get(
   "/github",
-  passport.authenticate(
-    "github",
-    { scope: ["user:email"] },
-    async (req, res) => {}
-  )
+  passportCall("github", { scope: ["user:email"] }, async (req, res) => {})
 );
 
 //Callback de github
 router.get(
   "/githubcallback",
-  passport.authenticate("github", {
+  passportCall("github", {
     failureRedirect: "/login",
     session: false,
     passReqToCallback: true,
