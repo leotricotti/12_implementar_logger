@@ -18,13 +18,18 @@
       crossorigin="anonymous"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/realTimePorducts.styles.css" />
+    <link rel="stylesheet" href="../css/realTimeProducts.styles.css" />
   </head>
   <body>
     <main>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"> E-Store </a>
+          <a
+            class="navbar-brand"
+            href="http://127.0.0.1:5500/html/products.html "
+          >
+            E-Store
+          </a>
           <div
             class="collapse navbar-collapse d-flex align-items-center mb-0"
             id="navbarSupportedContent"
@@ -32,7 +37,7 @@
             <ul
               class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu d-flex align-items-center"
             >
-              <p class="text-white-50">Bienvenido {{user}}</p>
+              <div id="welcome-user"></div>
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -62,13 +67,20 @@
                     <hr class="dropdown-divider" />
                   </li>
                   <li>
-                    <button class="btn dropdown-item" onclick="logout()">
+                    <button class="btn dropdown-item" onclick="">
                       <i class="fas fa-sign-out-alt fa-fw"></i>
                       Cerrar sesión
                     </button>
                   </li>
                 </ul>
               </li>
+              <a
+                class="btn position-relative"
+                href="http://127.0.0.1:5500/html/cart.html"
+              >
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div id="cart-badge" class="cart-basket"></div>
+              </a>
             </ul>
           </div>
         </div>
@@ -161,6 +173,8 @@
     ></script>
     <!-- Socket -->
     <script src="/socket.io/socket.io.js"></script>
+    <!--Welcome user-->
+    <script src="../js/welcomeUser.scripts.js"></script>
     <!-- Logout JS -->
     <script src="../js/logout.scripts.js"></script>
     <!-- >Custom JS -->
