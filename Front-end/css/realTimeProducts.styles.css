@@ -11,13 +11,12 @@ p {
 
 .welcome-user-item {
   position: absolute;
-  top: 17px;
-  right: 105px;
+  top: 9px;
+  right: 65px;
 }
 
-.dropdown-menu[data-bs-popper] {
-  left: -100px;
-  position: absolute !important;
+.navbar-nav {
+  flex-direction: row !important;
 }
 
 .container-fluid {
