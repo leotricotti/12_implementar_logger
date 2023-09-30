@@ -103,6 +103,14 @@ const productsHandler = async (handler, index) => {
 
 productsHandler();
 
+const welcomeUser = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const welcome = document.getElementById("welcome-user");
+  welcome.innerHTML = `<p class="text-white-50">Bienvenido ${user.first_name}</p>`;
+};
+
+welcomeUser();
+
 //Guardar cartId en localStorage
 const saveCartId = (cartId) => {
   const localId = localStorage.getItem("cartId");
@@ -153,6 +161,7 @@ const addCartId = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
         cartId,

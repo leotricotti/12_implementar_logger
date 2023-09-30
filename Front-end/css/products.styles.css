@@ -5,48 +5,6 @@ body {
   background-color: #eee;
 }
 
-.admin-panel {
-  color: #fff;
-  opacity: 0.5;
-}
-
-.admin-panel:after {
-  display: block;
-  content: "";
-  position: absolute;
-  top: 9px;
-  right: 6px;
-  width: 1px;
-  height: 20px;
-  background-color: #fff;
-}
-
-.admin-btn {
-  color: #fff;
-  position: relative;
-}
-
-.admin-btn::before {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 85%;
-  height: 1px;
-  bottom: 0;
-  left: 9px;
-  background-color: #fff !important;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.admin-btn:hover {
-  color: #fff;
-}
-
-.admin-btn:hover::before {
-  transform: scaleX(1);
-}
-
 .dropdown-menu[data-bs-popper] {
   left: -100px;
 }

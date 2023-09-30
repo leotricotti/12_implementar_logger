@@ -31,7 +31,12 @@ async function loginUser(req, res) {
 
   const result = await usersService.getOneUser(username);
 
-  const myToken = generateToken({ username, password, role: result[0].role });
+  const myToken = generateToken({
+    first_name: result[0].first_name,
+    username,
+    password,
+    role: result[0].role,
+  });
   res.json({ message: "Login correcto", token: myToken });
 
   // res
@@ -71,7 +76,6 @@ async function forgotPassword(req, res) {
 
 //Ruta que devuelve el usuario logueado
 async function currentUser(req, res) {
-  console.log("current", req.user);
   res.status(200).json({ data: req.user });
 }
 

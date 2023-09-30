@@ -32,7 +32,6 @@ const authToken = (req, res, next) => {
     if (err) res.status(403).json({ error: "Token invalido" });
 
     req.user = user;
-    console.log(req.user);
     next();
   });
 };

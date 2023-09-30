@@ -10,10 +10,16 @@ const getUser = async () => {
     });
 
     const result = await response.json();
-    console.log(result);
+    const role = result.data.user.role;
 
     if (result) {
-      // window.location.href = "http://127.0.0.1:5500/html/products.html";
+      localStorage.setItem("user", JSON.stringify(result.data.user));
+    }
+
+    if (role === "admin") {
+      window.location.href = "http://127.0.0.1:5500/html/realTimeProducts.html";
+    } else {
+      window.location.href = "http://127.0.0.1:5500/html/products.html";
     }
 
     return result;
