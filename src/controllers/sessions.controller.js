@@ -71,7 +71,7 @@ async function forgotPassword(req, res) {
 
 //Ruta que devuelve el usuario logueado
 async function currentUser(req, res) {
-  console.log(req.user);
+  console.log("current", req.user);
   res.status(200).json({ data: req.user });
 }
 

@@ -12,14 +12,10 @@ const getUser = async () => {
     const result = await response.json();
     console.log(result);
 
-    if (result.message === "No hay usuario logueado") {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No hay usuario logueado",
-        showConfirmButton: true,
-      });
+    if (result) {
+      // window.location.href = "http://127.0.0.1:5500/html/products.html";
     }
+
     return result;
   } catch (error) {
     console.log(error);
@@ -48,6 +44,7 @@ async function postLogin(username, password) {
     });
 
     const result = await response.json();
+    console.log(result);
     localStorage.setItem("token", result.token);
 
     if (result.message === "Login correcto") {
