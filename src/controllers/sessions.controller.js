@@ -69,6 +69,11 @@ async function forgotPassword(req, res) {
   }
 }
 
+//Ruta que devuelve el usuario logueado
+async function currentUser(req, res) {
+  res.status(200).json({ data: req.user });
+}
+
 //Callback de github
 async function githubCallback(req, res) {
   req.user = req.user._json;
@@ -80,6 +85,7 @@ export {
   failRegister,
   loginUser,
   failLogin,
+  currentUser,
   forgotPassword,
   githubCallback,
 };

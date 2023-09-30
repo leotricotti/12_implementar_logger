@@ -7,6 +7,7 @@ import {
   loginUser,
   forgotPassword,
   githubCallback,
+  currentUser,
 } from "../controllers/sessions.controller.js";
 
 //Inicializa servicios
@@ -32,6 +33,16 @@ router.post("/login", loginUser);
 
 //Ruta que recupera la contraseña
 router.post("/forgot", forgotPassword);
+
+//Ruta que se ejecuta cuando falla el login
+router.get("/failLogin", failLogin);
+
+// Ruta que envia el usuario logueado
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  currentUser
+);
 
 //Ruta que realiza el login con github
 router.get(
