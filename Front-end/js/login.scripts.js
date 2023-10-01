@@ -50,7 +50,6 @@ async function postLogin(username, password) {
     });
 
     const result = await response.json();
-    console.log(result);
     localStorage.setItem("token", result.token);
 
     if (result.message === "Login correcto") {

@@ -24,7 +24,7 @@ export default class ProductsDao {
   };
 
   //Método asyncrono para crear un producto
-  saveProducts = async (product) => {
+  saveOneProduct = async (product) => {
     try {
       const result = await productsModel.create(product);
       return result;
@@ -35,7 +35,7 @@ export default class ProductsDao {
   };
 
   //Método asyncrono para actualizar un producto
-  updateProducts = async (id, product) => {
+  updateOneProducts = async (id, product) => {
     try {
       const result = await productsModel.findByIdAndUpdate(id, product);
       return result;
@@ -80,6 +80,17 @@ export default class ProductsDao {
         { limit: 10, page: parseInt(page) }
       );
       return products;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
+  //Método asyncrono para eliminar un producto
+  deleteProducts = async (id) => {
+    try {
+      const result = await productsModel.findByIdAndDelete(id);
+      return result;
     } catch (error) {
       console.log(error);
       return [];

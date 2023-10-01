@@ -44,4 +44,10 @@ export default class ProductsRepository {
     const result = await this.dao.paginatedProducts(page);
     return result;
   };
+
+  // Método asyncrono para eliminar un producto
+  deleteOneProduct = async (id) => {
+    const result = await this.dao.deleteProducts(id);
+    return result;
+  };
 }

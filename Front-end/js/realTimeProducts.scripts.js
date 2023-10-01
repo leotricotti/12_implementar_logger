@@ -69,11 +69,7 @@ async function handleSubmit(e) {
   }
 }
 
-// Función para actualizar la lista de productos
-async function updateProductList() {
-  const productList = document.getElementById("products-list");
-  productList.innerHTML = "";
-
+const getProducts = async () => {
   try {
     const result = await fetch("http://localhost:8080/api/realTimeProducts", {
       method: "GET",
@@ -95,7 +91,31 @@ async function updateProductList() {
 
     const products = await result.json();
 
-    products.data.forEach((product) => {
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const paginatedProducts = async (page) => {
+  const productsData = await getProducts();
+  const products = productsData.data.slice(0, page * 10);
+  return products;
+};
+
+// Función para actualizar la lista de productos
+async function updateProductList() {
+  const productList = document.getElementById("products-list");
+  productList.innerHTML = "";
+
+  let page = 1;
+
+  try {
+    const data = await paginatedProducts(page);
+
+    const products = data.reverse();
+
+    products.forEach((product) => {
       //Capturar la url de la imagen
       const imageUrl = product.thumbnail[0]["img1"];
 
@@ -103,7 +123,7 @@ async function updateProductList() {
       container.classList.add("list-group-item");
 
       container.innerHTML = `
-        <div class="d-flex w-100 justify-content-between flex-column">
+        <div class="d-flex w-100  justify-content-between flex-column">
           <h2 class="mb-1 subtitle">${product.title}</h2>
           <p class="mb-1"><strong>Descripción:</strong> ${product.description}</p>
           <p class="mb-1"><strong>Codigo:</strong> ${product.code}</p>
@@ -118,8 +138,21 @@ async function updateProductList() {
 
       const btnEliminar = container.querySelector(".delete-product-btn");
       btnEliminar.addEventListener("click", () => {
-        eliminarProducto(product.id);
+        eliminarProducto(product._id);
       });
+
+      productList.appendChild(container);
+    });
+
+    const btnNextPage = document.getElementById("next-page");
+    btnNextPage.addEventListener("click", async () => {
+      page++;
+      const products = await paginatedProducts(page);
+      productList.innerHTML = "";
+
+      if (products.length / 10 < page) {
+        btnNextPage.classList.add("disabled");
+      }
 
       productList.appendChild(container);
     });
@@ -127,19 +160,50 @@ async function updateProductList() {
     console.log(error);
   }
 }
+
 updateProductList();
 
-// // Eliminar un producto de la lista de productos
-// function eliminarProducto(id) {
-//   socketIo.on("products", (products) => {
-//     updateProductList(products);
-//   });
-//   Swal.fire({
-//     icon: "success",
-//     title: "Producto eliminado con exito!",
-//     showConfirmButton: true,
-//     showClass: {
-//       popup: "animate__animated animate__fadeInDown",
-//     },
-//   });
-// }
+// Eliminar un producto de la lista de productos
+function eliminarProducto(id) {
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "No podrás revertir esta acción!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const response = await fetch(
+        `http://localhost:8080/api/realTimeProducts/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        return Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo salió mal! Vuelve a intentarlo",
+          showConfirmButton: true,
+          confirmButtonText: "Aceptar",
+        });
+      }
+
+      updateProductList();
+      Swal.fire({
+        icon: "success",
+        title: "Producto eliminado con exito!",
+        showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+      });
+    }
+  });
+}

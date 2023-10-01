@@ -43,4 +43,17 @@ async function saveProduct(req, res) {
   }
 }
 
-export { getProducts, saveProduct };
+// Metodo asyncrono para eliminar un producto
+async function deleteProduct(req, res) {
+  const { id } = req.params;
+  try {
+    let result = await productsService.deleteOneProduct(id);
+    res.json({ message: "Producto eliminado con éxito", data: result });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error al eliminar el producto", data: err });
+  }
+}
+
+export { getProducts, saveProduct, deleteProduct };
