@@ -20,7 +20,7 @@ p {
 }
 
 .form-container {
-  width: 100%;
+  width: 95%;
   max-width: 800px;
   background-color: #ffffff;
   padding: 20px;
@@ -63,7 +63,8 @@ label {
 }
 
 .list-group-item {
-  width: 800px;
+  width: 95%;
+  max-width: 800px;
   margin: 0 auto;
 }
 

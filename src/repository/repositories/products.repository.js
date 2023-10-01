@@ -17,7 +17,6 @@ export default class ProductsRepository {
 
   // Método asyncrono para crear un producto
   saveOneProduct = async (product) => {
-    console.log("Repo", product);
     const result = await this.dao.saveProduct(product);
     return result;
   };

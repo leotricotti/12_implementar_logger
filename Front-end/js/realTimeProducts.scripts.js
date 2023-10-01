@@ -14,8 +14,7 @@ async function handleSubmit(e) {
     !code.value ||
     !price.value ||
     !stock.value ||
-    !category.value ||
-    !thumbnail.value
+    !category.value
   ) {
     return Swal.fire({
       icon: "error",
@@ -34,8 +33,14 @@ async function handleSubmit(e) {
       price: price.value,
       stock: stock.value,
       category: category.value,
-      thumbnail: thumbnail.value,
+      thumbnail:
+        thumbnail.value === ""
+          ? { img1: "../img/no-image.png" }
+          : thumbnail.value,
     };
+
+    console.log(thumbnail.value);
+
     const response = await fetch("http://localhost:8080/api/realTimeProducts", {
       method: "POST",
       headers: {
@@ -67,6 +72,8 @@ async function handleSubmit(e) {
   for (let i = 0; i < form.elements.length; i++) {
     form.elements[i].value = "";
   }
+  paginatedProducts(1);
+  getProducts();
 }
 
 const getProducts = async () => {
@@ -99,7 +106,9 @@ const getProducts = async () => {
 
 const paginatedProducts = async (page) => {
   const productsData = await getProducts();
-  const products = productsData.data.slice(0, page * 10);
+  const orderedProducts = productsData.data.reverse();
+  const products = orderedProducts.slice(0, page * 10);
+  console.log(products);
   return products;
 };
 
@@ -111,9 +120,7 @@ async function updateProductList() {
   let page = 1;
 
   try {
-    const data = await paginatedProducts(page);
-
-    const products = data.reverse();
+    const products = await paginatedProducts(page);
 
     products.forEach((product) => {
       //Capturar la url de la imagen

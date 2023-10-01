@@ -3,14 +3,14 @@ import { productsService } from "../repository/index.js";
 // Método asyncrono para obtener los productos en tiempo real
 async function getProducts(req, res) {
   try {
-    const result = await productsService.getAllProducts();
+    let result = await productsService.getAllProducts();
     if (!result) {
-      res.status(404).json({ message: "No se encontraron productos" });
+      res.status(404).json({ message: "Error al cargar los productos" });
     }
     res.json({ message: "Productos obtenidos con éxito", data: result });
   } catch (err) {
     res
-      .status(404)
+      .status(500)
       .json({ message: "Error al obtener los productos", data: err });
   }
 }
@@ -29,7 +29,7 @@ async function saveProduct(req, res) {
       price: price,
       stock: stock,
       category: category,
-      thumbnails: !thumbnails ? "" : thumbnails,
+      thumbnails: thumbnails,
     };
 
     console.log(product);
