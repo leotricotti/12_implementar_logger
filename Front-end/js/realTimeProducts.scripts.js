@@ -73,8 +73,6 @@ async function handleSubmit(e) {
 async function updateProductList() {
   const productList = document.getElementById("products-list");
   productList.innerHTML = "";
-  const container = document.createElement("div");
-  container.classList.add("list-group-item");
 
   try {
     const result = await fetch("http://localhost:8080/api/realTimeProducts", {
@@ -101,6 +99,9 @@ async function updateProductList() {
       //Capturar la url de la imagen
       const imageUrl = product.thumbnail[0]["img1"];
 
+      const container = document.createElement("div");
+      container.classList.add("list-group-item");
+
       container.innerHTML = `
         <div class="d-flex w-100 justify-content-between flex-column">
           <h2 class="mb-1 subtitle">${product.title}</h2>
@@ -119,13 +120,13 @@ async function updateProductList() {
       btnEliminar.addEventListener("click", () => {
         eliminarProducto(product.id);
       });
+
       productList.appendChild(container);
     });
   } catch (error) {
     console.log(error);
   }
 }
-
 updateProductList();
 
 // // Eliminar un producto de la lista de productos

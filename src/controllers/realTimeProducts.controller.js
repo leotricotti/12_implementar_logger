@@ -1,5 +1,4 @@
 import { productsService } from "../repository/index.js";
-import { usersService } from "../repository/index.js";
 
 // Método asyncrono para obtener los productos en tiempo real
 async function getProducts(req, res) {
