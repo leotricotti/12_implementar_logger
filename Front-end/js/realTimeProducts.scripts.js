@@ -36,7 +36,7 @@ async function handleSubmit(e) {
       category: category.value,
       thumbnail: thumbnail.value,
     };
-    const response = await fetch("http://localhost:8080/api/realtimeproducts", {
+    const response = await fetch("http://localhost:8080/api/realTimeProducts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

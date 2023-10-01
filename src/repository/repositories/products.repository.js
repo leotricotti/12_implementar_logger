@@ -16,14 +16,15 @@ export default class ProductsRepository {
   };
 
   // Método asyncrono para crear un producto
-  saveOneProducts = async (product) => {
-    const result = await this.dao.saveProducts(product);
+  saveOneProduct = async (product) => {
+    console.log("Repo", product);
+    const result = await this.dao.saveProduct(product);
     return result;
   };
 
   // Método asyncrono para actualizar un producto
-  updateOneProducts = async (id, product) => {
-    const result = await this.dao.updateProducts(id, product);
+  updateOneProduct = async (id, product) => {
+    const result = await this.dao.updateProduct(id, product);
     return result;
   };
 
@@ -47,7 +48,7 @@ export default class ProductsRepository {
 
   // Método asyncrono para eliminar un producto
   deleteOneProduct = async (id) => {
-    const result = await this.dao.deleteProducts(id);
+    const result = await this.dao.deleteProduct(id);
     return result;
   };
 }
