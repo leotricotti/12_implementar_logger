@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import { createHash } from "../utils.js";
 import { usersService } from "../repository/index.js";
-import { generateToken } from "../utils.js";
+import { generateToken, isValidPassword } from "../utils.js";
 
 //Inicializa servicios
 dotenv.config();
@@ -30,6 +30,13 @@ async function loginUser(req, res) {
   }
 
   const result = await usersService.getOneUser(username);
+
+  if (result.length === 0 || !isValidPassword(result[0].password, password)) {
+    res.status(401).json({
+      respuesta: "Usuario o contraseña incorrectos",
+    });
+    return;
+  }
 
   const myToken = generateToken({
     first_name: result[0].first_name,

@@ -1,6 +1,6 @@
 :root {
-  --animate-duration: 800ms;
-  --animate-delay: 0.9s;
+  --animate-duration: 600ms;
+  --animate-delay: 0s;
 }
 
 body {
