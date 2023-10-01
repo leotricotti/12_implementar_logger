@@ -39,7 +39,7 @@ async function handleSubmit(e) {
           : thumbnail.value,
     };
 
-    console.log(thumbnail.value);
+    console.log(typeof thumbnail.value);
 
     const response = await fetch("http://localhost:8080/api/realTimeProducts", {
       method: "POST",

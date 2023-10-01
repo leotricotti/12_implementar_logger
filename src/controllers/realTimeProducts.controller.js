@@ -32,8 +32,6 @@ async function saveProduct(req, res) {
       thumbnails: thumbnails,
     };
 
-    console.log(product);
-
     try {
       let result = await productsService.saveOneProduct(product);
       res.json({ message: "Producto creado con éxito", data: product });
