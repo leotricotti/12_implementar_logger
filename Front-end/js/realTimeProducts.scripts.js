@@ -35,11 +35,11 @@ async function handleSubmit(e) {
       category: category.value,
       thumbnail:
         thumbnail.value === ""
-          ? { img1: "../img/no-image.png" }
+          ? {
+              img1: "https://freezedepot.com/wp-content/uploads/2023/05/producto-sin-imagen.png",
+            }
           : thumbnail.value,
     };
-
-    console.log(typeof thumbnail.value);
 
     const response = await fetch("http://localhost:8080/api/realTimeProducts", {
       method: "POST",
@@ -72,8 +72,7 @@ async function handleSubmit(e) {
   for (let i = 0; i < form.elements.length; i++) {
     form.elements[i].value = "";
   }
-  paginatedProducts(1);
-  getProducts();
+  updateProductList();
 }
 
 const getProducts = async () => {
@@ -108,7 +107,6 @@ const paginatedProducts = async (page) => {
   const productsData = await getProducts();
   const orderedProducts = productsData.data.reverse();
   const products = orderedProducts.slice(0, page * 10);
-  console.log(products);
   return products;
 };
 
