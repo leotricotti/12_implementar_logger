@@ -6,6 +6,9 @@ const showResult = (result) => {
       title: result,
       showConfirmButton: false,
       timer: 2000,
+      showClass: {
+        popup: "animate__animated animate__zoomInDown",
+      },
     });
   } else
     Swal.fire({
@@ -14,5 +17,8 @@ const showResult = (result) => {
       text: "Algo salió mal! Vuelve a intentarlo",
       showConfirmButton: true,
       confirmButtonText: "Aceptar",
+      showClass: {
+        popup: "animate__animated animate__zoomInDown",
+      },
     });
 };

@@ -23,6 +23,9 @@ async function postSignup(first_name, last_name, username, password) {
       icon: "error",
       title: "Oops...",
       text: result.error,
+      showClass: {
+        popup: "animate__animated animate__zoomInDown",
+      },
     });
     return false;
   } else {
@@ -31,6 +34,9 @@ async function postSignup(first_name, last_name, username, password) {
       title: "Usuario creado correctamente",
       showConfirmButton: false,
       timer: 1500,
+      showClass: {
+        popup: "animate__animated animate__zoomInDown",
+      },
     }).then(() => {
       window.location.href = "../html/index.html";
     });

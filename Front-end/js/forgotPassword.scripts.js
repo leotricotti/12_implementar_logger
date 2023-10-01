@@ -30,6 +30,9 @@ loginForm.addEventListener("submit", function (event) {
       text: "Las contraseñas no coinciden. Por favor, inténtelo de nuevo",
       showConfirmButton: false,
       timer: 1800,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
     });
   } else {
     postForgot(username, newPassword)
@@ -39,6 +42,9 @@ loginForm.addEventListener("submit", function (event) {
           title: "Contraseña actualizada con éxito",
           showConfirmButton: false,
           timer: 1800,
+          showClass: {
+            popup: "animate__animated animate__zoomIn",
+          },
         }).then(() => {
           window.location.href = "../html/index.html";
         })
@@ -50,6 +56,9 @@ loginForm.addEventListener("submit", function (event) {
           text: "Ha ocurrido un error. Por favor, inténtelo de nuevo",
           showConfirmButton: false,
           timer: 1800,
+          showClass: {
+            popup: "animate__animated animate__zoomIn",
+          },
         })
       );
   }

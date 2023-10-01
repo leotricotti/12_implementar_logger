@@ -1,21 +1,29 @@
 //Cerrar sesión
-const logout = async () => {
-  const response = await fetch("http://localhost:8080/api/sessions/logout", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
+const logout = () => {
+  Swal.fire({
+    title: "¿Estás seguro que deseas cerrar sesión?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: `Cerrar sesión`,
+    denyButtonText: `Cancelar`,
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
     },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: "success",
+        title: "Gracias por utilizar nuestros servicios",
+        showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
+      });
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "http://127.0.0.1:5500/html/index.html";
+      }, 2000);
+    }
   });
-  if (response) {
-    Swal.fire({
-      icon: "success",
-      title: "Gracias por utilizar nuestros servicios",
-      showConfirmButton: false,
-      timer: 2000,
-    }).then(() => {
-      localStorage.removeItem("currentPage");
-      window.location.href = "../html/index.html";
-    });
-  }
-  return response;
 };

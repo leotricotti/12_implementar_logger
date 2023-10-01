@@ -60,6 +60,9 @@ async function postLogin(username, password) {
         title: "Oops...",
         text: "Usuario o contraseña incorrectos",
         showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
       });
     }
 

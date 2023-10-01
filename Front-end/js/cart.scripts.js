@@ -68,7 +68,32 @@ const deleteAllProducts = async () => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  if (response) showResult("Carrito vaciado con éxito");
+
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Sí, vaciar carrito",
+    cancelButtonText: "Cancelar",
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: "success",
+        title: "Carrito vaciado con éxito",
+        showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomInDown",
+        },
+      });
+    }
+  });
+
   refreshPage();
   return response;
 };
@@ -97,6 +122,9 @@ const finishBuy = () => {
     cancelButtonColor: "#3085d6",
     confirmButtonText: "Sí, finalizar compra",
     cancelButtonText: "Cancelar",
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire({
@@ -105,6 +133,9 @@ const finishBuy = () => {
         icon: "success",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Aceptar",
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           localStorage.removeItem("cartId");

@@ -127,6 +127,9 @@ const getCartId = async () => {
         title: "Oops...",
         text: "No se pudo obtener el carrito",
         showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
       });
     }
     const carts = await response.json();

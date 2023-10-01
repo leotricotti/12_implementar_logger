@@ -22,7 +22,7 @@ async function handleSubmit(e) {
       text: "Todos los campos son necesarios!",
       focusConfirm: true,
       showClass: {
-        popup: "animate__animated animate__fadeInDown",
+        popup: "animate__animated animate__zoomInDown",
       },
     });
   } else {
@@ -56,6 +56,9 @@ async function handleSubmit(e) {
         text: "Algo salió mal! Vuelve a intentarlo",
         showConfirmButton: true,
         confirmButtonText: "Aceptar",
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
       });
     } else {
       Swal.fire({
@@ -63,7 +66,7 @@ async function handleSubmit(e) {
         title: "Producto agregado con exito!",
         showConfirmButton: true,
         showClass: {
-          popup: "animate__animated animate__fadeInDown",
+          popup: "animate__animated animate__zoomInDown",
         },
       });
     }
@@ -177,6 +180,9 @@ function eliminarProducto(id) {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
+    },
   }).then(async (result) => {
     if (result.isConfirmed) {
       const response = await fetch(
@@ -197,6 +203,9 @@ function eliminarProducto(id) {
           text: "Algo salió mal! Vuelve a intentarlo",
           showConfirmButton: true,
           confirmButtonText: "Aceptar",
+          showClass: {
+            popup: "animate__animated animate__zoomIn",
+          },
         });
       }
 
@@ -206,7 +215,7 @@ function eliminarProducto(id) {
         title: "Producto eliminado con exito!",
         showConfirmButton: true,
         showClass: {
-          popup: "animate__animated animate__fadeInDown",
+          popup: "animate__animated animate__zoomInDown",
         },
       });
     }

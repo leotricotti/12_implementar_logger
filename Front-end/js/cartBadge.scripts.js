@@ -17,7 +17,14 @@ const cartBadge = async () => {
         }
       );
       if (!response.ok) {
-        throw new Error("Error al obtener el carrito");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se pudo obtener el carrito",
+          showClass: {
+            popup: "animate__animated animate__zoomIn",
+          },
+        });
       }
       const cart = await response.json();
       cartBadge.innerHTML = `                
