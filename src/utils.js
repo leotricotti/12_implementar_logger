@@ -24,7 +24,6 @@ const generateToken = (user) => {
 // Función que verifica si el token se ha enviado en la solicitud y si es válido.
 const authToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader) res.status(401).json({ error: "Error de autenticacion" });
 
   const token = authHeader.split(" ")[1];

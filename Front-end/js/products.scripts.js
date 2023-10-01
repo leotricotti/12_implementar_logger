@@ -171,36 +171,44 @@ addCartId();
 // Agrega productos al carrito
 const addProduct = async (idProduct) => {
   const cartId = localStorage.getItem("cartId");
-  if (!cartId) {
+  try {
     const response = await fetch(
       `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
-      }
-    );
-  } else {
-    const response = await fetch(
-      `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           op: "add",
         }),
       }
     );
-    if (response) showResult("Producto agregado con éxito");
+
+    if (response) {
+      Swal.fire({
+        icon: "success",
+        title: "Producto agregado con éxito",
+        showConfirmButton: false,
+        timer: 1500,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
+      });
+    }
+
     refreshPage();
+
     return response;
+  } catch (error) {
+    console.log(error);
   }
 };
 
 // Función que actualiza la página
 const refreshPage = () => {
-  window.location.reload();
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
 };

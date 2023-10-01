@@ -24,7 +24,7 @@ async function postSignup(first_name, last_name, username, password) {
       title: "Oops...",
       text: result.error,
       showClass: {
-        popup: "animate__animated animate__zoomInDown",
+        popup: "animate__animated animate__zoomIn",
       },
     });
     return false;
@@ -35,7 +35,7 @@ async function postSignup(first_name, last_name, username, password) {
       showConfirmButton: false,
       timer: 1500,
       showClass: {
-        popup: "animate__animated animate__zoomInDown",
+        popup: "animate__animated animate__zoomIn",
       },
     }).then(() => {
       window.location.href = "../html/index.html";

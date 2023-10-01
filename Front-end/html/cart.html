@@ -31,13 +31,13 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="#"> E-Store </a>
           <div
-            class="collapse navbar-collapse d-flex align-items-center mb-0"
+            class="collapse navbar-collapse d-flex align-items-center mb-0 position-relative"
             id="navbarSupportedContent"
           >
             <ul
               class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu d-flex align-items-center"
             >
-              <p class="text-white-50">Bienvenido</p>
+              <div id="welcome-user"></div>
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -67,7 +67,7 @@
                     <hr class="dropdown-divider" />
                   </li>
                   <li>
-                    <button class="btn dropdown-item" onclick="">
+                    <button class="btn dropdown-item" onclick="logout()">
                       <i class="fas fa-sign-out-alt fa-fw"></i>
                       Cerrar sesión
                     </button>
@@ -92,10 +92,10 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <!--Welcome user-->
+    <script src="../js/welcomeUser.scripts.js"></script>
     <!-- Logout -->
     <script src="../js/logout.scripts.js"></script>
-    <!-- Show Result -->
-    <script src="../js/showResult.scripts.js"></script>
     <!-- Cart Badge -->
     <script src="../js/cartBadge.scripts.js"></script>
     <!-- Custom JS -->

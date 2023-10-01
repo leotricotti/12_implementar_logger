@@ -1,6 +1,7 @@
 //Incrementa la cantidad de un producto en el carrito
 const increaseQuantity = async (idProduct) => {
   const cartId = localStorage.getItem("cartId");
+
   const response = await fetch(
     `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
     {
@@ -14,15 +15,27 @@ const increaseQuantity = async (idProduct) => {
       }),
     }
   );
-  if (response) showResult("Producto agregado con éxito");
+
+  if (response) {
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado con éxito",
+      showConfirmButton: true,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
+    });
+  }
+
   refreshPage();
+
   return response;
 };
 
 //Decrementa la cantidad de un producto en el carrito
 const decreaseQuantity = async (idProduct) => {
-  //Obtener cartId de localStorage
   const cartId = localStorage.getItem("cartId");
+
   const response = await fetch(
     `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
     {
@@ -33,15 +46,27 @@ const decreaseQuantity = async (idProduct) => {
       },
     }
   );
-  if (response) showResult("Producto eliminado con éxito");
+
+  if (response) {
+    Swal.fire({
+      icon: "success",
+      title: "Producto eliminado con éxito",
+      showConfirmButton: true,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
+    });
+  }
+
   refreshPage();
+
   return response;
 };
 
 //Elimina un producto del carrito
 const deleteProduct = async (idProduct) => {
-  //Obtener cartId de localStorage
   const cartId = localStorage.getItem("cartId");
+
   const response = await fetch(
     `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
     {
@@ -52,8 +77,20 @@ const deleteProduct = async (idProduct) => {
       },
     }
   );
-  if (response) showResult("Producto eliminado con éxito");
+
+  if (response) {
+    Swal.fire({
+      icon: "success",
+      title: "Producto eliminado con éxito",
+      showConfirmButton: true,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
+    });
+  }
+
   refreshPage();
+
   return response;
 };
 
@@ -88,7 +125,7 @@ const deleteAllProducts = async () => {
         title: "Carrito vaciado con éxito",
         showConfirmButton: true,
         showClass: {
-          popup: "animate__animated animate__zoomInDown",
+          popup: "animate__animated animate__zoomIn",
         },
       });
     }
@@ -149,9 +186,9 @@ const finishBuy = () => {
 
 // Mostrar productos del carrito
 const showCartProducts = async () => {
-  //Obtener cartId de localStorage
+  const cartId = localStorage.getItem("cartId");
+
   try {
-    const cartId = localStorage.getItem("cartId");
     const response = await fetch(
       `http://localhost:8080/api/carts/populated/${cartId}`,
       {
@@ -229,7 +266,7 @@ const showCartProducts = async () => {
         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
           <button
             class="btn btn-link px-2"
-            onclick="decreaseQuantity(${product.product._id} )"
+            onclick="decreaseQuantity('${product.product._id}')"
           >
             <i class="fas fa-minus"></i>
           </button>

@@ -10,6 +10,10 @@ body {
   background-color: #eee;
 }
 
+.dropdown-menu[data-bs-popper] {
+  left: -100px;
+}
+
 .trash-icon {
   cursor: pointer;
 }
@@ -76,4 +80,10 @@ p {
 
 .product-cart:last-child {
   border-bottom: none;
+}
+
+.welcome-user-item {
+  position: absolute;
+  top: 9px;
+  right: 100px;
 }
