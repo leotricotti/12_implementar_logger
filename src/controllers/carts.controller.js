@@ -60,34 +60,25 @@ async function createCart(req, res) {
   }
 }
 
-//Método asyncrono para agregar productos al carrito
-async function addProduct(req, res) {
-  console.log("Hola");
+async function manageCartProducts(req, res) {
   const { cid, pid } = req.params;
   const { op } = req.body;
 
   try {
     const cart = await cartService.getOneCart(cid);
-    let productExistsInCart = cart.products.findIndex(
-      (dato) => dato.product === pid
+    const getProductIndex = cart.products.findIndex((product) =>
+      product.product == pid ? true : false
     );
-    productExistsInCart === -1
-      ? cart.products.push({
-          product: pid,
-          quantity: 1,
-        })
-      : (cart.products[productExistsInCart].quantity =
-          op === "add"
-            ? cart.products[productExistsInCart].quantity + 1
-            : cart.products[productExistsInCart].quantity - 1);
 
-            console.log(cart);
+    if (op === "add") {
+      cart.products[getProductIndex].quantity += 1;
+    } else if (op === "subtract") {
+      cart.products[getProductIndex].quantity -= 1;
+    }
 
     const result = await cartService.updateOneCart(cid, cart);
 
-    const updatedCart = await cartService.getOneCart(cid);
-
-    res.json({ message: "Carrito actualizado con éxito", data: updatedCart });
+    res.json({ message: "Carrito actualizado con éxito", data: cart });
   } catch (err) {
     res.status(500).json({
       message: "Error al actualizar el carrito",
@@ -99,15 +90,18 @@ async function addProduct(req, res) {
 //Método asyncrono para eliminar productos del carrito
 async function deleteProduct(req, res) {
   const { cid, pid } = req.params;
+
   try {
-    const cart = await CartService.getOne(cid);
+    const cart = await cartService.getOne(cid);
+
     let productExistsInCarts = cart.products.findIndex(
       (dato) => dato.product == pid
     );
-    productExistsInCarts == -1
-      ? res.status(404).json({ message: "Producto no encontrado" })
-      : cart.products.splice(productExistsInCarts, 1);
+
+    cart.products.splice(productExistsInCarts, 1);
+
     const result = await cart.updateCarts(cid, cart);
+
     res.json({ message: "Producto eliminado con éxito", data: cart });
   } catch (err) {
     res.status(500).json({
@@ -143,7 +137,7 @@ export {
   getAll,
   getOne,
   createCart,
-  addProduct,
+  manageCartProducts,
   deleteProduct,
   emptyCart,
   populatedCart,

@@ -3,10 +3,10 @@ import {
   getAll,
   getOne,
   createCart,
-  addProduct,
   deleteProduct,
   emptyCart,
   populatedCart,
+  manageCartProducts,
 } from "../controllers/carts.controller.js";
 
 //Inicializar servicios
@@ -25,7 +25,7 @@ router.get("/populated/:cid", populatedCart);
 router.post("/", createCart);
 
 //Método asyncrono para agregar productos al carrito
-router.post("/:cid/product/:pid", addProduct);
+router.post("/:cid/product/:pid", manageCartProducts);
 
 //Método asyncrono para eliminar productos del carrito
 router.delete("/:cid/product/:pid", deleteProduct);
