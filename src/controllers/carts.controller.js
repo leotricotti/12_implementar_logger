@@ -66,14 +66,18 @@ async function manageCartProducts(req, res) {
 
   try {
     const cart = await cartService.getOneCart(cid);
-    const getProductIndex = cart.products.findIndex((product) =>
+    const productExist = cart.products.findIndex((product) =>
       product.product == pid ? true : false
     );
 
-    if (op === "add") {
-      cart.products[getProductIndex].quantity += 1;
-    } else if (op === "subtract") {
-      cart.products[getProductIndex].quantity -= 1;
+    if (productExist === -1) {
+      cart.products.push({ product: pid, quantity: 1 });
+    } else {
+      if (op === "add") {
+        cart.products[getProductIndex].quantity += 1;
+      } else if (op === "subtract") {
+        cart.products[getProductIndex].quantity -= 1;
+      }
     }
 
     const result = await cartService.updateOneCart(cid, cart);
