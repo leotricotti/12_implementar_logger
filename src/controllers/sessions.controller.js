@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import { createHash } from "../utils.js";
 import { usersService } from "../repository/index.js";
+import UserDto from "../dao/DTOs/user.dto.js";
 import { generateToken, isValidPassword } from "../utils.js";
 
 //Inicializa servicios
@@ -83,7 +84,8 @@ async function forgotPassword(req, res) {
 
 //Ruta que devuelve el usuario logueado
 async function currentUser(req, res) {
-  res.status(200).json({ data: req.user });
+  const user = new UserDto(req.user);
+  res.status(200).json({ data: user });
 }
 
 //Callback de github
