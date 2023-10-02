@@ -10,10 +10,10 @@ const getUser = async () => {
     });
 
     const result = await response.json();
-    const role = result.data.user.role;
+    const role = result.data.role;
 
     if (result) {
-      localStorage.setItem("user", JSON.stringify(result.data.user));
+      localStorage.setItem("user", JSON.stringify(result.data));
     }
 
     if (role === "admin") {
