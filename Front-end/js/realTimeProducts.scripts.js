@@ -148,8 +148,6 @@ async function updateProductList() {
       btnEliminar.addEventListener("click", () => {
         eliminarProducto(product._id);
       });
-
-      productList.appendChild(container);
     });
 
     const btnNextPage = document.getElementById("next-page");

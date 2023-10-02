@@ -22,6 +22,7 @@ const logout = () => {
       setTimeout(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.setItem("currentPage", 1);
         window.location.href = "http://127.0.0.1:5500/html/index.html";
       }, 2000);
     }
