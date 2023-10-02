@@ -27,10 +27,16 @@ const cartBadge = async () => {
         });
       }
       const cart = await response.json();
+
+      const productsQuantity = cart.products.reduce(
+        (acc, product) => acc + product.quantity,
+        0
+      );
+
       cartBadge.innerHTML = `                
       <span
         class="basket-count"
-        >${cart.products.length}</span
+        >${productsQuantity}</span
       >`;
     }
   } catch (error) {

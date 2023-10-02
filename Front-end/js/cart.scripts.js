@@ -16,10 +16,21 @@ const increaseQuantity = async (idProduct) => {
     }
   );
 
-  if (response) {
+  const cart = await response.json();
+
+  if (cart.data.products.length > 0) {
     Swal.fire({
       icon: "success",
       title: "Producto agregado con éxito",
+      showConfirmButton: true,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
+    });
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "No hay stock disponible",
       showConfirmButton: true,
       showClass: {
         popup: "animate__animated animate__zoomIn",
@@ -50,10 +61,21 @@ const decreaseQuantity = async (idProduct) => {
     }
   );
 
-  if (response) {
+  const cart = await response.json();
+
+  if (cart.data.products.length > 0) {
     Swal.fire({
       icon: "success",
       title: "Producto eliminado con éxito",
+      showConfirmButton: true,
+      showClass: {
+        popup: "animate__animated animate__zoomIn",
+      },
+    });
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Error al eliminar producto",
       showConfirmButton: true,
       showClass: {
         popup: "animate__animated animate__zoomIn",
@@ -92,7 +114,8 @@ const deleteProduct = async (idProduct) => {
     });
   }
 
-  refreshPage();
+  console.log(response);
+  // refreshPage();
 
   return response;
 };
@@ -187,7 +210,6 @@ const finishBuy = () => {
   });
 };
 
-// Mostrar productos del carrito
 const showCartProducts = async () => {
   const cartId = localStorage.getItem("cartId");
 
@@ -205,9 +227,9 @@ const showCartProducts = async () => {
     const cart = await response.json();
     const products = cart.data.products;
     let html = "";
+    let cartNav = "";
     if (products.length > 0) {
-      html += `
-        <div class="container h-100 py-5" id="cart-container">
+      cartNav += `
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-10">
             <h3
@@ -240,83 +262,83 @@ const showCartProducts = async () => {
                 Finalizar compra
               </button>
             </nav>
-  <div class="card rounded-3 mb-4">
-  ${products
-    .map((product) => {
-      return `
-    <div class="card-body p-4">
-    <div class="product-cart">
-      <div
-        class="row d-flex justify-content-between align-items-center mb-3 mt-3"
-      >
-      ${product.product.thumbnail.map((img) => {
-        return `
-        <div class="col-md-2 col-lg-2 col-xl-2">
-          <img
-            src="${img.img1}"
-            class="img-fluid rounded-3"
-            alt="Cotton T-shirt"
-          />
-        </div>
-        `;
-      })}
-        <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
-          <p class="lead fw-normal mb-2">
-            Producto:
-            <span class="text-muted"> ${product.product.title}</span>
-          </p>
-        </div>
-        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-          <button
-            class="btn btn-link px-2"
-            onclick="decreaseQuantity('${product.product._id}')"
-          >
-            <i class="fas fa-minus"></i>
-          </button>
-          <input
-            name="quantity"
-            value="${product.quantity}"
-            type="text"
-            class="form-control form-control-sm text-center"
-          />
-          <button
-            class="btn btn-link px-2"
-            onclick="increaseQuantity('${product.product._id}')"
-          >
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-        <div
-          class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4"
-        >
-          <h5 class="mb-0">$ ${product.product.price}</h5>
-        </div>
-        <div
-          class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon"
-          onclick="deleteProduct('${product.product._id}')"
-        >
-          <i class="fas fa-trash fa-lg"></i>
-        </div>
-      </div>
-      `;
-    })
-    .join("")}
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>`;
-    } else {
-      html += `
-  <nav class="d-flex mb-3 nav-products flex-wrap">
-  <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
-  <button class="btn btn-secondary btn-sm" type="button">
-  <a href="http://127.0.0.1:5500/html/products.html"> Ir a comprar </a>
-  </button>
-  </nav>
-  `;
+            </div>`;
     }
+
+    products.map((product) => {
+      html += `
+      <div class="card rounded-3 mb-4" id="cart-container">
+          <div class="card-body p-4">
+            <div class="product-cart">
+              <div class="row d-flex justify-content-between align-items-center mb-3 mt-3">
+                ${product.product.thumbnail
+                  .map((img) => {
+                    return `
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <img
+                          src="${img.img1}"
+                          class="img-fluid rounded-3"
+                          alt="Cotton T-shirt"
+                        />
+                      </div>
+                    `;
+                  })
+                  .join("")}
+                <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
+                  <p class="lead fw-normal mb-2">
+                    Producto:
+                    <span class="text-muted"> ${product.product.title}</span>
+                  </p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                  <button
+                    class="btn btn-link px-2"
+                    onclick="decreaseQuantity('${product.product._id}')"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input
+                    name="quantity"
+                    value="${product.quantity}"
+                    type="text"
+                    class="form-control form-control-sm text-center"
+                  />
+                  <button
+                    class="btn btn-link px-2"
+                    onclick="increaseQuantity('${product.product._id}')"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4">
+                  <h5 class="mb-0">$${(
+                    product.product.price * product.quantity
+                  ).toFixed(2)}</h5>
+                </div>
+                <div class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon" onclick="deleteProduct('${
+                  product.product._id
+                }')">
+                  <i class="fas fa-trash fa-lg"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        `;
+    });
+
+    if (products.length === 0) {
+      html += `
+        <nav class="d-flex mb-3 nav-products flex-wrap">
+          <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
+          <button class="btn btn-secondary btn-sm" type="button">
+            <a href="http://127.0.0.1:5500/html/products.html"> Ir a comprar </a>
+          </button>
+        </nav>
+      `;
+    }
+
+    document.getElementById("cart-nav-container").innerHTML = cartNav;
     document.getElementById("cart-container").innerHTML = html;
   } catch (error) {
     console.error(error);

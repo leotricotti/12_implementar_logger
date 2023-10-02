@@ -74,9 +74,9 @@ async function manageCartProducts(req, res) {
       cart.products.push({ product: pid, quantity: 1 });
     } else {
       if (op === "add") {
-        cart.products[getProductIndex].quantity += 1;
-      } else if (op === "subtract") {
-        cart.products[getProductIndex].quantity -= 1;
+        cart.products[productExist].quantity += 1;
+      } else if (op === "substract") {
+        cart.products[productExist].quantity -= 1;
       }
     }
 
@@ -94,17 +94,20 @@ async function manageCartProducts(req, res) {
 //Método asyncrono para eliminar productos del carrito
 async function deleteProduct(req, res) {
   const { cid, pid } = req.params;
-
+  console.log(cid, pid);
   try {
-    const cart = await cartService.getOne(cid);
+    const cart = await cartService.getOneCart(cid);
 
     let productExistsInCarts = cart.products.findIndex(
       (dato) => dato.product == pid
     );
 
-    cart.products.splice(productExistsInCarts, 1);
+    console.log(cart.products[productExistsInCarts]);
 
-    const result = await cart.updateCarts(cid, cart);
+    cart.products.splice(productExistsInCarts, 1);
+    console.log(cart.products);
+
+    const result = await cartService.updateOneCart(cid, cart);
 
     res.json({ message: "Producto eliminado con éxito", data: cart });
   } catch (err) {
