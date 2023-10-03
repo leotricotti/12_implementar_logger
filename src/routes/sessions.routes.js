@@ -8,7 +8,7 @@ import {
   githubCallback,
   currentUser,
 } from "../controllers/sessions.controller.js";
-import { passportCall, authToken } from "../utils.js";
+import { passportCall } from "../utils.js";
 
 //Inicializa servicios
 const router = Router();
@@ -38,7 +38,7 @@ router.post("/forgot", forgotPassword);
 router.get("/failLogin", failLogin);
 
 // Ruta que envia el usuario logueado
-router.get("/current", authToken, currentUser);
+router.get("/current", passportCall("jwt"), currentUser);
 
 //Ruta que realiza el login con github
 router.get(

@@ -21,7 +21,7 @@ const initializePassport = () => {
     "jwt",
     new JWTStrategy(
       {
-        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: JWT_SECRET,
       },
       async (jwt_payload, done) => {
@@ -94,14 +94,14 @@ const initializePassport = () => {
   });
 };
 
-// Configurar cookie extractor
-const cookieExtractor = (req) => {
-  let token = null;
-  if (req && req.cookies) {
-    token = req.cookies["jwt"];
-  }
-  return token;
-};
+// // Configurar cookie extractor
+// const cookieExtractor = (req) => {
+//   let token = null;
+//   if (req && req.cookies) {
+//     token = req.cookies["jwt"];
+//   }
+//   return token;
+// };
 
 // Configurar passport para loguear usuarios con github
 const githubStrategy = () => {

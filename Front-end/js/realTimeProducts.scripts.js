@@ -106,6 +106,8 @@ const getProducts = async () => {
   }
 };
 
+let page = 1;
+
 const paginatedProducts = async (page) => {
   const productsData = await getProducts();
   const orderedProducts = productsData.data.reverse();
@@ -118,19 +120,22 @@ async function updateProductList() {
   const productList = document.getElementById("products-list");
   productList.innerHTML = "";
 
-  let page = 1;
-
   try {
+    console.log(page);
+    ee;
     const products = await paginatedProducts(page);
+    console.log(products);
+
+    const container = document.createElement("div");
 
     products.forEach((product) => {
       //Capturar la url de la imagen
       const imageUrl = product.thumbnail[0]["img1"];
 
-      const container = document.createElement("div");
-      container.classList.add("list-group-item");
+      const item = document.createElement("div");
+      item.classList.add("list-group-item");
 
-      container.innerHTML = `
+      item.innerHTML = `
         <div class="d-flex w-100  justify-content-between flex-column">
           <h2 class="mb-1 subtitle">${product.title}</h2>
           <p class="mb-1"><strong>Descripción:</strong> ${product.description}</p>
@@ -144,24 +149,20 @@ async function updateProductList() {
         <button type="button" class="btn btn-primary delete-product-btn">Eliminar</button>
       `;
 
-      const btnEliminar = container.querySelector(".delete-product-btn");
+      const btnEliminar = item.querySelector(".delete-product-btn");
       btnEliminar.addEventListener("click", () => {
         eliminarProducto(product._id);
       });
+
+      container.appendChild(item);
     });
 
     const btnNextPage = document.getElementById("next-page");
     btnNextPage.addEventListener("click", async () => {
       page++;
-      const products = await paginatedProducts(page);
-      productList.innerHTML = "";
-
-      if (products.length / 10 < page) {
-        btnNextPage.classList.add("disabled");
-      }
-
-      productList.appendChild(container);
     });
+
+    productList.appendChild(container);
   } catch (error) {
     console.log(error);
   }
@@ -208,6 +209,7 @@ function eliminarProducto(id) {
       }
 
       updateProductList();
+
       Swal.fire({
         icon: "success",
         title: "Producto eliminado con exito!",

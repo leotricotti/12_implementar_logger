@@ -13,7 +13,7 @@ import {
   githubStrategy,
 } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
-import { authToken } from "./utils.js";
+import { passportCall, authorization } from "./utils.js";
 
 // Inicializar servicios
 dotenv.config();
@@ -48,11 +48,21 @@ async function enviroment() {
 enviroment();
 
 // Routes
-app.use("/api/userCart", authToken, UserCart);
-app.use("/api/carts", authToken, CartsRouter);
+app.use("/api/userCart", passportCall("jwt"), authorization("user"), UserCart);
+app.use("/api/carts", passportCall("jwt"), authorization("user"), CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use("/api/products", authToken, ProductsRouter);
-app.use("/api/realTimeProducts", authToken, RealTimeProducts);
+app.use(
+  "/api/products",
+  passportCall("jwt"),
+  authorization("user"),
+  ProductsRouter
+);
+app.use(
+  "/api/realTimeProducts",
+  passportCall("jwt"),
+  authorization("admin"),
+  RealTimeProducts
+);
 
 // Server
 const httpServer = app.listen(PORT, () => {
