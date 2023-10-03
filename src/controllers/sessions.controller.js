@@ -46,15 +46,6 @@ async function loginUser(req, res) {
     role: result[0].role,
   });
   res.json({ message: "Login correcto", token: myToken });
-
-  // res
-  //   .cookie("token", myToken, {
-  //     httpOnly: true,
-  //     secure: false,
-  //     sameSite: "none",
-  //     maxAge: 1000 * 60 * 60,
-  //   })
-  //   .json({ message: "Login correcto", user: result[0] });
 }
 
 //Ruta que se ejecuta cuando falla el registro

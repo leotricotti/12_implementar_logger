@@ -88,6 +88,8 @@ const getProducts = async () => {
       },
     });
 
+    console.log(localStorage.getItem("token"));
+
     if (result.status === 404) {
       return Swal.fire({
         icon: "error",
@@ -121,8 +123,6 @@ async function updateProductList() {
   productList.innerHTML = "";
 
   try {
-    console.log(page);
-    ee;
     const products = await paginatedProducts(page);
     console.log(products);
 
