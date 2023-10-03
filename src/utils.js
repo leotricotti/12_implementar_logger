@@ -21,6 +21,20 @@ const generateToken = (user) => {
   return token;
 };
 
+// Función que verifica si el token se ha enviado en la solicitud y si es válido.
+const authToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) res.status(401).json({ error: "Error de autenticacion" });
+
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) res.status(403).json({ error: "Token invalido" });
+
+    req.user = user;
+    next();
+  });
+};
+
 // Esta función para autenticar a los usuarios.
 const passportCall = (strategy) => {
   return async (req, res, next) => {
@@ -39,11 +53,12 @@ const passportCall = (strategy) => {
 //Función que verifica si un usuario tiene permisos para acceder a una ruta determinada
 const authorization = (role) => {
   return async (req, res, next) => {
-    if (!req.user) return res.status(401).send({ error: "Unauthorized" });
-    if (req.user.role != role)
+    console.log(req.user.user.role);
+    if (!req.user.user) return res.status(401).send({ error: "Unauthorized" });
+    if (req.user.user.role != role)
       return res.status(403).send({ error: "No permissions" });
     next();
   };
 };
 
-export { generateToken, passportCall, authorization };
+export { generateToken, passportCall, authorization, authToken };
