@@ -114,7 +114,6 @@ const deleteProduct = async (idProduct) => {
     });
   }
 
-  console.log(response);
   // refreshPage();
 
   return response;
@@ -228,7 +227,6 @@ const showCartProducts = async () => {
     const products = cart.data.products;
     let html = "";
     let cartNav = "";
-    console.log(products);
     if (products.length > 0) {
       cartNav += `
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -264,15 +262,18 @@ const showCartProducts = async () => {
               </button>
             </nav>
             </div>`;
-    }
 
-    products.map((product) => {
       html += `
-            <div class="product-cart">
-              <div class="row d-flex justify-content-between align-items-center mb-3 mt-3">
-                ${product.product.thumbnail
-                  .map((img) => {
-                    return `
+    <div class="card rounded-3 mb-4">
+      <div class="card-body p-4">
+        ${products
+          .map((product) => {
+            return `
+          <div class="product-cart">
+            <div class="row d-flex justify-content-between align-items-center mb-3 mt-3">
+              ${product.product.thumbnail
+                .map((img) => {
+                  return `
                       <div class="col-md-2 col-lg-2 col-xl-2">
                         <img
                           src="${img.img1}"
@@ -281,50 +282,53 @@ const showCartProducts = async () => {
                         />
                       </div>
                     `;
-                  })
-                  .join("")}
-                <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
-                  <p class="lead fw-normal mb-2">
-                    Producto:
-                    <span class="text-muted"> ${product.product.title}</span>
-                  </p>
-                </div>
-                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                  <button
-                    class="btn btn-link px-2"
-                    onclick="decreaseQuantity('${product.product._id}')"
-                  >
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <input
-                    name="quantity"
-                    value="${product.quantity}"
-                    type="text"
-                    class="form-control form-control-sm text-center"
-                  />
-                  <button
-                    class="btn btn-link px-2"
-                    onclick="increaseQuantity('${product.product._id}')"
-                  >
-                    <i class="fas fa-plus"></i>
-                  </button>
-                </div>
-                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4">
-                  <h5 class="mb-0">$${(
-                    product.product.price * product.quantity
-                  ).toFixed(2)}</h5>
-                </div>
-                <div class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon" onclick="deleteProduct('${
-                  product.product._id
-                }')">
-                  <i class="fas fa-trash fa-lg"></i>
-                </div>
+                })
+                .join("")}
+              <div class="col-md-3 col-lg-3 col-xl-3 mt-2">
+                <p class="lead fw-normal mb-2">
+                  Producto:
+                  <span class="text-muted"> ${product.product.title}</span>
+                </p>
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                <button
+                  class="btn btn-link px-2"
+                  onclick="decreaseQuantity('${product.product._id}')"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input
+                  name="quantity"
+                  value="${product.quantity}"
+                  type="text"
+                  class="form-control form-control-sm text-center"
+                />
+                <button
+                  class="btn btn-link px-2"
+                  onclick="increaseQuantity('${product.product._id}')"
+                >
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4">
+                <h5 class="mb-0">
+                  $${(product.product.price * product.quantity).toFixed(2)}
+                </h5>
+              </div>
+              <div
+                class="col-md-1 col-lg-1 col-xl-1 text-danger trash-icon"
+                onclick="deleteProduct('${product.product._id}')"
+              >
+                <i class="fas fa-trash fa-lg"></i>
               </div>
             </div>
-        `;
-    });
-
-    if (products.length === 0) {
+          </div> `;
+          })
+          .join("")}
+      </div>
+    </div>
+    `;
+    } else {
       html += `
         <nav class="d-flex mb-3 nav-products flex-wrap justify-content-center">
           <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>

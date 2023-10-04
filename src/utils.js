@@ -53,7 +53,6 @@ const passportCall = (strategy) => {
 //Función que verifica si un usuario tiene permisos para acceder a una ruta determinada
 const authorization = (role) => {
   return async (req, res, next) => {
-    console.log(req.user.user.role);
     if (!req.user.user) return res.status(401).send({ error: "Unauthorized" });
     if (req.user.user.role != role)
       return res.status(403).send({ error: "No permissions" });

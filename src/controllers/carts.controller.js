@@ -94,7 +94,6 @@ async function manageCartProducts(req, res) {
 //Método asyncrono para eliminar productos del carrito
 async function deleteProduct(req, res) {
   const { cid, pid } = req.params;
-  console.log(cid, pid);
   try {
     const cart = await cartService.getOneCart(cid);
 
@@ -102,10 +101,7 @@ async function deleteProduct(req, res) {
       (dato) => dato.product == pid
     );
 
-    console.log(cart.products[productExistsInCarts]);
-
     cart.products.splice(productExistsInCarts, 1);
-    console.log(cart.products);
 
     const result = await cartService.updateOneCart(cid, cart);
 
