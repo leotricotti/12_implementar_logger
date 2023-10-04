@@ -89,3 +89,16 @@ const createCart = async () => {
   });
   const result = await response.json();
 };
+
+// Ruta que realiza el login con github
+
+const githubLogin = async () => {
+  const response = await fetch("http://localhost:8080/api/sessions/github", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const result = await response.json();
+  window.location.href = result.url;
+};
