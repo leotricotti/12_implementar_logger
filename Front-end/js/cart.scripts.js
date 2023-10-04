@@ -256,7 +256,7 @@ const showCartProducts = async () => {
               <button
                 class="btn btn-secondary btn-sm mb-2"
                 type="button"
-                onclick="finishBuy()"
+                onclick="finishPurchase()"
               >
                 Finalizar compra
               </button>
@@ -347,3 +347,21 @@ const showCartProducts = async () => {
 };
 
 showCartProducts();
+
+const finishPurchase = async () => {
+  const cartId = localStorage.getItem("cartId");
+  try {
+    const response = await fetch(
+      `http://localhost:8080/api/carts/${cartId}/purchase`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};

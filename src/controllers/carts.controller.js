@@ -1,4 +1,5 @@
 import { cartService } from "../repository/index.js";
+import { productsService } from "../repository/index.js";
 
 //Método asyncrono para obtener todos los carritos
 async function getAll(req, res) {
@@ -119,7 +120,9 @@ async function finishPurchase(req, res) {
   const { cid } = req.params;
   try {
     const cart = await cartService.getOneCart(cid);
-    console.log(cart);
+    const products = await productsService.getAllProducts();
+
+    console.log(cart, products);
   } catch (err) {
     res.status(500).json({
       message: "Error al finalizar la compra",
