@@ -7,6 +7,7 @@ import {
   emptyCart,
   populatedCart,
   manageCartProducts,
+  finishPurchase,
 } from "../controllers/carts.controller.js";
 
 //Inicializar servicios
@@ -32,5 +33,8 @@ router.delete("/:cid/product/:pid", deleteProduct);
 
 //Método asyncrono para vaciar el carrito
 router.delete("/:cid", emptyCart);
+
+//Método asyncrono para finalizar la compra
+router.put("/:cid/purchase", finishPurchase);
 
 export default router;

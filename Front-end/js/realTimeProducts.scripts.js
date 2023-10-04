@@ -1,3 +1,8 @@
+// Paginación de productos
+let page = 1;
+// Cantidad de productos
+let productsCount = 0;
+
 // Obtener el formulario de agregar producto
 const form = document.getElementById("add-product-form");
 form.addEventListener("submit", handleSubmit);
@@ -105,9 +110,31 @@ const getProducts = async () => {
     console.log(error);
   }
 };
+// Función que obtiene la cantidad de productos
+const getProductsData = async () => {
+  const data = await getProducts();
+  const productsData = Math.ceil(data.data.length / 10);
+  return productsData;
+};
 
-let page = 1;
+getProductsData().then((data) => {
+  productsCount = data;
+  console.log(productsCount);
+});
 
+// Función para agregar productos
+const addProductBtn = () => {
+  const btnAddProduct = document.getElementById("add-product-btn");
+  console.log(productsCount);
+  if (page === productsCount) {
+    btnAddProduct.classList.add("disabled");
+  } else {
+    page++;
+  }
+  updateProductList();
+};
+
+// Función que pagina los productos
 const paginatedProducts = async (page) => {
   const productsData = await getProducts();
   const orderedProducts = productsData.data.reverse();
@@ -122,6 +149,7 @@ async function updateProductList() {
 
   try {
     const products = await paginatedProducts(page);
+    console.log(page);
 
     const container = document.createElement("div");
 
@@ -152,11 +180,6 @@ async function updateProductList() {
       });
 
       container.appendChild(item);
-    });
-
-    const btnNextPage = document.getElementById("next-page");
-    btnNextPage.addEventListener("click", async () => {
-      page++;
     });
 
     productList.appendChild(container);

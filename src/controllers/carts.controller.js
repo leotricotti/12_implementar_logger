@@ -114,6 +114,20 @@ async function deleteProduct(req, res) {
   }
 }
 
+//Metodo asyncrono para finalizar la compra
+async function finishPurchase(req, res) {
+  const { cid } = req.params;
+  try {
+    const cart = await cartService.getOneCart(cid);
+    console.log(cart);
+  } catch (err) {
+    res.status(500).json({
+      message: "Error al finalizar la compra",
+      data: err,
+    });
+  }
+}
+
 //Método asyncrono para vaciar el carrito
 async function emptyCart(req, res) {
   const { cid } = req.params;
@@ -144,4 +158,5 @@ export {
   deleteProduct,
   emptyCart,
   populatedCart,
+  finishPurchase,
 };
