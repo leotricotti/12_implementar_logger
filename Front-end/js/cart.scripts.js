@@ -228,6 +228,7 @@ const showCartProducts = async () => {
     const products = cart.data.products;
     let html = "";
     let cartNav = "";
+    console.log(products);
     if (products.length > 0) {
       cartNav += `
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -267,8 +268,6 @@ const showCartProducts = async () => {
 
     products.map((product) => {
       html += `
-      <div class="card rounded-3 mb-4" id="cart-container">
-          <div class="card-body p-4">
             <div class="product-cart">
               <div class="row d-flex justify-content-between align-items-center mb-3 mt-3">
                 ${product.product.thumbnail
@@ -322,8 +321,6 @@ const showCartProducts = async () => {
                 </div>
               </div>
             </div>
-          </div>
-          </div>
         `;
     });
 

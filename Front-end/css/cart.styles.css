@@ -87,3 +87,8 @@ p {
   top: 9px;
   right: 100px;
 }
+
+.card {
+  width: 95%;
+  margin: 0 auto;
+}

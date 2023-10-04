@@ -195,20 +195,13 @@ const addProduct = async (idProduct) => {
         showClass: {
           popup: "animate__animated animate__zoomIn",
         },
+      }).then(() => {
+        cartBadge();
       });
     }
-
-    refreshPage();
 
     return response;
   } catch (error) {
     console.log(error);
   }
-};
-
-// Función que actualiza la página
-const refreshPage = () => {
-  setTimeout(() => {
-    window.location.reload();
-  }, 2000);
 };
