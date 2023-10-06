@@ -89,3 +89,8 @@ const createCart = async () => {
   });
   const result = await response.json();
 };
+
+// Login con GitHub
+const githubLogin = () => {
+  window.location.href = "http://localhost:8080/api/sessions/github";
+};

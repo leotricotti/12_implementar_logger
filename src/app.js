@@ -14,6 +14,7 @@ import {
 } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
 import { authToken, authorization } from "./utils.js";
+import { Server } from "socket.io";
 
 // Inicializar servicios
 dotenv.config();
