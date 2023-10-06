@@ -79,7 +79,8 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     // Enviar una respuesta automática junto con el mensaje recibido
     const mensaje = data.message;
-    const respuesta = "Gracias por su mensaje, en breve le responderemos.";
+    const respuesta =
+      "Gracias por contactarnos! En breve uno de nuestros representantes se comunicará con usted.";
     const mensajeConRespuesta = {
       mensaje: mensaje,
       respuesta: respuesta,

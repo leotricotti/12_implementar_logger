@@ -1,3 +1,9 @@
+const calculateDiscountedPrice = (price) => {
+  const parsedPrice = parseFloat(price);
+  const discountedPrice = (parsedPrice * 0.85).toFixed(2);
+  return discountedPrice;
+};
+
 //Incrementa la cantidad de un producto en el carrito
 const increaseQuantity = async (idProduct) => {
   const cartId = localStorage.getItem("cartId");
@@ -18,28 +24,8 @@ const increaseQuantity = async (idProduct) => {
 
   const cart = await response.json();
 
-  if (cart.data.products.length > 0) {
-    Swal.fire({
-      icon: "success",
-      title: "Producto agregado con éxito",
-      showConfirmButton: true,
-      showClass: {
-        popup: "animate__animated animate__zoomIn",
-      },
-    });
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "No hay stock disponible",
-      showConfirmButton: true,
-      showClass: {
-        popup: "animate__animated animate__zoomIn",
-      },
-    });
-  }
-
-  refreshPage();
-
+  showCartProducts();
+  cartBadge();
   return response;
 };
 
@@ -63,27 +49,8 @@ const decreaseQuantity = async (idProduct) => {
 
   const cart = await response.json();
 
-  if (cart.data.products.length > 0) {
-    Swal.fire({
-      icon: "success",
-      title: "Producto eliminado con éxito",
-      showConfirmButton: true,
-      showClass: {
-        popup: "animate__animated animate__zoomIn",
-      },
-    });
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Error al eliminar producto",
-      showConfirmButton: true,
-      showClass: {
-        popup: "animate__animated animate__zoomIn",
-      },
-    });
-  }
-
-  refreshPage();
+  showCartProducts();
+  cartBadge();
 
   return response;
 };
@@ -103,18 +70,33 @@ const deleteProduct = async (idProduct) => {
     }
   );
 
-  if (response) {
-    Swal.fire({
-      icon: "success",
-      title: "Producto eliminado con éxito",
-      showConfirmButton: true,
-      showClass: {
-        popup: "animate__animated animate__zoomIn",
-      },
-    });
-  }
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Sí, eliminar producto",
+    cancelButtonText: "Cancelar",
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: "success",
+        title: "Producto con éxito",
+        showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
+      });
+    }
+  });
 
-  // refreshPage();
+  showCartProducts();
+  cartBadge();
 
   return response;
 };
@@ -156,15 +138,9 @@ const deleteAllProducts = async () => {
     }
   });
 
-  refreshPage();
+  showCartProducts();
+  cartBadge();
   return response;
-};
-
-//Refrescar página
-const refreshPage = () => {
-  setTimeout(() => {
-    window.location.reload();
-  }, 1800);
 };
 
 //Direccionar a la pagina de productos anterior
@@ -312,7 +288,10 @@ const showCartProducts = async () => {
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 mb-4 mt-4">
                 <h5 class="mb-0">
-                  $${(product.product.price * product.quantity).toFixed(2)}
+                  $${(
+                    calculateDiscountedPrice(product.product.price) *
+                    product.quantity
+                  ).toFixed(2)}
                 </h5>
               </div>
               <div
