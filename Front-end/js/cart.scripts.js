@@ -365,3 +365,16 @@ const finishPurchase = async () => {
     console.error(error);
   }
 };
+
+// Abre el chat
+const chatOpen = document.getElementById("chat-img-id");
+const chatContainer = document.getElementById("chat1");
+chatOpen.addEventListener("click", () => {
+  chatContainer.classList.add("active");
+});
+
+// Cierra el chat
+const chatClose = document.getElementById("chat-close");
+chatClose.addEventListener("click", () => {
+  chatContainer.classList.remove("active");
+});

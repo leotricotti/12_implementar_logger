@@ -1,3 +1,9 @@
+const calculateDiscountedPrice = (price) => {
+  const parsedPrice = parseFloat(price);
+  const discountedPrice = (parsedPrice * 0.85).toFixed(2);
+  return discountedPrice;
+};
+
 const productsHandler = async (handler, index) => {
   if (!handler) handler = "page";
   if (!index) index = 1;
@@ -75,9 +81,11 @@ const productsHandler = async (handler, index) => {
             class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start"
           >
             <div class="d-flex flex-row align-items-center mb-1">
-              <h4 class="mb-1 me-1">${product.price}</h4>
+              <h4 class="mb-1 me-1">$ ${calculateDiscountedPrice(
+                product.price
+              )}</h4>
               <span class="text-danger">
-                <s> ${product.price} </s>
+                <s> $ ${product.price} </s>
               </span>
             </div>
             <h6 class="text-success">Envio gratis</h6>
@@ -206,10 +214,15 @@ const addProduct = async (idProduct) => {
   }
 };
 
-const productsChat = () => {
-  const chatBtn = document.getElementById("chat-img");
-  const chatContainer = document.getElementById("chat-card");
-  chatBtn.addEventListener("click", () => {
-    chatContainer.classList.add("active");
-  });
-};
+// Abre el chat
+const chatOpen = document.getElementById("chat-img-id");
+const chatContainer = document.getElementById("chat1");
+chatOpen.addEventListener("click", () => {
+  chatContainer.classList.add("active");
+});
+
+// Cierra el chat
+const chatClose = document.getElementById("chat-close");
+chatClose.addEventListener("click", () => {
+  chatContainer.classList.remove("active");
+});

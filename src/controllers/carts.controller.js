@@ -121,8 +121,6 @@ async function finishPurchase(req, res) {
   try {
     const cart = await cartService.getOneCart(cid);
     const products = await productsService.getAllProducts();
-
-    console.log(cart, products);
   } catch (err) {
     res.status(500).json({
       message: "Error al finalizar la compra",

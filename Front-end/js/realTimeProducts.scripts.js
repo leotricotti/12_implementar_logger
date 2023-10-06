@@ -119,13 +119,11 @@ const getProductsData = async () => {
 
 getProductsData().then((data) => {
   productsCount = data;
-  console.log(productsCount);
 });
 
 // Función para agregar productos
 const addProductBtn = () => {
   const btnAddProduct = document.getElementById("add-product-btn");
-  console.log(productsCount);
   if (page === productsCount) {
     btnAddProduct.classList.add("disabled");
   } else {
@@ -149,7 +147,6 @@ async function updateProductList() {
 
   try {
     const products = await paginatedProducts(page);
-    console.log(page);
 
     const container = document.createElement("div");
 
