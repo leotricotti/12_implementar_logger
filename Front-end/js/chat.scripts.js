@@ -51,7 +51,6 @@ socket.on("messageLogs", (data) => {
   >
     <p class="small mb-0">
       ${elem.respuesta}
-      ayudarte?
     </p>
   </div>
 </div>

@@ -77,10 +77,9 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado!");
   socket.on("message", (data) => {
-    console.log(data);
     // Enviar una respuesta automática junto con el mensaje recibido
     const mensaje = data.message;
-    const respuesta = "Gracias por tu mensaje!";
+    const respuesta = "Gracias por su mensaje, en breve le responderemos.";
     const mensajeConRespuesta = {
       mensaje: mensaje,
       respuesta: respuesta,
