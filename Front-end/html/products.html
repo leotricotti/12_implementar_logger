@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Store | Productos</title>
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+    <!--Socket.io -->
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
     <!-- Animate CSS -->
     <link
       rel="stylesheet"
@@ -234,6 +236,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-row justify-content-start mb-4">
                     <img
+                      class="rounded-circle"
                       src="../img/logo.jpg"
                       alt="avatar 1"
                       style="width: 45px; height: 100%"
@@ -251,7 +254,7 @@
                       </p>
                     </div>
                   </div>
-
+                  <div id="message-logs"></div>
                   <div class="form-outline">
                     <textarea
                       class="form-control chat-form"
@@ -277,6 +280,8 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <!-- Chat -->
+    <script src="../js/chat.scripts.js"></script>
     <!--Welcome user-->
     <script src="../js/welcomeUser.scripts.js"></script>
     <!--Cart Badge-->

@@ -24,6 +24,8 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 const MONGO_URI = process.env.MONGO_URI;
 
+const messages = [];
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -70,4 +72,12 @@ const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
+});
+
+io.on("connection", (socket) => {
+  console.log("Nuevo cliente conectado!");
+  socket.on("message", (data) => {
+    messages.push(data);
+    io.emit("messageLogs", messages);
+  });
 });
