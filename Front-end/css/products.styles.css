@@ -91,6 +91,12 @@ p {
 
 /* Chat */
 
+.card-body {
+  height: 330px;
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+}
+
 .fa-times {
   cursor: pointer;
 }

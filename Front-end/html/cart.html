@@ -111,26 +111,28 @@
                   <i class="fas fa-times" id="chat-close"></i>
                 </div>
                 <div class="card-body">
-                  <div class="d-flex flex-row justify-content-start mb-4">
-                    <img
-                      src="../img/logo.jpg"
-                      alt="avatar 1"
-                      style="width: 45px; height: 100%"
-                    />
-                    <div
-                      class="p-3 ms-3"
-                      style="
-                        border-radius: 15px;
-                        background-color: rgba(57, 192, 237, 0.2);
-                      "
-                    >
-                      <p class="small mb-0">
-                        Gracias por visitar nuestra tienda. ¿En que podemos
-                        ayudarte?
-                      </p>
+                  <div class="messages">
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                      <img
+                        src="../img/logo.jpg"
+                        alt="avatar 1"
+                        style="width: 45px; height: 100%"
+                      />
+                      <div
+                        class="p-3 ms-3"
+                        style="
+                          border-radius: 15px;
+                          background-color: rgba(57, 192, 237, 0.2);
+                        "
+                      >
+                        <p class="small mb-0">
+                          Gracias por visitar nuestra tienda. ¿En que podemos
+                          ayudarte?
+                        </p>
+                      </div>
                     </div>
                   </div>
-
+                  <div id="message-logs"></div>
                   <div class="form-outline">
                     <textarea
                       class="form-control chat-form"
@@ -156,6 +158,8 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <!-- Chat -->
+    <script src="../js/chat.scripts.js"></script>
     <!--Welcome user-->
     <script src="../js/welcomeUser.scripts.js"></script>
     <!-- Logout -->
