@@ -77,12 +77,15 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado!");
   socket.on("message", (data) => {
+    console.log(data);
     // Enviar una respuesta automática junto con el mensaje recibido
+    const mensaje = data.message;
     const respuesta = "Gracias por tu mensaje!";
     const mensajeConRespuesta = {
-      mensaje: data,
+      mensaje: mensaje,
       respuesta: respuesta,
     };
+    console.log(mensajeConRespuesta);
     messages.push(mensajeConRespuesta);
     io.emit("messageLogs", messages);
   });

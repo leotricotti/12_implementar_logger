@@ -16,6 +16,8 @@ socket.on("messageLogs", (data) => {
   let log = document.getElementById("message-logs");
   let message = "";
 
+  console.log(data);
+
   data.forEach((elem) => {
     message += `
     <div class="d-flex flex-row justify-content-end mb-4">
@@ -24,7 +26,7 @@ socket.on("messageLogs", (data) => {
       style="border-radius: 15px; background-color: #fbfbfb"
     >
       <p class="small mb-0">
-   ${elem.message}
+   ${elem.mensaje}
       </p>
     </div>
     <img
@@ -33,6 +35,26 @@ socket.on("messageLogs", (data) => {
       style="width: 45px; height: 100%"
     />
   </div>
+  <div class="d-flex flex-row justify-content-start mb-4">
+  <img
+    class="rounded-circle"
+    src="../img/logo.jpg"
+    alt="avatar 1"
+    style="width: 45px; height: 100%"
+  />
+  <div
+    class="p-3 ms-3"
+    style="
+      border-radius: 15px;
+      background-color: rgba(57, 192, 237, 0.2);
+    "
+  >
+    <p class="small mb-0">
+      ${elem.respuesta}
+      ayudarte?
+    </p>
+  </div>
+</div>
     `;
   });
 
