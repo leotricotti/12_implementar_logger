@@ -64,3 +64,10 @@ app.use(
 const httpServer = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Socket.io
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});

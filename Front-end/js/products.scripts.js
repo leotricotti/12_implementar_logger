@@ -205,3 +205,11 @@ const addProduct = async (idProduct) => {
     console.log(error);
   }
 };
+
+const productsChat = () => {
+  const chatBtn = document.getElementById("chat-img");
+  const chatContainer = document.getElementById("chat-card");
+  chatBtn.addEventListener("click", () => {
+    chatContainer.classList.add("active");
+  });
+};

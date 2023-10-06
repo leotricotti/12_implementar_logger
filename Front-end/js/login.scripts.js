@@ -90,21 +90,7 @@ const createCart = async () => {
   const result = await response.json();
 };
 
-<<<<<<< HEAD
 // Login con GitHub
 const githubLogin = () => {
   window.location.href = "http://localhost:8080/api/sessions/github";
-=======
-// Ruta que realiza el login con github
-
-const githubLogin = async () => {
-  const response = await fetch("http://localhost:8080/api/sessions/github", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const result = await response.json();
-  window.location.href = result.url;
->>>>>>> 2cd03d63d84659a37f2478230fb3c090a6432c4e
 };
