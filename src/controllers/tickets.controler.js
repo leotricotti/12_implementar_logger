@@ -1,8 +1,21 @@
 import { ticketsService } from "../repository/index.js";
+import { productsService } from "../repository/index.js";
+import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
-  const { amount, purchaser } = req.body;
+  const { products, amount, purchaser } = req.body;
   try {
+    // const productsList = await productsService.getAllProducts();
+
+    // const productWithOutStock = productsList.findIndex(
+    //   (product) => product.stock >= product
+    // );
+
+    // if (productWithOutStock) {
+    //   const newUserCart
+    //   return res.status(400).json({ message: "No hay stock disponible" });
+    // }
+
     const newTicket = {
       code: Math.floor(Math.random() * 1000000),
       purchase_datetime: new Date(),

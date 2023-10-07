@@ -4,6 +4,16 @@ const calculateDiscountedPrice = (price) => {
   return discountedPrice;
 };
 
+const totalPurchase = (products) => {
+  let total = 0;
+  let totalWithDiscount = 0;
+  products.forEach((product) => {
+    total += product.product.price * product.quantity;
+  });
+  totalWithDiscount = (total * 0.85).toFixed(2);
+  return totalWithDiscount;
+};
+
 //Incrementa la cantidad de un producto en el carrito
 const increaseQuantity = async (idProduct) => {
   const cartId = localStorage.getItem("cartId");
@@ -308,7 +318,9 @@ const showCartProducts = async () => {
     </div>
     <div class="py-2 text-end total-cart">
     <h5 class="d-inline-block align-middle mr-2">Subtotal:</h5>
-    <h5 class="d-inline-block align-middle ">$ ${totalPrice}</h5></div>
+    <h5 class="d-inline-block align-middle ">$ ${totalPurchase(
+      products
+    )}</h5></div>
     </div>
     `;
     } else {
