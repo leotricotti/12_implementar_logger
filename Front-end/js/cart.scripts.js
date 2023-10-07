@@ -23,6 +23,14 @@ async function finishPurchase(products) {
   const cartId = localStorage.getItem("cartId");
   const user = JSON.parse(localStorage.getItem("user"));
   const username = user.username;
+  const cartUserProducts = products.map((product) => {
+    return {
+      productId: product.product._id,
+      quantity: product.quantity,
+    };
+  });
+
+  console.log(cartUserProducts);
 
   try {
     const response = await fetch(

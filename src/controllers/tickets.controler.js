@@ -3,7 +3,7 @@ import { ticketsService } from "../repository/index.js";
 // import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
-  const { products, amount, purchaser } = req.body;
+  const { products, user, purchaser } = req.body;
   try {
     // const productsList = await productsService.getAllProducts();
 
