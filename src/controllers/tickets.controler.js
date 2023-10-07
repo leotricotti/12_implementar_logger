@@ -1,6 +1,6 @@
 import { ticketsService } from "../repository/index.js";
-import { productsService } from "../repository/index.js";
-import userCart from "./userCart.controller.js";
+// import { productsService } from "../repository/index.js";
+// import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
   const { products, amount, purchaser } = req.body;

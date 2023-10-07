@@ -1,18 +1,48 @@
+// Funcion que calcula el precio con descuento
 const calculateDiscountedPrice = (price) => {
   const parsedPrice = parseFloat(price);
   const discountedPrice = (parsedPrice * 0.85).toFixed(2);
   return discountedPrice;
 };
 
+// Funcion que calcula el total de la compra
 const totalPurchase = (products) => {
   let total = 0;
   let totalWithDiscount = 0;
+
   products.forEach((product) => {
     total += product.product.price * product.quantity;
   });
+
   totalWithDiscount = (total * 0.85).toFixed(2);
   return totalWithDiscount;
 };
+
+// Funcion que finaliza la compra
+async function finishPurchase(products) {
+  const cartId = localStorage.getItem("cartId");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user.username;
+
+  try {
+    const response = await fetch(
+      `http://localhost:8080/api/carts/${cartId}/purchase`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          username,
+          products,
+        }),
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 //Incrementa la cantidad de un producto en el carrito
 const increaseQuantity = async (idProduct) => {
@@ -242,7 +272,7 @@ const showCartProducts = async () => {
               <button
                 class="btn btn-secondary btn-sm mb-2"
                 type="button"
-                onclick="finishPurchase()"
+                onclick=${finishPurchase(products)}"
               >
                 Finalizar compra
               </button>
@@ -342,24 +372,6 @@ const showCartProducts = async () => {
 };
 
 showCartProducts();
-
-const finishPurchase = async () => {
-  const cartId = localStorage.getItem("cartId");
-  try {
-    const response = await fetch(
-      `http://localhost:8080/api/carts/${cartId}/purchase`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 // Abre el chat
 const chatOpen = document.getElementById("chat-img-id");
