@@ -306,6 +306,10 @@ const showCartProducts = async () => {
           .join("")}
       </div>
     </div>
+    <div class="py-2 text-end total-cart">
+    <h5 class="d-inline-block align-middle mr-2">Subtotal:</h5>
+    <h5 class="d-inline-block align-middle ">$ ${totalPrice}</h5></div>
+    </div>
     `;
     } else {
       html += `

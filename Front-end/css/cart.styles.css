@@ -94,6 +94,12 @@ p {
   margin: 0 auto;
 }
 
+.total-cart {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-right: 40px;
+}
+
 /* Chat */
 
 .fa-times {
