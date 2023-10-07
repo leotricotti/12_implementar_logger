@@ -15,6 +15,7 @@ const totalPurchase = (products) => {
   });
 
   totalWithDiscount = (total * 0.85).toFixed(2);
+  localStorage.setItem("totalPurchase", totalWithDiscount);
   return totalWithDiscount;
 };
 
@@ -22,15 +23,7 @@ const totalPurchase = (products) => {
 async function finishPurchase(products) {
   const cartId = localStorage.getItem("cartId");
   const user = JSON.parse(localStorage.getItem("user"));
-  const username = user.username;
-  const cartUserProducts = products.map((product) => {
-    return {
-      productId: product.product._id,
-      quantity: product.quantity,
-    };
-  });
-
-  console.log(cartUserProducts);
+  const totalPurchase = localStorage.getItem("totalPurchase");
 
   try {
     const response = await fetch(
@@ -42,8 +35,9 @@ async function finishPurchase(products) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          username,
+          username: user.username,
           products,
+          totalPurchase,
         }),
       }
     );

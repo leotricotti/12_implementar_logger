@@ -3,8 +3,10 @@ import { ticketsService } from "../repository/index.js";
 // import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
-  const { products, user, purchaser } = req.body;
+  const { products, username, totalPurchase } = req.body;
+  const { cartId } = req.params;
   try {
+    console.log(products, username, totalPurchase, cartId);
     // const productsList = await productsService.getAllProducts();
 
     // const productWithOutStock = productsList.findIndex(
