@@ -25,8 +25,6 @@ async function finishPurchase(products) {
   const user = JSON.parse(localStorage.getItem("user"));
   const totalPurchase = localStorage.getItem("totalPurchase");
 
-  console.log(cartId);
-
   try {
     const response = await fetch(
       `http://localhost:8080/api/carts/${cartId}/purchase`,
@@ -44,8 +42,9 @@ async function finishPurchase(products) {
         }),
       }
     );
-    const purchase = await response.json();
-    console.log(purchase);
+    const result = await response.json();
+
+    console.log(result);
 
     // if (response.message === "Ticket creado con éxito") {
     //   Swal.fire({
@@ -353,7 +352,7 @@ const showCartProducts = async () => {
       </div>
     </div>
     <div class="py-2 text-end total-cart">
-    <h5 class="d-inline-block align-middle mr-2">Subtotal:</h5>
+    <h5 class="d-inline-block align-middle mr-2">Total:</h5>
     <h5 class="d-inline-block align-middle ">$ ${totalPurchase(
       products
     )}</h5></div>

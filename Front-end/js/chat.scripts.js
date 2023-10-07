@@ -16,8 +16,6 @@ socket.on("messageLogs", (data) => {
   let log = document.getElementById("message-logs");
   let message = "";
 
-  console.log(data);
-
   data.forEach((elem) => {
     message += `
     <div class="d-flex flex-row justify-content-end mb-4">
