@@ -52,6 +52,7 @@ async function populatedCart(req, res) {
 //Método asyncrono para crear un carrito
 async function createCart(req, res) {
   try {
+    console.log("aqui");
     const newCart = req.body;
     const result = await cartService.saveOneCart(newCart);
     res.json({ message: "Carrito creado con éxito", data: newCart });

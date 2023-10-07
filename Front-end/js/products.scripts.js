@@ -129,18 +129,8 @@ const getCartId = async () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (!response.ok) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No se pudo obtener el carrito",
-        showConfirmButton: true,
-        showClass: {
-          popup: "animate__animated animate__zoomIn",
-        },
-      });
-    }
     const carts = await response.json();
+
     const lastCart = carts.carts[carts.carts.length - 1];
     saveCartId(lastCart._id);
   } catch (error) {

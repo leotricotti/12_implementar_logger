@@ -1,3 +1,26 @@
+//Crea un carrito vacío en la base de datos
+const createCart = async () => {
+  try {
+    if (localStorage.getItem("cartId")) {
+      return;
+    }
+    const response = await fetch("http://localhost:8080/api/carts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        products: [],
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Funcion que captura la información del usuario y la envía almacena en el local storage
 const getUser = async () => {
   try {
@@ -40,6 +63,8 @@ loginForm.addEventListener("submit", function (event) {
 });
 
 async function postLogin(username, password) {
+  console.log(username, password);
+
   try {
     const response = await fetch("http://localhost:8080/api/sessions/login", {
       method: "POST",
@@ -53,7 +78,6 @@ async function postLogin(username, password) {
     localStorage.setItem("token", result.token);
 
     if (result.message === "Login correcto") {
-      getUser();
     } else {
       Swal.fire({
         icon: "error",
@@ -66,29 +90,14 @@ async function postLogin(username, password) {
       });
     }
 
+    createCart();
+    getUser();
+
     return result;
   } catch (error) {
     console.log(error);
   }
 }
-
-//Crea un carrito vacío en la base de datos
-const createCart = async () => {
-  if (localStorage.getItem("cartId")) {
-    return;
-  }
-  const response = await fetch("http://localhost:8080/api/carts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({
-      products: [],
-    }),
-  });
-  const result = await response.json();
-};
 
 // Login con GitHub
 const githubLogin = () => {
