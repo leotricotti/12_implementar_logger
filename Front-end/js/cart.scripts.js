@@ -42,6 +42,42 @@ async function finishPurchase(products) {
       }
     );
     const purchase = await response.json();
+    console.log(purchase);
+
+    // if (response.message === "Ticket creado con éxito") {
+    //   Swal.fire({
+    //     title: "¿Estás seguro?",
+    //     text: "¡No podrás revertir esto!",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#d33",
+    //     cancelButtonColor: "#3085d6",
+    //     confirmButtonText: "Sí, finalizar compra",
+    //     cancelButtonText: "Cancelar",
+    //     showClass: {
+    //       popup: "animate__animated animate__zoomIn",
+    //     },
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       Swal.fire({
+    //         title: "¡Compra finalizada con éxito!",
+    //         text: "En unos minutos recibirás un correo con los detalles de tu compra",
+    //         icon: "success",
+    //         confirmButtonColor: "#3085d6",
+    //         confirmButtonText: "Aceptar",
+    //         showClass: {
+    //           popup: "animate__animated animate__zoomIn",
+    //         },
+    //       }).then((result) => {
+    //         if (result.isConfirmed) {
+    //           localStorage.removeItem("cartId");
+    //           window.location.href = "../html/index.html";
+    //           logout();
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
   } catch (error) {
     console.error(error);
   }
@@ -192,42 +228,6 @@ const continueBuying = (page) => {
   window.location.href = `http://127.0.0.1:5500/html/products.html`;
 };
 
-//Finalizar compra
-const finishBuy = () => {
-  Swal.fire({
-    title: "¿Estás seguro?",
-    text: "¡No podrás revertir esto!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Sí, finalizar compra",
-    cancelButtonText: "Cancelar",
-    showClass: {
-      popup: "animate__animated animate__zoomIn",
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "¡Compra finalizada con éxito!",
-        text: "En unos minutos recibirás un correo con los detalles de tu compra",
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Aceptar",
-        showClass: {
-          popup: "animate__animated animate__zoomIn",
-        },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          localStorage.removeItem("cartId");
-          window.location.href = "../html/index.html";
-          logout();
-        }
-      });
-    }
-  });
-};
-
 const showCartProducts = async () => {
   const cartId = localStorage.getItem("cartId");
 
@@ -275,7 +275,7 @@ const showCartProducts = async () => {
               <button
                 class="btn btn-secondary btn-sm mb-2"
                 type="button"
-                onclick=${finishPurchase(products)}"
+                id="finish-purchase-button"
               >
                 Finalizar compra
               </button>
@@ -369,6 +369,15 @@ const showCartProducts = async () => {
 
     document.getElementById("cart-nav-container").innerHTML = cartNav;
     document.getElementById("cart-container").innerHTML = html;
+
+    // Espera 1 segundo antes de agregar el evento click al botón "Finalizar compra"
+    setTimeout(function () {
+      document
+        .getElementById("finish-purchase-button")
+        .addEventListener("click", function () {
+          finishPurchase(products);
+        });
+    }, 1000);
   } catch (error) {
     console.error(error);
   }

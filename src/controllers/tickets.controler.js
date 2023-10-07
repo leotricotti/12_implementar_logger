@@ -1,12 +1,14 @@
 import { ticketsService } from "../repository/index.js";
-// import { productsService } from "../repository/index.js";
+import { productsService } from "../repository/index.js";
 // import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
-  const { username, totalPurchase } = req.body;
+  const { username, totalPurchase, products } = req.body;
   // const { cartId } = req.params;
   try {
-    // const productsList = await productsService.getAllProducts();
+    const productsList = await productsService.getAllProducts();
+
+    console.log(products);
 
     // const productWithOutStock = productsList.findIndex(
     //   (product) => product.stock >= product
@@ -25,6 +27,8 @@ async function createTicket(req, res) {
     };
 
     console.log(newTicket);
+
+    res.json({ message: "Ticket creado con éxito", data: newTicket });
 
     // const result = await ticketsService.createOneTicket(newTicket);
     // if (!result) {
