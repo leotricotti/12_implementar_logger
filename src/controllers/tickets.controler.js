@@ -1,34 +1,46 @@
 import { ticketsService } from "../repository/index.js";
-import { productsService } from "../repository/index.js";
-// import userCart from "./userCart.controller.js";
+import { cartService } from "../repository/index.js";
 
-async function createTicket(req, res) {
+async function finishPurchase(req, res) {
   const { username, totalPurchase, products } = req.body;
-  // const { cartId } = req.params;
+  const { cid } = req.params;
   try {
-    const productsList = await productsService.getAllProducts();
+    const cart = await cartService.getOneCart(cid);
 
-    console.log(products);
+    const productWithOutStock = await products.filter((product) =>
+      product.product.stock < product.quantity ? true : false
+    );
 
-    // const productWithOutStock = productsList.findIndex(
-    //   (product) => product.stock >= product
-    // );
+    if (productWithOutStock === undefined) {
+      cart.products = [];
+      const result = await cartService.updateOneCart(cid, cart);
+      return res.json({
+        message: "Compra realizada con éxito",
+        data: result,
+      });
+    } else {
+      cart.products = [productWithOutStock];
+      const result = await cartService.updateOneCart(cid, cart);
 
-    // if (productWithOutStock) {
-    //   const newUserCart
-    //   return res.status(400).json({ message: "No hay stock disponible" });
-    // }
+      const cart = await cartService.getOneCart(cid);
 
-    const newTicket = {
-      code: Math.floor(Math.random() * 1000000),
-      purchase_datetime: new Date().toLocaleString(),
-      amount: totalPurchase,
-      purchaser: username,
-    };
+      console.log(cart);
 
-    console.log(newTicket);
+      // return res.json({
+      //   message:
+      //     "Compra realizada con éxito. Los siguietes productos no se pudieron comprar por falta de stock:",
+      //   data: result,
+      // });
+    }
 
-    res.json({ message: "Ticket creado con éxito", data: newTicket });
+    // const newTicket = {
+    //   code: Math.floor(Math.random() * 1000000),
+    //   purchase_datetime: new Date().toLocaleString(),
+    //   amount: totalPurchase,
+    //   purchaser: username,
+    // };
+
+    // res.json({ message: "Ticket creado con éxito", data: newTicket });
 
     // const result = await ticketsService.createOneTicket(newTicket);
     // if (!result) {
@@ -41,4 +53,4 @@ async function createTicket(req, res) {
   }
 }
 
-export { createTicket };
+export { finishPurchase };
