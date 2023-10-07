@@ -3,10 +3,9 @@ import { ticketsService } from "../repository/index.js";
 // import userCart from "./userCart.controller.js";
 
 async function createTicket(req, res) {
-  const { products, username, totalPurchase } = req.body;
-  const { cartId } = req.params;
+  const { username, totalPurchase } = req.body;
+  // const { cartId } = req.params;
   try {
-    console.log(products, username, totalPurchase, cartId);
     // const productsList = await productsService.getAllProducts();
 
     // const productWithOutStock = productsList.findIndex(
@@ -20,17 +19,19 @@ async function createTicket(req, res) {
 
     const newTicket = {
       code: Math.floor(Math.random() * 1000000),
-      purchase_datetime: new Date(),
-      amount,
-      purchaser,
+      purchase_datetime: new Date().toLocaleString(),
+      amount: totalPurchase,
+      purchaser: username,
     };
 
-    const result = await ticketsService.createOneTicket(newTicket);
-    if (!result) {
-      return res.status(400).json({ message: "No se pudo crear el ticket" });
-    }
+    console.log(newTicket);
 
-    res.json({ message: "Ticket creado con éxito", data: newTicket });
+    // const result = await ticketsService.createOneTicket(newTicket);
+    // if (!result) {
+    //   return res.status(400).json({ message: "No se pudo crear el ticket" });
+    // }
+
+    // res.json({ message: "Ticket creado con éxito", data: newTicket });
   } catch (err) {
     res.status(500).json({ message: "Error al crear el ticket ", data: err });
   }

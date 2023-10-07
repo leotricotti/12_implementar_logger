@@ -41,6 +41,7 @@ async function finishPurchase(products) {
         }),
       }
     );
+    const purchase = await response.json();
   } catch (error) {
     console.error(error);
   }
