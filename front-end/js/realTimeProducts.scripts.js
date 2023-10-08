@@ -105,7 +105,7 @@ async function handleUpdateProduct(
             if (result.isConfirmed) {
               setTimeout(function () {
                 window.location.reload();
-              }, 2000);
+              }, 500);
             }
           });
         }
