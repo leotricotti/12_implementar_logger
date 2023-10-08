@@ -66,7 +66,7 @@ async function finishPurchase(req, res) {
       const newTicket = {
         code: Math.floor(Math.random() * 1000000),
         purchase_datetime: new Date().toLocaleString(),
-        amount: totalPurchase - missingProductDiscount,
+        amount: (totalPurchase - missingProductDiscount).toFixed(2),
         purchaser: username,
       };
 
