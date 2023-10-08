@@ -28,7 +28,6 @@ export default class UsersDao {
 
   //Método asyncrono para obtener un usuario
   getOne = async (uid) => {
-    console.log("uid", uid);
     try {
       const result = await usersModel.find({ email: uid });
       return result;
