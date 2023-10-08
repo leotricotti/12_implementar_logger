@@ -66,8 +66,6 @@ async function handleUpdateProduct(
       );
       const result = await response.json();
 
-      console.log(result);
-
       if (!result.message === "Producto actualizado con éxito") {
         return Swal.fire({
           icon: "error",
@@ -82,12 +80,35 @@ async function handleUpdateProduct(
       }
 
       Swal.fire({
-        icon: "success",
-        title: "Producto actualizado con exito!",
-        showConfirmButton: true,
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, actualizar producto!",
+        cancelButtonText: "Cancelar",
         showClass: {
           popup: "animate__animated animate__zoomIn",
         },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "¡Producto actualizado con éxito!",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Aceptar",
+            showClass: {
+              popup: "animate__animated animate__zoomIn",
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setTimeout(function () {
+                window.location.reload();
+              }, 2000);
+            }
+          });
+        }
       });
     }
   } catch (error) {
@@ -226,7 +247,7 @@ async function handleSubmit(e) {
       text: "Todos los campos son necesarios!",
       focusConfirm: true,
       showClass: {
-        popup: "animate__animated animate__zoomInDown",
+        popup: "animate__animated animate__zoomIn",
       },
     });
   } else {
@@ -270,7 +291,7 @@ async function handleSubmit(e) {
         title: "Producto agregado con exito!",
         showConfirmButton: true,
         showClass: {
-          popup: "animate__animated animate__zoomInDown",
+          popup: "animate__animated animate__zoomIn",
         },
       });
     }
@@ -432,7 +453,7 @@ function eliminarProducto(id) {
         title: "Producto eliminado con exito!",
         showConfirmButton: true,
         showClass: {
-          popup: "animate__animated animate__zoomInDown",
+          popup: "animate__animated animate__zoomIn",
         },
       });
     }

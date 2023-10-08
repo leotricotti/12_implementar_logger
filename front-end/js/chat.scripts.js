@@ -1,6 +1,7 @@
 const socket = io("http://localhost:8080");
 let chatBox = document.getElementById("textAreaExample");
 
+// Socket events
 chatBox.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     if (chatBox.value.trim().length > 0) {

@@ -75,8 +75,6 @@ async function updateProduct(req, res) {
   const { id } = req.params;
   const { title, description, code, price, stock, category, thumbnail } =
     req.body;
-
-  console.log(req.body);
   try {
     if (!title || !description || !price || !code || !stock) {
       res.status(400).json({ message: "Faltan datos" });
