@@ -364,6 +364,14 @@ const showCartProducts = async () => {
     )}</h5></div>
     </div>
     `;
+      // Espera 1 segundo antes de agregar el evento click al botón "Finalizar compra"
+      setTimeout(function () {
+        document
+          .getElementById("finish-purchase-button")
+          .addEventListener("click", function () {
+            finishPurchaseAction(products);
+          });
+      }, 1000);
     } else {
       html += `
         <nav class="d-flex mb-3 nav-products mt-5 flex-wrap justify-content-center">
@@ -377,15 +385,6 @@ const showCartProducts = async () => {
 
     document.getElementById("cart-nav-container").innerHTML = cartNav;
     document.getElementById("cart-container").innerHTML = html;
-
-    // Espera 1 segundo antes de agregar el evento click al botón "Finalizar compra"
-    setTimeout(function () {
-      document
-        .getElementById("finish-purchase-button")
-        .addEventListener("click", function () {
-          finishPurchaseAction(products);
-        });
-    }, 1000);
   } catch (error) {
     console.error(error);
   }
