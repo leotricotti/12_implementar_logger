@@ -33,11 +33,8 @@ const cartBadge = async () => {
         0
       );
 
-      cartBadge.innerHTML = `                
-      <span
-        class="basket-count"
-        >${productsQuantity}</span
-      >`;
+      cartBadge.innerText = `                
+        ${productsQuantity}`;
     }
   } catch (error) {
     console.error(error);

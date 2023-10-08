@@ -51,7 +51,7 @@ body {
 
 .basket-count {
   position: absolute;
-  top: 0px;
+  top: -14px;
   right: 3px;
 }
 
