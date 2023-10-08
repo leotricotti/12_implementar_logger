@@ -64,33 +64,32 @@ async function handleUpdateProduct(
           body: JSON.stringify(product),
         }
       );
+      const result = await response.json();
+
+      console.log(result);
+
+      if (!result.message === "Producto actualizado con éxito") {
+        return Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo salió mal! Vuelve a intentarlo",
+          showConfirmButton: true,
+          confirmButtonText: "Aceptar",
+          showClass: {
+            popup: "animate__animated animate__zoomIn",
+          },
+        });
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Producto actualizado con exito!",
+        showConfirmButton: true,
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
+      });
     }
-
-    const result = await response.json();
-
-    console.log(result);
-
-    //   if (!response.ok) {
-    //     return Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "Algo salió mal! Vuelve a intentarlo",
-    //       showConfirmButton: true,
-    //       confirmButtonText: "Aceptar",
-    //       showClass: {
-    //         popup: "animate__animated animate__zoomIn",
-    //       },
-    //     });
-    //   }
-
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Producto actualizado con exito!",
-    //     showConfirmButton: true,
-    //     showClass: {
-    //       popup: "animate__animated animate__zoomInDown",
-    //     },
-    //   });
   } catch (error) {
     console.log(error);
   }
