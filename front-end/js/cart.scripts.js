@@ -50,6 +50,7 @@ async function finishPurchase(products) {
   }
 }
 
+// Funcion que confirma o rechaza la compra
 const finishPurchaseAction = (products) => {
   Swal.fire({
     title: "¿Estás seguro?",
