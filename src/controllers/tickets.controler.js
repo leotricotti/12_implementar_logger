@@ -4,11 +4,19 @@ import { cartService } from "../repository/index.js";
 async function finishPurchase(req, res) {
   const { username, totalPurchase, products } = req.body;
   const { cid } = req.params;
+
   try {
     const cart = await cartService.getOneCart(cid);
 
     const productWithOutStock = await products.filter((product) =>
       product.product.stock < product.quantity ? true : false
+    );
+
+    const missingProductDiscount = await productWithOutStock.reduce(
+      (acc, product) => {
+        return acc + product.product.price * product.quantity * 0.85;
+      },
+      0
     );
 
     const productWithStock = await products.filter((product) =>
@@ -45,7 +53,7 @@ async function finishPurchase(req, res) {
       const newTicket = {
         code: Math.floor(Math.random() * 1000000),
         purchase_datetime: new Date().toLocaleString(),
-        amount: totalPurchase,
+        amount: totalPurchase - missingProductDiscount,
         purchaser: username,
       };
 
@@ -58,7 +66,7 @@ async function finishPurchase(req, res) {
         message:
           "Compra realizada con éxito. Los siguietes productos no se pudieron comprar por falta de stock:",
         data: ticket,
-        remainingProducts: remainingProducts.products,
+        remainingProducts: productWithOutStock,
         products: productWithStock,
       });
     }
