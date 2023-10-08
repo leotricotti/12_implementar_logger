@@ -10,6 +10,11 @@ body {
   background-color: #eee;
 }
 
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .dropdown-menu[data-bs-popper] {
   left: -100px;
 }

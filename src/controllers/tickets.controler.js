@@ -12,7 +12,7 @@ async function finishPurchase(req, res) {
     );
 
     const productWithStock = await products.filter((product) =>
-      product.product.stock >= product.quantity ? true : false
+      product.product.stock > product.quantity ? true : false
     );
 
     if (productWithOutStock.length === 0) {

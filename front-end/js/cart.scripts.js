@@ -77,11 +77,14 @@ const finishPurchaseAction = (products) => {
       }).then((result) => {
         if (result.isConfirmed) {
           finishPurchase(products);
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          localStorage.setItem("currentPage", 1);
-          localStorage.removeItem("cartId");
-          window.location.href = "../html/orderDetails.html";
+          setTimeout(function () {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            localStorage.setItem("currentPage", 1);
+            localStorage.removeItem("cartId");
+            localStorage.removeItem("totalPurchase");
+            window.location.href = "../html/orderDetails.html";
+          }, 2000);
         }
       });
     }
@@ -363,7 +366,7 @@ const showCartProducts = async () => {
     `;
     } else {
       html += `
-        <nav class="d-flex mb-3 nav-products flex-wrap justify-content-center">
+        <nav class="d-flex mb-3 nav-products mt-5 flex-wrap justify-content-center">
           <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
           <button class="btn btn-secondary btn-sm" type="button">
             <a href="http://127.0.0.1:5500/html/products.html"> Ir a comprar </a>
