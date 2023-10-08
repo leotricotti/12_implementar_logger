@@ -10,6 +10,15 @@ body {
   background-color: #eee;
 }
 
+.navbar {
+  z-index: 1000;
+  width: 100%;
+}
+
+.update-product-container {
+  margin-top: 85px;
+}
+
 p {
   margin: 0;
 }
