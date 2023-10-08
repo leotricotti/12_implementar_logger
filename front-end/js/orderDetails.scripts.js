@@ -8,10 +8,6 @@ async function orderDetails() {
   productsData.push(order.products);
   productsWithOutStock.push(order.remainingProducts);
 
-  productsWithOutStock[0].map((item) => {
-    console.log(item.product.title);
-  });
-
   const html = `
     <div class="row">
       <div class="col mb-3">
@@ -43,7 +39,7 @@ async function orderDetails() {
       .join("")}
     </div>
     ${
-      productsWithOutStock[0].length > 0
+      productsWithOutStock[0] && productsWithOutStock[0].length > 0
         ? `
         
     <div class="mx-n5 px-5 py-4 pt-0" style="background-color: #f2f2f2">

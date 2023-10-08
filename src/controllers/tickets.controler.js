@@ -36,6 +36,8 @@ async function finishPurchase(req, res) {
       0
     );
 
+    console.log(missingProductDiscount);
+
     if (productWithOutStock.length === 0) {
       cart.products = [];
       const result = await cartService.updateOneCart(cid, cart);
