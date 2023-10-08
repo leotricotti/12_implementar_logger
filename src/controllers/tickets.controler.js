@@ -22,15 +22,15 @@ async function finishPurchase(req, res) {
         purchaser: username,
       };
 
-      console.log(newTicket);
-
       const ticket = await ticketsService.createOneTicket(newTicket);
 
-      console.log(ticket);
+      if (!ticket) {
+        res.status(500).json({ message: "Error al crear el ticket " });
+      }
 
       res.json({
         message: "Compra realizada con éxito",
-        data: resultTicket,
+        data: ticket,
       });
     } else {
       cart.products = [...productWithOutStock];
@@ -45,7 +45,9 @@ async function finishPurchase(req, res) {
       };
 
       const ticket = await ticketsService.createOneTicket(newTicket);
-      console.log(ticket);
+      if (!ticket) {
+        res.status(500).json({ message: "Error al crear el ticket " });
+      }
 
       res.json({
         message:
