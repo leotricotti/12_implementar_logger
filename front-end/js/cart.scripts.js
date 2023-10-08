@@ -43,43 +43,45 @@ async function finishPurchase(products) {
       }
     );
     const result = await response.json();
-
     console.log(result);
 
-    // if (response.message === "Ticket creado con éxito") {
-    //   Swal.fire({
-    //     title: "¿Estás seguro?",
-    //     text: "¡No podrás revertir esto!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#d33",
-    //     cancelButtonColor: "#3085d6",
-    //     confirmButtonText: "Sí, finalizar compra",
-    //     cancelButtonText: "Cancelar",
-    //     showClass: {
-    //       popup: "animate__animated animate__zoomIn",
-    //     },
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       Swal.fire({
-    //         title: "¡Compra finalizada con éxito!",
-    //         text: "En unos minutos recibirás un correo con los detalles de tu compra",
-    //         icon: "success",
-    //         confirmButtonColor: "#3085d6",
-    //         confirmButtonText: "Aceptar",
-    //         showClass: {
-    //           popup: "animate__animated animate__zoomIn",
-    //         },
-    //       }).then((result) => {
-    //         if (result.isConfirmed) {
-    //           localStorage.removeItem("cartId");
-    //           window.location.href = "../html/index.html";
-    //           logout();
-    //         }
-    //       });
-    //     }
-    //   });
-    // }
+    if (result) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, finalizar compra",
+        cancelButtonText: "Cancelar",
+        showClass: {
+          popup: "animate__animated animate__zoomIn",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "¡Compra finalizada con éxito!",
+            text: "En unos minutos recibirás un correo con los detalles de tu compra",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Aceptar",
+            showClass: {
+              popup: "animate__animated animate__zoomIn",
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              localStorage.setItem("currentPage", 1);
+              localStorage.removeItem("cartId");
+              orderDetails(result);
+              window.location.href = "../html/orderDetails.html";
+            }
+          });
+        }
+      });
+    }
   } catch (error) {
     console.error(error);
   }
