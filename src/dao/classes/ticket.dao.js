@@ -11,15 +11,4 @@ export default class TicketDao {
       return [];
     }
   }
-
-  //Método asyncrono para obtener todos los tickets
-  async getAllTickets() {
-    try {
-      const result = await ticketModel.find();
-      return result;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  }
 }

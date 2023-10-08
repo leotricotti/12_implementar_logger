@@ -1,6 +1,8 @@
 import { ticketsService } from "../repository/index.js";
 import { cartService } from "../repository/index.js";
+import { productsService } from "../repository/index.js";
 
+//Metodo asyncrono para finalizar la compra
 async function finishPurchase(req, res) {
   const { username, totalPurchase, products } = req.body;
   const { cid } = req.params;
@@ -8,19 +10,30 @@ async function finishPurchase(req, res) {
   try {
     const cart = await cartService.getOneCart(cid);
 
+    // Filtrar los productos que no tienen stock
     const productWithOutStock = await products.filter((product) =>
       product.product.stock < product.quantity ? true : false
     );
 
+    // Filtrar los productos que tienen stock
+    const productWithStock = await products.filter((product) =>
+      product.product.stock > product.quantity ? true : false
+    );
+
+    // Actualizar el stock de los productos que se compraron
+    productWithStock.map(async (product) => {
+      const newStock = product.product.stock - product.quantity;
+      await productsService.updateOneProduct(product.product._id, {
+        stock: newStock,
+      });
+    });
+
+    // Calcular el descuento por los productos que no tienen stock
     const missingProductDiscount = await productWithOutStock.reduce(
       (acc, product) => {
         return acc + product.product.price * product.quantity * 0.85;
       },
       0
-    );
-
-    const productWithStock = await products.filter((product) =>
-      product.product.stock > product.quantity ? true : false
     );
 
     if (productWithOutStock.length === 0) {
@@ -75,15 +88,4 @@ async function finishPurchase(req, res) {
   }
 }
 
-async function getAllTickets(req, res) {
-  try {
-    const tickets = await ticketsService.getAllTickets();
-    res.json(tickets);
-  } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener los tickets", data: err });
-  }
-}
-
-export { finishPurchase, getAllTickets };
+export { finishPurchase };
