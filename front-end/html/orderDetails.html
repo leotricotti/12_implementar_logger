@@ -23,8 +23,36 @@
               class="card border-top border-bottom border-3"
               style="border-color: #0d6efd !important"
             >
-              <div class="card-body p-5">
-                <p class="lead fw-bold mb-5">Detalle de su compra</p>
+              <div class="card-body p-5 position-relative">
+                <div
+                  class="order-brand position-absolute top-0 mt-3 d-flex align-items-center justify-content-between"
+                  style="width: 85%"
+                >
+                  <div>
+                    <img
+                      src="../img/logo.jpg"
+                      alt="E-Store logo"
+                      class="rounded-circle me-2"
+                      width="25"
+                      height="25"
+                    />
+                    <a
+                      class="navbar-brand"
+                      href="http://127.0.0.1:5500/html/products.html "
+                    >
+                      E-Store
+                    </a>
+                  </div>
+
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    type="button"
+                    id="order-detail-btn"
+                  >
+                    Finalizar
+                  </button>
+                </div>
+                <p class="lead fw-bold mb-5 mt-4">Detalle de su compra</p>
                 <div id="order-container"></div>
               </div>
             </div>
