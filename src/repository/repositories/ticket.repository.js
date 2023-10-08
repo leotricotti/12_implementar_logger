@@ -8,4 +8,10 @@ export default class TicketsRepository {
     const result = await this.dao.createTicket(ticket);
     return result;
   };
+
+  // Método asyncrono para obtener todos los tickets
+  getAllTickets = async () => {
+    const result = await this.dao.getAllTickets();
+    return result;
+  };
 }

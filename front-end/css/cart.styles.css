@@ -14,17 +14,17 @@ body {
   left: -100px;
 }
 
+.cart-nav {
+  margin-bottom: 0 !important;
+}
+
+.navbar {
+  z-index: 1000;
+  width: 100%;
+}
+
 .trash-icon {
   cursor: pointer;
-}
-
-a {
-  text-decoration: none;
-  color: #fff;
-}
-
-p {
-  margin: 0;
 }
 
 .fa-cart-shopping {

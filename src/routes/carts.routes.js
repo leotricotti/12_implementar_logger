@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { finishPurchase } from "../controllers/tickets.controler.js";
+import {
+  finishPurchase,
+  getAllTickets,
+} from "../controllers/tickets.controler.js";
 import {
   getAll,
   getOne,
@@ -36,5 +39,8 @@ router.delete("/:cid", emptyCart);
 
 //Método asyncrono que finaliza la compra
 router.post("/:cid/purchase", finishPurchase);
+
+//Método asyncrono que captura todos los tickets
+router.get("/purchase", getAllTickets);
 
 export default router;

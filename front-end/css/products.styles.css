@@ -14,6 +14,11 @@ body {
   left: -100px;
 }
 
+.navbar {
+  z-index: 1000;
+  width: 100%;
+}
+
 .fa-cart-shopping {
   color: #0a58ca;
   cursor: pointer;
@@ -50,13 +55,8 @@ body {
   right: 3px;
 }
 
-a {
-  text-decoration: none;
-  color: #fff;
-}
-
-p {
-  margin: 0;
+.main-title {
+  margin-top: 80px;
 }
 
 .py-5 {

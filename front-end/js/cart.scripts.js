@@ -43,49 +43,50 @@ async function finishPurchase(products) {
       }
     );
     const result = await response.json();
-    console.log(result);
 
-    if (result) {
+    localStorage.setItem("order", JSON.stringify(result));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const finishPurchaseAction = (products) => {
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Sí, finalizar compra",
+    cancelButtonText: "Cancelar",
+    showClass: {
+      popup: "animate__animated animate__zoomIn",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
       Swal.fire({
-        title: "¿Estás seguro?",
-        text: "¡No podrás revertir esto!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Sí, finalizar compra",
-        cancelButtonText: "Cancelar",
+        title: "¡Compra finalizada con éxito!",
+        text: "En unos minutos recibirás un correo con los detalles de tu compra",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Aceptar",
         showClass: {
           popup: "animate__animated animate__zoomIn",
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "¡Compra finalizada con éxito!",
-            text: "En unos minutos recibirás un correo con los detalles de tu compra",
-            icon: "success",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Aceptar",
-            showClass: {
-              popup: "animate__animated animate__zoomIn",
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              localStorage.removeItem("token");
-              localStorage.removeItem("user");
-              localStorage.setItem("currentPage", 1);
-              localStorage.removeItem("cartId");
-              orderDetails(result);
-              window.location.href = "../html/orderDetails.html";
-            }
-          });
+          finishPurchase(products);
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.setItem("currentPage", 1);
+          localStorage.removeItem("cartId");
+          window.location.href = "../html/orderDetails.html";
         }
       });
     }
-  } catch (error) {
-    console.error(error);
-  }
-}
+  });
+};
 
 //Incrementa la cantidad de un producto en el carrito
 const increaseQuantity = async (idProduct) => {
@@ -252,8 +253,8 @@ const showCartProducts = async () => {
     let cartNav = "";
     if (products.length > 0) {
       cartNav += `
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-10">
+        <div class="row d-flex justify-content-center align-items-center h-100 mt-4">
+          <div class="col-10 ">
             <h3
               class="fw-normal text-black mb-5 text-decoration-underline text-center"
             >
@@ -379,7 +380,7 @@ const showCartProducts = async () => {
       document
         .getElementById("finish-purchase-button")
         .addEventListener("click", function () {
-          finishPurchase(products);
+          finishPurchaseAction(products);
         });
     }, 1000);
   } catch (error) {

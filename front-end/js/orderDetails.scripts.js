@@ -1,6 +1,9 @@
 // Funcion que crea un resumen de la compra
-async function orderDetails(order) {
+async function orderDetails() {
   const orderDetails = document.getElementById("order-container");
+  const order = await JSON.parse(localStorage.getItem("order"));
+
+  console.log(order);
 
   const html = `
     <div class="row">
@@ -13,26 +16,27 @@ async function orderDetails(order) {
         <p>${order.data.code}</p>
       </div>
     </div>
-    ${order
-      .map((item) => {
-        return `
         <div
           class="mx-n5 px-5 py-4"
           style="background-color: #f2f2f2"
         >
           <div class="row">
             <div class="col-md-8 col-lg-9">
-              <p>BEATS Solo 3 Wireless Headphones</p>
+              <p>${order.data.purchaser}</p>
             </div>
             <div class="col-md-4 col-lg-3">
-              <p>£299.99</p>
+              <p>${order.data.amount}</p>
             </div>
           </div>
         </div>
+        <div class="row my-4">
+        <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+          <p class="lead fw-bold mb-0">$ ${order.data.amount}</p>
+        </div>
+      </div>
       `;
-      })
-      .join("")}
-  `;
 
   orderDetails.innerHTML = html;
 }
+
+orderDetails();

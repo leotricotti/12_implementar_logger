@@ -11,6 +11,10 @@ async function finishPurchase(req, res) {
       product.product.stock < product.quantity ? true : false
     );
 
+    const productWithStock = await products.filter((product) =>
+      product.product.stock >= product.quantity ? true : false
+    );
+
     if (productWithOutStock.length === 0) {
       cart.products = [];
       const result = await cartService.updateOneCart(cid, cart);
@@ -31,6 +35,7 @@ async function finishPurchase(req, res) {
       res.json({
         message: "Compra realizada con éxito",
         data: ticket,
+        products: productWithStock,
       });
     } else {
       cart.products = [...productWithOutStock];
@@ -54,6 +59,7 @@ async function finishPurchase(req, res) {
           "Compra realizada con éxito. Los siguietes productos no se pudieron comprar por falta de stock:",
         data: ticket,
         remainingProducts: remainingProducts.products,
+        products: productWithStock,
       });
     }
   } catch (err) {
@@ -61,4 +67,15 @@ async function finishPurchase(req, res) {
   }
 }
 
-export { finishPurchase };
+async function getAllTickets(req, res) {
+  try {
+    const tickets = await ticketsService.getAllTickets();
+    res.json(tickets);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error al obtener los tickets", data: err });
+  }
+}
+
+export { finishPurchase, getAllTickets };
