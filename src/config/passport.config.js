@@ -27,9 +27,9 @@ const initializePassport = () => {
       async (jwt_payload, done) => {
         try {
           //validar que el usuario exista en la base de datos
-          let response = await usersService.getOneUser({
-            email: jwt_payload.user.username,
-          });
+          let response = await usersService.getOneUser(
+            jwt_payload.user.username
+          );
           if (!response) {
             return done(null, false, { message: "Usuario inexistente" });
           } else {
