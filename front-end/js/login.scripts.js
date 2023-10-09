@@ -54,6 +54,7 @@ const getUser = async () => {
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-button");
 
+// Agregar un evento submit al formulario de login
 loginForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
@@ -61,6 +62,7 @@ loginForm.addEventListener("submit", function (event) {
   postLogin(username, password);
 });
 
+// Función para enviar los datos de inicio de sesión al servidor
 async function postLogin(username, password) {
   try {
     const response = await fetch("http://localhost:8080/api/sessions/login", {
